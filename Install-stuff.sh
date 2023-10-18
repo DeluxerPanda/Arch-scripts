@@ -128,7 +128,6 @@ sudo cp -a "${THEME_NAME}"/* "${THEME_DIR}/${THEME_NAME}"
 sudo cp -an /etc/default/grub /etc/default/grub.bak
 sudo sed -i '/GRUB_THEME=/d' /etc/default/grub
 echo "GRUB_THEME=\"${THEME_DIR}/${THEME_NAME}/theme.txt\"" | sudo tee -a /etc/default/grub
-sudo update-grub
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 #Asus-Linux.org stuff
