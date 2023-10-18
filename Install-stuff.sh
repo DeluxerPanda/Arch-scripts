@@ -120,6 +120,7 @@ mv ~/.config/mydwm/.xinitrc ~/
 rm -rf ~/.config/mydwm
 
 # Set up custom GRUB2 theme
+sudo chmod root:root CyberRe/*
 THEME_DIR="/boot/grub/themes"
 THEME_NAME="CyberRe"
 print_info_message "Setting up custom GRUB2 theme"
