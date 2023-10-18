@@ -99,24 +99,24 @@ spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
 # Clone Git repository and move directories
-git clone https://github.com/DeluxPanda/mydwm.git ~/.configa/mydwm
-cd ~/.configa/mydwm
+git clone https://github.com/DeluxPanda/mydwm.git ~/.config/mydwm
+cd ~/.config/mydwm
 
 # Move directories and install applications
 for app in "dwm" "dmenu" "st" "slstatus"; do
-    sudo mv "$app" ~/.configa/
+    sudo mv "$app" ~/.config/
     echo "Moving $app"
 done
 
 # Install applications
 for app in "dwm" "dmenu" "st" "slstatus"; do
-    cd ~/.configa/"$app"
+    cd ~/.config/"$app"
     echo "Installing $app"
     sudo make clean install
 done
-
+mv ~/.config/mydwm/.xinitrc ~/
 # Remove the cloned repository
-rm -rf ~/.configa/mydwm
+rm -rf ~/.config/mydwm
 
 # Set up custom GRUB2 theme
 THEME_DIR="/boot/grub/themes"
@@ -176,14 +176,6 @@ sudo systemctl enable --now power-profiles-daemon.service
 #Supergfxctl - graphics switching
 sudo systemctl enable --now supergfxd
 
-
-titel_message_length=${#titel_message}
-spaces=$(( (${#separator} - message_length) / 2 ))
-printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$titel_message" ""
-
-message="All done!"
-message_length=${#message}
-spaces=$(( (${#separator} - message_length) / 2 ))
-printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
+startx
 
 
