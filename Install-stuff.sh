@@ -37,7 +37,7 @@ message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 echo -ne "
-1. Installing wget, git, libxft, libxinerama
+1. Installing wget, git, libxft, libxinerama, xrandr
 2. Installing JetBrains Mono, Awesome Font
 3. Make dwm, dmenu, st, slstatus work
 4. Grub Theme
@@ -57,12 +57,12 @@ message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 
-message2="wget, git, libxft, libxinerama"
+message2="wget, git, libxft, libxinerama, xrandr"
 message2_length=${#message2}
 spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
-sudo pacman -Sy --noconfirm --needed wget git libxft libxinerama
+sudo pacman -Sy --noconfirm --needed wget git libxft libxinerama xorg-xrandr
 
 #Install necessary stuff
 
