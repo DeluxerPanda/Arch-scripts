@@ -63,7 +63,10 @@ spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
 sudo pacman -Sy --noconfirm --needed wget git libxft libxinerama xorg-xrandr xwallpaper rofi
-
+wget https://i.imgur.com/9zpVhD7.jpg
+mkdir ~/Bilder/Wallpapers
+mv 9zpVhD7.jpg wallpaper1.jpg
+mv wallpaper1.jpg ~/Bilder/Wallpapers
 #Install necessary stuff
 
 titel_message_length=${#titel_message}
