@@ -37,9 +37,9 @@ message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 echo -ne "
-1. Installing wget, git, libxft, libxinerama, xrandr, xwallpaper
+1. Installing wget, git, libxft, libxinerama, xrandr, xwallpaper, rofi
 2. Installing JetBrains Mono, Awesome Font
-3. Make dwm, dmenu, st, slstatus work
+3. Make dwm, st, slstatus work
 4. Grub Theme
 5. Asus-Linux.org stuff
 -------------------------------------------------------------------------"
@@ -62,7 +62,7 @@ message2_length=${#message2}
 spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
-sudo pacman -Sy --noconfirm --needed wget git libxft libxinerama xorg-xrandr xwallpaper
+sudo pacman -Sy --noconfirm --needed wget git libxft libxinerama xorg-xrandr xwallpaper rofi
 
 #Install necessary stuff
 
@@ -93,7 +93,7 @@ message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 
-message2="Makeing dwm, dmenu, st, slstatus work"
+message2="Makeing dwm, st, slstatus work"
 message2_length=${#message2}
 spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
@@ -103,13 +103,13 @@ git clone https://github.com/DeluxPanda/mydwm.git ~/.config/mydwm
 cd ~/.config/mydwm
 
 # Move directories and install applications
-for app in "dwm" "dmenu" "st" "slstatus"; do
+for app in "dwm" "st" "slstatus"; do
     sudo mv "$app" ~/.config/
     echo "Moving $app"
 done
 
 # Install applications
-for app in "dwm" "dmenu" "st" "slstatus"; do
+for app in "dwm" "st" "slstatus"; do
     cd ~/.config/"$app"
     echo "Installing $app"
     sudo make clean install
