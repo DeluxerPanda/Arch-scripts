@@ -114,6 +114,7 @@ for app in "dwm" "dmenu" "st" "slstatus"; do
     echo "Installing $app"
     sudo make clean install
 done
+cd ~/
 mv ~/.config/mydwm/.xinitrc ~/
 # Remove the cloned repository
 rm -rf ~/.config/mydwm
