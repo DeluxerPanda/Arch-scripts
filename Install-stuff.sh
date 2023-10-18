@@ -26,7 +26,7 @@ printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 
 exit 1
 else
-clear
+
 
 titel_message_length=${#titel_message}
 spaces=$(( (${#separator} - message_length) / 2 ))
@@ -47,7 +47,7 @@ sudo pacman -Suy
 fi
 
 #Install necessary stuff
-clear
+
 titel_message_length=${#titel_message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$titel_message" ""
@@ -65,7 +65,7 @@ spaces=$(( (${#separator} - message2_length) / 2 ))
 sudo pacman -Sy --noconfirm --needed wget git libxft libxinerama
 
 #Install necessary stuff
-clear
+
 titel_message_length=${#titel_message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$titel_message" ""
@@ -83,7 +83,7 @@ spaces=$(( (${#separator} - message2_length) / 2 ))
 sudo pacman -Sy --noconfirm --needed ttf-jetbrains-mono ttf-font-awesome
 
 #Makeing dwm work
-clear
+
 titel_message_length=${#titel_message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$titel_message" ""
@@ -130,7 +130,7 @@ echo "GRUB_THEME=\"${THEME_DIR}/${THEME_NAME}/theme.txt\"" | sudo tee -a /etc/de
 sudo update-grub
 
 #Asus-Linux.org stuff
-clear
+
 titel_message_length=${#titel_message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$titel_message" ""
@@ -152,7 +152,7 @@ echo "[g14]
 Server = https://arch.asus-linux.org" | sudo tee -a /etc/pacman.conf
 sudo pacman -Suy
 
-clear
+
 titel_message_length=${#titel_message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$titel_message" ""
@@ -176,7 +176,7 @@ sudo systemctl enable --now power-profiles-daemon.service
 #Supergfxctl - graphics switching
 sudo systemctl enable --now supergfxd
 
-clear
+
 titel_message_length=${#titel_message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$titel_message" ""
@@ -186,4 +186,4 @@ message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 
-startx
+
