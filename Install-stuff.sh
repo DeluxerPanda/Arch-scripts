@@ -37,13 +37,13 @@ message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 echo -ne "
-1. Installing wget, git, libxft, libxinerama, xrandr, xwallpaper, rofi
+1. Installing wget, git, libxft, libxinerama, xrandr, xwallpaper, rofi, alsa-utils
 2. Installing JetBrains Mono, Awesome Font
 3. Make dwm, st, slstatus work
 4. Grub Theme
 5. Asus-Linux.org stuff
 -------------------------------------------------------------------------"
-sudo pacman -Syu
+sudo pacman -Syu --noconfirm --needed
 fi
 
 #Install necessary stuff
@@ -57,12 +57,12 @@ message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 
-message2="wget, git, libxft, libxinerama, xrandr, xwallpaper"
+message2="wget, git, libxft, libxinerama, xrandr, xwallpaper, rofi, alsa-utils"
 message2_length=${#message2}
 spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
-sudo pacman -Sy --noconfirm --needed wget git libxft libxinerama xorg-xrandr xwallpaper rofi
+sudo pacman -S --noconfirm --needed wget git libxft libxinerama xorg-xrandr xwallpaper rofi alsa-utils
 
 mkdir ~/Bilder/Wallpapers
 mv wallpaper1.jpg ~/Bilder/Wallpapers
