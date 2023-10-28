@@ -64,8 +64,20 @@ spaces=$(( (${#separator} - message2_length) / 2 ))
 
 sudo pacman -S --noconfirm --needed wget git libxft libxinerama xorg-xrandr xwallpaper rofi alsa-utils
 
-mkdir ~/Bilder/Wallpapers
+mkdir -p ~/Bilder/Wallpapers
+
 mv wallpaper1.jpg ~/Bilder/Wallpapers
+
+cp /etc/X11/xinit/xinitrc ~/.xinitrc
+
+echo "
+xrandr --output eDP --scale 0.5x0.5
+xwallpaper --zoom $HOME/Bilder/Wallpapers/wallpaper1.jpg
+xcompmgr &
+slstatus &
+exec dwm
+" | sudo tee -a ~/.xinitrc
+
 #Install necessary stuff
 
 titel_message_length=${#titel_message}
