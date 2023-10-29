@@ -9,10 +9,6 @@ titel_message="
 "
 separator="-------------------------------------------------------------------------"
 
-print_info_message() {
-    print_message "$1"
-}
-
 if [ "$(id -u)" -eq 0 ]; then
 clear
 titel_message_length=${#titel_message}
