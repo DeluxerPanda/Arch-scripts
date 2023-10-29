@@ -112,16 +112,16 @@ spaces=$(( (${#separator} - message2_length) / 2 ))
 # Clone Git repository and move directories
 git clone https://github.com/DeluxPanda/mydwm.git ~/.config/mydwm
 cd ~/.config/mydwm
-
+mkdir suckless
 # Move directories and install applications
 for app in "dwm" "st" "slstatus"; do
-    sudo mv "$app" ~/.config/
+    sudo mv "$app" ~/.config/suckless
     echo "Moving $app"
 done
 
 # Install applications
 for app in "dwm" "st" "slstatus"; do
-    cd ~/.config/"$app"
+    cd ~/.config/suckless/"$app"
     echo "Installing $app"
     sudo make clean install
 done
@@ -157,12 +157,12 @@ message2_length=${#message2}
 spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
-git clone https://aur.archlinux.org/yay.git
+git clone https://aur.archlinux.org/yay.git ~/yay
 cd yay
 makepkg -si -y
 cd ~/
 
-rm -rf yay
+rm -rf ~/yay
 
 startx
 
