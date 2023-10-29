@@ -40,7 +40,6 @@ echo -ne "
 -------------------------------------------------------------------------"
 sudo pacman -Syu --noconfirm --needed
 fi
-sudo mv /etc/pacman.conf.bak /etc/pacman.conf
 sudo cp /etc/pacman.conf /etc/pacman.conf.bak
 #Asus-Linux.org stuff
 
