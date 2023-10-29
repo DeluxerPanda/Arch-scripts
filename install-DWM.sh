@@ -159,7 +159,7 @@ spaces=$(( (${#separator} - message2_length) / 2 ))
 
 git clone https://aur.archlinux.org/yay.git
 cd yay
-makepkg -si
+makepkg -si -y
 cd ~/
 
 rm -rf yay
