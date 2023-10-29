@@ -110,9 +110,9 @@ spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
 # Clone Git repository and move directories
-git clone https://github.com/DeluxPanda/mydwm.git ~/.config/mydwm
-cd ~/.config/mydwm
-mkdir suckless
+git clone https://github.com/DeluxPanda/mydwm.git ~/mydwm
+cd ~/mydwm
+mkdir -p ~/.config/suckless
 # Move directories and install applications
 for app in "dwm" "st" "slstatus"; do
     sudo mv "$app" ~/.config/suckless
@@ -126,9 +126,9 @@ for app in "dwm" "st" "slstatus"; do
     sudo make clean install
 done
 cd ~/
-mv ~/.config/mydwm/.xinitrc ~/
+mv ~/mydwm/.xinitrc ~/
 # Remove the cloned repository
-rm -rf ~/.config/mydwm
+rm -rf ~/mydwm
 
 # Set up custom GRUB2 theme
 sudo chown root:root CyberRe/*
