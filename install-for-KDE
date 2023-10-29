@@ -63,7 +63,7 @@ spaces=$(( (${#separator} - message2_length) / 2 ))
 sudo pacman -S --noconfirm --needed wget
 
 # Set up custom GRUB2 theme
-sudo chmod root:root CyberRe/*
+sudo chown root:root CyberRe/*
 THEME_DIR="/boot/grub/themes"
 THEME_NAME="CyberRe"
 print_info_message "Setting up custom GRUB2 theme"
