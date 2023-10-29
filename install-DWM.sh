@@ -41,7 +41,7 @@ echo -ne "
 2. Installing JetBrains Mono, Awesome Font
 3. Make dwm, st, slstatus work
 4. Grub Theme
-5. Asus-Linux.org stuff
+5. Start DWM
 -------------------------------------------------------------------------"
 sudo pacman -Syu --noconfirm --needed
 fi
