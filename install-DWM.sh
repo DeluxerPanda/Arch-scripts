@@ -38,7 +38,7 @@ spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 echo -ne "
 1. Installing wget, git, libxft, libxinerama, xrandr, xwallpaper, rofi, alsa-utils, base-devel
-2. Installing JetBrains Mono, Awesome Font
+2. Installing JetBrains Mono, Awesome Font, pcmanfm
 3. Make dwm, st, slstatus work
 4. Grub Theme
 5. Installing YAY
@@ -95,7 +95,7 @@ message2_length=${#message2}
 spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
-sudo pacman -Sy --noconfirm --needed ttf-jetbrains-mono ttf-font-awesome
+sudo pacman -Sy --noconfirm --needed ttf-jetbrains-mono ttf-font-awesome pcmanfm
 
 #Makeing dwm work
 
