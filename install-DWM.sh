@@ -9,10 +9,6 @@ titel_message="
 "
 separator="-------------------------------------------------------------------------"
 
-print_info_message() {
-    print_message "$1"
-}
-
 if [ "$(id -u)" -eq 0 ]; then
 clear
 titel_message_length=${#titel_message}
@@ -138,7 +134,6 @@ rm -rf ~/.config/mydwm
 sudo chmod root:root CyberRe/*
 THEME_DIR="/boot/grub/themes"
 THEME_NAME="CyberRe"
-print_info_message "Setting up custom GRUB2 theme"
 sudo mkdir -p "${THEME_DIR}/${THEME_NAME}"
 sudo cp -a "${THEME_NAME}"/* "${THEME_DIR}/${THEME_NAME}"
 sudo cp -an /etc/default/grub /etc/default/grub.bak
