@@ -41,7 +41,8 @@ echo -ne "
 2. Installing JetBrains Mono, Awesome Font
 3. Make dwm, st, slstatus work
 4. Grub Theme
-5. Start DWM
+5. Installing YAY
+6. Start DWM
 -------------------------------------------------------------------------"
 sudo pacman -Syu --noconfirm --needed
 fi
@@ -144,6 +145,30 @@ sudo cp -an /etc/default/grub /etc/default/grub.bak
 sudo sed -i '/GRUB_THEME=/d' /etc/default/grub
 echo "GRUB_THEME=\"${THEME_DIR}/${THEME_NAME}/theme.txt\"" | sudo tee -a /etc/default/grub
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+#Installing YAY
+
+titel_message_length=${#titel_message}
+spaces=$(( (${#separator} - message_length) / 2 ))
+printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$titel_message" ""
+
+message="Installing YAY"
+message_length=${#message}
+spaces=$(( (${#separator} - message_length) / 2 ))
+printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
+
+message2="Makeing YAY work"
+message2_length=${#message2}
+spaces=$(( (${#separator} - message2_length) / 2 ))
+ printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
+
+pacman -S --needed git base-devel
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+cd ~/
+
+rm -rf yay
 
 startx
 
