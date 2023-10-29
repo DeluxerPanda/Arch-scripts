@@ -23,7 +23,6 @@ printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 exit 1
 else
 
-
 titel_message_length=${#titel_message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$titel_message" ""
@@ -33,8 +32,8 @@ message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 echo -ne "
-1. Installing wget, git, libxft, libxinerama, xrandr, xwallpaper, rofi, alsa-utils, base-devel
-2. Installing JetBrains Mono, Awesome Font, pcmanfm
+1. Installing wget, libxft, libxinerama, xrandr, xwallpaper, rofi, alsa-utils, base-devel
+2. Installing JetBrains Mono, Awesome Font, pcmanfm, xarchiver
 3. Make dwm, st, slstatus work
 4. Grub Theme
 5. Installing YAY
@@ -54,7 +53,7 @@ message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 
-message2="wget, git, libxft, libxinerama, xrandr, xwallpaper, rofi, alsa-utils, base-devel"
+message2="wget, libxft, libxinerama, xrandr, xwallpaper, rofi, alsa-utils, base-devel"
 message2_length=${#message2}
 spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
@@ -86,12 +85,12 @@ message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 
-message2="JetBrains Mono, Awesome Font"
+message2="JetBrains Mono, Awesome Font, pcmanfm, xarchiver"
 message2_length=${#message2}
 spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
-sudo pacman -Sy --noconfirm --needed ttf-jetbrains-mono ttf-font-awesome pcmanfm
+sudo pacman -Sy --noconfirm --needed ttf-jetbrains-mono ttf-font-awesome pcmanfm xarchiver
 
 #Makeing dwm work
 
