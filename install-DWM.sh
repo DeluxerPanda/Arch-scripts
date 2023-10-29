@@ -37,7 +37,7 @@ message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 echo -ne "
-1. Installing wget, git, libxft, libxinerama, xrandr, xwallpaper, rofi, alsa-utils
+1. Installing wget, git, libxft, libxinerama, xrandr, xwallpaper, rofi, alsa-utils, base-devel
 2. Installing JetBrains Mono, Awesome Font
 3. Make dwm, st, slstatus work
 4. Grub Theme
@@ -58,12 +58,12 @@ message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 
-message2="wget, git, libxft, libxinerama, xrandr, xwallpaper, rofi, alsa-utils"
+message2="wget, git, libxft, libxinerama, xrandr, xwallpaper, rofi, alsa-utils, base-devel"
 message2_length=${#message2}
 spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
-sudo pacman -S --noconfirm --needed wget git libxft libxinerama xorg-xrandr xwallpaper rofi alsa-utils
+sudo pacman -S --noconfirm --needed wget git libxft libxinerama xorg-xrandr xwallpaper rofi alsa-utils base-devel
 
 mkdir -p ~/Bilder/Wallpapers
 
@@ -162,7 +162,6 @@ message2_length=${#message2}
 spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
-pacman -S --needed git base-devel
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
