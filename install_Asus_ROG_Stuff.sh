@@ -32,7 +32,7 @@ message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 echo -ne "
-1. Asus-Linux.org stuff
+1. Asus-Linux.org stuff and lib32-vulkan-radeon
 -------------------------------------------------------------------------"
 sudo pacman -Syu --noconfirm --needed
 fi
@@ -65,18 +65,19 @@ titel_message_length=${#titel_message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$titel_message" ""
 
-message="Installing from Asus-Linux.org"
+message="Installing from Asus-Linux.org and lib32-vulkan-radeon"
 message_length=${#message}
 spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 
-message2="Asusctl, Supergfxctl, ROG Control Center"
+message2="Asusctl, Supergfxctl, ROG Control Center, lib32-vulkan-radeon"
 message2_length=${#message2}
 spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
 #Installing
-sudo pacman -Sy --noconfirm --needed asusctl supergfxctl rog-control-center
+sudo pacman -Sy --noconfirm --needed asusctl supergfxctl rog-control-center lib32-vulkan-radeon
+
 
 #Asusctl - custom fan profiles, anime, led control etc
 sudo systemctl enable --now power-profiles-daemon.service
