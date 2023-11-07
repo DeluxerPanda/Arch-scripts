@@ -33,7 +33,7 @@ spaces=$(( (${#separator} - message_length) / 2 ))
 printf "%s\n%${spaces}s%s\n%s\n" "$separator" "" "$message" "$separator"
 echo -ne "
 1. Installing wget, libxft, libxinerama, xrandr, xwallpaper, rofi, alsa-utils, base-devel
-2. Installing JetBrains Mono, Awesome Font, pcmanfm, xarchiver
+2. Installing JetBrains Mono, Awesome Font, pcmanfm, xarchiver, xorg-xinit
 3. Make dwm, st, slstatus work
 4. Grub Theme
 5. Installing YAY
@@ -64,7 +64,7 @@ mkdir -p ~/Bilder/Wallpapers
 
 mv wallpaper1.jpg ~/Bilder/Wallpapers
 
-cp /etc/X11/xinit/xinitrc ~/.xinitrc
+cp -f /etc/X11/xinit/xinitrc ~/.xinitrc
 
 echo "
 xrandr --output eDP --scale 0.5x0.5
@@ -90,7 +90,7 @@ message2_length=${#message2}
 spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
-sudo pacman -Sy --noconfirm --needed ttf-jetbrains-mono ttf-font-awesome pcmanfm xarchiver
+sudo pacman -Sy --noconfirm --needed ttf-jetbrains-mono ttf-font-awesome pcmanfm xarchiver xorg-xinit
 
 #Makeing dwm work
 
