@@ -109,8 +109,8 @@ spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
 # Clone Git repository and move directories
-git clone https://github.com/DeluxPanda/mydwm.git ~/mydwm
-cd ~/mydwm
+git clone https://github.com/DeluxPanda/My-DWM.git ~/My-DWM
+cd ~/My-DWM
 mkdir -p ~/.config/suckless
 # Move directories and install applications
 for app in "dwm" "st" "slstatus"; do
@@ -125,9 +125,9 @@ for app in "dwm" "st" "slstatus"; do
     sudo make clean install
 done
 cd ~/
-mv ~/mydwm/.xinitrc ~/
+mv ~/My-DWM/.xinitrc ~/
 # Remove the cloned repository
-rm -rf ~/mydwm
+rm -rf ~/My-DWM
 
 # Set up custom GRUB2 theme
 sudo chown root:root CyberRe/*
@@ -155,11 +155,12 @@ message2="Makeing YAY work"
 message2_length=${#message2}
 spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
-
+ 
 git clone https://aur.archlinux.org/yay.git ~/yay
-cd yay
+cd ~/yay
 makepkg -si -y
 cd ~/
+rm -rf ~/yay
 
 rm -rf ~/yay
 
