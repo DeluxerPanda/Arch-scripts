@@ -109,7 +109,7 @@ spaces=$(( (${#separator} - message2_length) / 2 ))
  printf "%s%${spaces}s%s\n%s\n" "" "" "$message2" "$separator"
 
 # Clone Git repository and move directories
-git clone https://github.com/DeluxPanda/My-DWM.git ~/My-DWM
+git clone https://github.com/DeluxerPanda/My-DWM.git ~/My-DWM
 cd ~/My-DWM
 mkdir -p ~/.config/suckless
 # Move directories and install applications
