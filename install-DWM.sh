@@ -130,6 +130,8 @@ mv ~/My-DWM/.xinitrc ~/
 rm -rf ~/My-DWM
 
 # Set up custom GRUB2 theme
+mv ~/Arch-scripts/CyberRe ~/.config/
+cd ~/.config/CyberRe
 sudo chown root:root CyberRe/*
 THEME_DIR="/boot/grub/themes"
 THEME_NAME="CyberRe"
@@ -139,6 +141,7 @@ sudo cp -an /etc/default/grub /etc/default/grub.bak
 sudo sed -i '/GRUB_THEME=/d' /etc/default/grub
 echo "GRUB_THEME=\"${THEME_DIR}/${THEME_NAME}/theme.txt\"" | sudo tee -a /etc/default/grub
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+cd ~/
 
 #Installing YAY
 
@@ -158,11 +161,11 @@ spaces=$(( (${#separator} - message2_length) / 2 ))
  
 git clone https://aur.archlinux.org/yay.git ~/yay
 cd ~/yay
-makepkg -si -y
+makepkg -si
 cd ~/
 rm -rf ~/yay
 
-rm -rf ~/yay
+rm -rf ~/Arch-scripts
 
 startx
 
