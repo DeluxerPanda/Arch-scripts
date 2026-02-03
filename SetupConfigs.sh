@@ -101,3 +101,6 @@ fi
     GoXLRMini
     clear
     dualGPU
+
+    clear
+    echo "Du kan nu starta om datorn :D"
