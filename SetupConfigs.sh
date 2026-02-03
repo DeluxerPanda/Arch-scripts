@@ -56,35 +56,48 @@ select_option() {
     return $selected
 }
 
-GoXLRMini(){
-clear
+main() {
     sudo pacman -S --noconfirm --needed base-devel git
     git clone https://aur.archlinux.org/yay.git
     cd yay
     makepkg -si
     cd ..
     rm -rf yay
+    yay -S librewolf-bin
+}
 
-    yay -S --sudoloop --noconfirm goxlr-utility
+OpenRazer(){
+if lsusb | grep -q "Razer"; then
+    sudo gpasswd -a $USER plugdev
+    sudo pacman -S --noconfirm -needed openrazer-daemon
+    yay -S --sudoloop --noconfirm -needed razergenie
+if
+}
+
+GoXLRMini(){
+if lsusb | grep -q "GoXLRMini"; then
+    yay -S --sudoloop --noconfirm -needed goxlr-utility
+if
 }
 
 dualGPU(){
-clear
-
-    # Dual GPU setup (AMD + NVIDIA)
-    if lspci | grep -i 'vga' | grep -qi 'Radeon' && lspci | grep -i 'vga' | grep -qi 'nvidia'; then
-        echo "Dual GPU setup detected (AMD + NVIDIA). Setting up quickpassthrough..."
-        sudo pacman -S --needed --noconfirm go
-        git clone https://github.com/HikariKnight/quickpassthrough.git
-        cd quickpassthrough
-        go mod download
-        CGO_ENABLED=0 go build -ldflags="-X github.com/HikariKnight/quickpassthrough/internal/version.Version=$(git rev-parse --short HEAD)" -o quickpassthrough cmd/main.go
-        chmod +x ./quickpassthrough
-        ./quickpassthrough
-        cd "$work_dir"
-        rm -rf quickpassthrough
-    fi
+# Dual GPU setup (AMD + NVIDIA)
+if lspci | grep -i 'vga' | grep -qi 'Radeon' && lspci | grep -i 'vga' | grep -qi 'nvidia'; then
+    echo "Dual GPU setup detected (AMD + NVIDIA). Setting up quickpassthrough..."
+    sudo pacman -S --needed --noconfirm go
+    git clone https://github.com/HikariKnight/quickpassthrough.git
+    cd quickpassthrough
+    go mod download
+    CGO_ENABLED=0 go build -ldflags="-X github.com/HikariKnight/quickpassthrough/internal/version.Version=$(git rev-parse --short HEAD)" -o quickpassthrough cmd/main.go
+    chmod +x ./quickpassthrough
+    ./quickpassthrough
+    cd "$work_dir"
+    rm -rf quickpassthrough
+fi
 }
 
+    main
+    clear
     GoXLRMini
+    clear
     dualGPU
