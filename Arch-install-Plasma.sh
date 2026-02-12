@@ -202,6 +202,8 @@ userinfo () {
 
     while true
     do
+        echo "**OBS! Lösenordet kommer inte att visas när du skriver det, så var noga med att skriva det korrekt.**"
+        echo "**OBS! Använd inte numpadstangenterna just nu!**"
         read -rs -p "Ange lösenord: " PASSWORD1
         echo -ne "\n"
         read -rs -p "Ange lösenord igen: " PASSWORD2
@@ -232,30 +234,9 @@ userinfo () {
     done
     export NAME_OF_MACHINE=$name_of_machine
 }
-grubtheme () {
-    echo -ne "  
-    -----------------------------------------------------------------------
-                        Välj ett grub tema                    
-    -----------------------------------------------------------------------
-    1) Cartoon Girl
-    2) Aesthetic
-    3) inget tema
-    -----------------------------------------------------------------------
-    "
-    options=("Cartoon Girl" "Aesthetic" "inget tema")
-    select_option "${options[@]}"
-    case $? in
-        0)
-        export GRUB_THEME="CartoonGirl";;
-        1)
-        export GRUB_THEME="Aesthetic";;
-        2)
-        export GRUB_THEME="none";;
-        *) echo "Fel alternativ. Försök igen."; grubtheme;;
-    esac                
-}
 
 dualGPU_check () {
+    if lspci | grep -E "NVIDIA|GeForce" >/dev/null && lspci | grep -E "Radeon" >/dev/null; then
         echo -ne "  
     -----------------------------------------------------------------------
                         Välj huvud GPU                    
@@ -264,7 +245,6 @@ dualGPU_check () {
     2) NVIDIA
     -----------------------------------------------------------------------
     "
-    if lspci | grep -E "NVIDIA|GeForce" >/dev/null && lspci | grep -E "Radeon" >/dev/null; then
     options=("Radeon (AMD)" "NVIDIA")
     select_option "${options[@]}"
     case $? in
@@ -277,66 +257,12 @@ dualGPU_check () {
     fi
 }
 
-fastfetch_theme () {
-        echo -ne "  
-    -----------------------------------------------------------------------
-                        Välj ett Fastfetch tema                    
-    -----------------------------------------------------------------------
-    1) Transgender Flagga
-    2) Non-binary Flagga
-    3) inget tema
-    -----------------------------------------------------------------------
-    "
-    options=("Transgender Flag" "Nonbinary Flag" "inget tema")
-    select_option "${options[@]}"
-    case $? in
-        0)
-        export FASTFETCH="Transgender";;
-        1)
-        export FASTFETCH="Nonbinary";;
-        2)
-        export FASTFETCH="none";;
-        *) echo "Fel alternativ. Försök igen."; fastfetch_theme;;
-    esac
-}
-
-starship_theme () {
-        echo -ne "  
-    -----------------------------------------------------------------------
-                        Välj ett Starship tema                    
-    -----------------------------------------------------------------------
-    1) Transgender
-    2) Non-binary
-    3) inget tema
-    -----------------------------------------------------------------------
-    "
-    options=("Transgender Flag" "Nonbinary Flag" "inget tema")
-    select_option "${options[@]}"
-    case $? in
-        0)
-        export STARSHIP="Transgender";;
-        1)
-        export STARSHIP="Nonbinary";;
-        2)
-        export STARSHIP="none";;
-        *) echo "Fel alternativ. Försök igen."; starship_theme;;
-    esac
-}
 
 # Starting functions
 background_checks
 clear
 logo
 userinfo
-clear
-logo
-grubtheme
-clear
-logo
-fastfetch_theme
-clear
-logo
-starship_theme
 clear
 logo
 dualGPU_check
@@ -602,35 +528,7 @@ sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[^"]*/& splash /' /etc/default/grub
 # remove quiet from grub cmdline
 sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)quiet\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1\2"/' /etc/default/grub
 
-# Copy theme
-
-if [ "$GRUB_THEME" == "CartoonGirl" ]; then
-    mkdir -p "/boot/grub/themes/CartoonGirl"
-
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/theme.txt -O /boot/grub/themes/CartoonGirl/theme.txt
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/select_w.png -O /boot/grub/themes/CartoonGirl/select_w.png
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/select_e.png -O /boot/grub/themes/CartoonGirl/select_e.png
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/select_c.png -O /boot/grub/themes/CartoonGirl/select_c.png
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/norwester_22.pf2 -O /boot/grub/themes/CartoonGirl/norwester_22.pf2
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/hackb_18.pf2 -O /boot/grub/themes/CartoonGirl/hackb_18.pf2
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/Cartoon_Girl.png -O /boot/grub/themes/CartoonGirl/Cartoon_Girl.png
-    
-    sed -i 's|^#GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/CartoonGirl/theme.txt"|' /etc/default/grub
-
-elif [ "$GRUB_THEME" == "Aesthetic" ]; then
-    mkdir -p "/boot/grub/themes/Aesthetic"
-
-    wget -p https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/theme.txt -O /boot/grub/themes/Aesthetic/theme.txt
-    wget -p https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/select_w.png -O /boot/grub/themes/Aesthetic/select_w.png
-    wget -p https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/select_e.png -O /boot/grub/themes/Aesthetic/select_e.png
-    wget -p https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/select_c.png -O /boot/grub/themes/Aesthetic/select_c.png
-    wget -p https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/hackb_18.pf2 -O /boot/grub/themes/Aesthetic/hackb_18.pf2
-    wget -p https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/Aesthetic.png -O /boot/grub/themes/Aesthetic/Aesthetic.png
-    
-    sed -i 's|^#GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/Aesthetic/theme.txt"|' /etc/default/grub
-fi
-
-    sed -i '/^GRUB_TIMEOUT=/c\GRUB_TIMEOUT=30' /etc/default/grub
+sed -i '/^GRUB_TIMEOUT=/c\GRUB_TIMEOUT=30' /etc/default/grub
 
 echo -e "Updating grub..."
 
@@ -658,69 +556,15 @@ systemctl disable dhcpcd.service
 echo "  DHCP disabled"
 systemctl enable NetworkManager.service
 echo "  NetworkManager enabled"
-systemctl enable reflector.timer
-echo "  Reflector enabled"
-
 
 #-------------------------------------------------------------------------
-#                    Installation av skrivbordsmiljö och grundläggande paket
+#                    Städa upp
 #-------------------------------------------------------------------------
-
-pacman -Sy --noconfirm
-pacman -S --needed --noconfirm kdeconnect starship bash-completion bat fastfetch btop pavucontrol mpv feh plasma sddm konsole kate dolphin ark nfs-utils nano usbutils gnome-keyring fuse ffmpeg flatpak steam ttf-jetbrains-mono-nerd noto-fonts-emoji gamescope unrar
-
-systemctl enable sddm.service
-echo "  Sddm enabled"
-
-wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O $HOME/.bashrc
-chown $USERNAME:$USERNAME $HOME/.bashrc
 
 mkdir -p $HOME/Desktop
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/SetupConfigs.sh -O $HOME/Desktop/SetupConfigs.sh
 chown -R $USERNAME:$USERNAME $HOME/Desktop
 chmod +x $HOME/Desktop/SetupConfigs.sh
-
-
-if lsusb | grep -q "GoXLRMini"; then
-
-    mkdir -p $HOME/.config/autostart
-
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/scripts/GoXLR_loopback.sh -O $HOME/.config/autostart/GoXLR_loopback.sh
-    chmod +x $HOME/.config/autostart/GoXLR_loopback.sh
-
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_loopback.desktop -O $HOME/.config/autostart/GoXLR_loopback.desktop
-    
-    sed -i "s|^Exec=.*|Exec=$HOME/.config/autostart/GoXLR_loopback.sh|" \
-    "$HOME/.config/autostart/GoXLR_loopback.desktop"
-
-
-    chmod 600 $HOME/.config/autostart/GoXLR_loopback.desktop
-
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_daemon.desktop -O $HOME/.config/autostart/GoXLR_daemon.desktop
-    chmod 600 $HOME/.config/autostart/GoXLR_daemon.desktop
-fi
-
-mkdir -p $HOME/.config/fastfetch
-if [ "$FASTFETCH" == "Transgender" ]; then
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/transgender/config.jsonc -O $HOME/.config/fastfetch/config.jsonc
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/transgender/trans.txt -O $HOME/.config/fastfetch/trans.txt
-elif [ "$FASTFETCH" == "Nonbinary" ]; then
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/nonbinary/config.jsonc -O $HOME/.config/fastfetch/config.jsonc
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/nonbinary/nonbinary.txt -O $HOME/.config/fastfetch/nonbinary.txt
-fi
-
-
-if [ "$STARSHIP" == "Transgender" ]; then
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/transgender/starship.toml -O $HOME/.config/starship.toml
-elif [ "$STARSHIP" == "Nonbinary" ]; then
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/nonbinary/starship.toml -O $HOME/.config/starship.toml
-fi
-
-chown -R $USERNAME:$USERNAME $HOME/.config
-
-#-------------------------------------------------------------------------
-#                    Städa upp
-#-------------------------------------------------------------------------
 
 # Remove no password sudo rights
 sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
