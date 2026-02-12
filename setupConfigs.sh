@@ -225,14 +225,53 @@ setupStarship(){
     case $? in
         0)
             wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/transgender/starship.toml -O $HOME/.config/starship.toml
-        ;;
+            setupStarshipEmoji;;
         1)
             wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/nonbinary/starship.toml -O $HOME/.config/starship.toml
-        ;;
+            setupStarshipEmoji;;
         2) 
             rm $HOME/.config/starship.toml
         ;;
         *) echo "Fel alternativ. Försök igen."; setupStarship;;
+    esac
+}
+
+setupStarshipEmoji(){
+    clear
+        echo -ne "  
+    -----------------------------------------------------------------------
+                        Välj ett Starship Emoji                    
+    -----------------------------------------------------------------------
+    "
+    options=("🐼 (Standard)" "😺" "🐧" "🦄" "🦊" "🦉" "🐝" "🍍")
+    select_option "${options[@]}"
+
+    case $? in
+        0)
+            sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐼](\$style)'|" "$HOME/.config/starship.toml"
+        ;;
+        1)
+            sed -i "s|format = '\[[^]]*\](\$style)'|format = '[😺](\$style)'|" "$HOME/.config/starship.toml"
+        ;;
+        2) 
+            sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐧](\$style)'|" "$HOME/.config/starship.toml"
+        ;;
+        3) 
+            sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦄](\$style)'|" "$HOME/.config/starship.toml"
+        ;;
+        4) 
+            sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦊](\$style)'|" "$HOME/.config/starship.toml"
+        ;;
+        5) 
+            sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦉](\$style)'|" "$HOME/.config/starship.toml"
+        ;;
+        6) 
+            sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐝](\$style)'|" "$HOME/.config/starship.toml"
+        ;;
+        7) 
+            sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🍍](\$style)'|" "$HOME/.config/starship.toml"
+        ;;
+        *) echo "välj ett alternativ. Försök igen."; setupStarshipEmoji;;
     esac
 }
 
