@@ -143,6 +143,7 @@ setupGrub () {
     case $? in
         0)
             sudo mkdir -p "/boot/grub/themes/CartoonGirl"
+            sudo rm -rf /boot/grub/themes/Aesthetic
             sudo wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/theme.txt -O /boot/grub/themes/CartoonGirl/theme.txt
             sudo wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/select_w.png -O /boot/grub/themes/CartoonGirl/select_w.png
             sudo wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/select_e.png -O /boot/grub/themes/CartoonGirl/select_e.png
@@ -154,6 +155,7 @@ setupGrub () {
         ;;
         1)
             sudo mkdir -p "/boot/grub/themes/Aesthetic"
+            sudo rm -rf /boot/grub/themes/CartoonGirl
             sudo wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/theme.txt -O /boot/grub/themes/Aesthetic/theme.txt
             sudo wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/select_w.png -O /boot/grub/themes/Aesthetic/select_w.png
             sudo wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/select_e.png -O /boot/grub/themes/Aesthetic/select_e.png
@@ -162,8 +164,10 @@ setupGrub () {
             sudo wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/Aesthetic.png -O /boot/grub/themes/Aesthetic/Aesthetic.png
             sudo sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/Aesthetic/theme.txt"|' /etc/default/grub
         ;;
-        2) 
-        echo "Inget tema valt";
+        2)
+        sudo rm -rf /boot/grub/themes/CartoonGirl
+        sudo rm -rf /boot/grub/themes/Aesthetic
+        sudo sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME=""|' /etc/default/grub
         ;;
         *) echo "Fel alternativ. Försök igen."; setupGrub;;
     esac
@@ -196,7 +200,7 @@ setupFastfetch(){
             wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/nonbinary/nonbinary.txt -O $HOME/.config/fastfetch/nonbinary.txt
         ;;
         2) 
-        echo "Inget tema valt";
+        rm -rf $HOME/.config/fastfetch/
         ;;
         *) echo "Fel alternativ. Försök igen."; setupFastfetch;;
     esac
@@ -226,7 +230,7 @@ setupStarship(){
             wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/nonbinary/starship.toml -O $HOME/.config/starship.toml
         ;;
         2) 
-        echo "Inget tema valt";
+            rm $HOME/.config/starship.toml
         ;;
         *) echo "Fel alternativ. Försök igen."; setupStarship;;
     esac
