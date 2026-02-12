@@ -69,6 +69,9 @@ main() {
 
     sudo pacman -Sy --noconfirm
     sudo pacman -S --noconfirm --needed base-devel git bash-completion bat btop pavucontrol mpv feh nfs-utils nano usbutils gnome-keyring fuse ffmpeg steam ttf-jetbrains-mono-nerd noto-fonts-emoji gamescope unrar
+if ! [ -x "$(command -v sddm)" ]; then
+sudo systemctl enable sddm.service
+fi
 }
 
 setupEnvironment(){
