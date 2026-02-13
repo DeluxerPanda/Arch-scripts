@@ -68,10 +68,8 @@ main() {
     yay -S --sudoloop --noconfirm --needed librewolf-bin
 
     sudo pacman -Sy --noconfirm
-    sudo pacman -S --noconfirm --needed base-devel git bash-completion bat btop pavucontrol mpv feh nfs-utils nano usbutils gnome-keyring fuse ffmpeg steam ttf-jetbrains-mono-nerd noto-fonts-emoji gamescope unrar
-if ! [ -x "$(command -v sddm)" ]; then
-sudo systemctl enable sddm.service
-fi
+    sudo pacman -S --noconfirm --needed base-devel git bash-completion bat btop pavucontrol mpv feh nfs-utils nano usbutils gnome-keyring fuse ffmpeg steam ttf-jetbrains-mono-nerd noto-fonts-emoji gamescope unrar wget
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O $HOME/.bashrc
 }
 
 setupEnvironment(){
