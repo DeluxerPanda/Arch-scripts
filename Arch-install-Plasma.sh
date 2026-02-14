@@ -446,6 +446,8 @@ ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
 loadkeys sv-latin1
 echo "KEYMAP=sv-latin1" > /etc/vconsole.conf
 echo "XKBLAYOUT=se" >> /etc/vconsole.conf
+echo "LANG=sv_SE.UTF-8" > /etc/locale.conf
+echo "LC_TIME=sv_SE.UTF-8" >> /etc/locale.conf
 
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
