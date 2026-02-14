@@ -106,10 +106,6 @@ function CopyingFiles() {
     mkdir -p ~/Bilder/backgrounds
     wget -O ~/Bilder/backgrounds/wallpaper.jpg "https://lh3.googleusercontent.com/pw/AP1GczNr22gSNbdSNq_08trKdHkkswDq1k2PuefBqriaPp86lshFr10RjFqKQ_phn0187riksWgh-ouqn_6-MkHwVb5nIpyCaiH34WCOIywCis8X39gV3q3Fsy_9HZO-he7gxYnjbt7zulTazkiIj4qxyBjY"
 
-    sudo mkdir -p /mnt/DeluxDrive
-    sudo mkdir -p /mnt/media
-    sudo mkdir -p /mnt/Squizzmallow
-
     # Config files
     mkdir -p ~/.config
     cp "$work_dir/config/starship.toml" ~/.config/
@@ -151,9 +147,12 @@ function buildingPackages() {
     print_message "$titel_message"
     print_message "Bygger och installerar dwm, st"
     
-    cd "$work_dir/dwm"
+
+    git clone https://github.com/DeluxerPanda/dwm.git
+    cd dwm
     sudo make clean install
     cd "$work_dir"
+    rm -rf dwm
 
     git clone https://github.com/DeluxerPanda/st.git
     cd st
