@@ -563,10 +563,8 @@ echo "  NetworkManager enabled"
 #                    Städa upp
 #-------------------------------------------------------------------------
 
-mkdir -p $HOME/Desktop
-wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/setupConfigs.sh -O $HOME/Desktop/setupConfigs.sh
-chown -R $USERNAME:$USERNAME $HOME/Desktop
-chmod +x $HOME/Desktop/setupConfigs.sh
+wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/setupConfigs.sh -O $HOME/setupConfigs.sh
+chmod +x $HOME/setupConfigs.sh
 
 # Remove no password sudo rights
 sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers

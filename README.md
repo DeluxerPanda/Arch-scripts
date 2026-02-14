@@ -5,6 +5,10 @@ Jag tar inget ansvar för eventuella skador, instabilitet eller dataförlust som
 
 > **Viktigt:** Använd endast dessa script om du vet vad du gör
 
+# Arch install
+```bash
+curl -fsSL https://deluxerpanda.se/archsetup | sh
+```
 
 <details>
 <summary style="font-weight: bolder; font-size: 2rem;"> 🎨 GRUB Tema </summary>
