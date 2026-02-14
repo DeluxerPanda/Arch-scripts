@@ -410,8 +410,8 @@ fi
 
 gpu_type=$(lspci | grep -E "VGA|3D|Display")
 mkdir -p /mnt/home/$USERNAME/.config/autostart/
-wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/autostart/setupConfigs.sh -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.sh
-wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/autostart/setupConfigs.desktop -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.desktop
+cp ./setupConfigs.sh -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.sh
+cp ./setupConfigs.desktop -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.desktop
 
     sed -i "s|^Exec=.*|Exec=$HOME/.config/autostart/setupConfigs.sh|" \
     "/mnt/home/$USERNAME/.config/autostart/setupConfigs.desktopp"
