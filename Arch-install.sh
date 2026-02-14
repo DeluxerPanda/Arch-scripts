@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh -e
 
 # Redirect stdout and stderr to archsetup.txt and still output to console
 exec > >(tee -i archsetup.txt)
