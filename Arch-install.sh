@@ -199,7 +199,7 @@ userinfo () {
             echo "ogiltigt användarnamn."
     done
     export USERNAME=$username
-
+    clear
     while true
     do
         echo "**OBS! Lösenordet kommer inte att visas när du skriver det, så var noga med att skriva det korrekt.**"
@@ -409,7 +409,7 @@ if [[  $TOTAL_MEM -lt 8000000 ]]; then
 fi
 
 gpu_type=$(lspci | grep -E "VGA|3D|Display")
-
+mkdir -p /mnt/home/$USERNAME/.config/autostart/
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/autostart/setupConfigs.sh -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.sh
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/autostart/setupConfigs.desktop -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.desktop
 
