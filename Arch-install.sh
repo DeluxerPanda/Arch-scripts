@@ -410,6 +410,17 @@ fi
 
 gpu_type=$(lspci | grep -E "VGA|3D|Display")
 
+wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/autostart/setupConfigs.sh -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.sh
+wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/autostart/setupConfigs.desktop -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.desktop
+
+    sed -i "s|^Exec=.*|Exec=$HOME/.config/autostart/setupConfigs.sh|" \
+    "/mnt/home/$USERNAME/.config/autostart/setupConfigs.desktopp"
+
+chmod +x /mnt/home/$USERNAME/.config/autostart/setupConfigs.sh
+chown $USERNAME:$USERNAME /mnt/home/$USERNAME/.config/autostart/setupConfigs.sh
+chmod +x /mnt/home/$USERNAME/.config/autostart/setupConfigs.desktop
+chown $USERNAME:$USERNAME /mnt/home/$USERNAME/.config/autostart/setupConfigs.desktop
+
 arch-chroot /mnt /bin/bash <<EOF
 
 
@@ -562,9 +573,6 @@ echo "  NetworkManager enabled"
 #-------------------------------------------------------------------------
 #                    Städa upp
 #-------------------------------------------------------------------------
-
-wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/setupConfigs.sh -O $HOME/setupConfigs.sh
-chmod +x $HOME/setupConfigs.sh
 
 # Remove no password sudo rights
 sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
