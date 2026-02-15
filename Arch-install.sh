@@ -267,10 +267,11 @@ setupGrub () {
     -----------------------------------------------------------------------
     1) Cartoon Girl
     2) Aesthetic
-    3) inget tema
+    3) Fallout
+    4) inget tema
     -----------------------------------------------------------------------
     "
-    options=("Cartoon Girl" "Aesthetic" "inget tema")
+    options=("Cartoon Girl" "Aesthetic" "Fallout" "inget tema")
     select_option "${options[@]}"
     case $? in
         0)
