@@ -58,7 +58,7 @@ select_option() {
 
 main() {
     sudo pacman -S --noconfirm --needed base-devel git
-    if ! [ -x "$(command -v git)" ]; then
+    if ! [ -x "$(command -v yay)" ]; then
     git clone https://aur.archlinux.org/yay.git
     cd yay
     makepkg -si
@@ -141,6 +141,7 @@ resetToNormal(){
 #-------------------------------------------------------------------------
 #                    Städa upp
 #-------------------------------------------------------------------------
+mv $HOME/.bash_profile_new $HOME/.bash_profile
 
 # Remove no password sudo rights
 sudo sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
@@ -148,8 +149,6 @@ sudo sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASS
 # Add sudo rights
 sudo sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 sudo sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
-
-mv $HOME/.bash_profile_new $HOME/.bash_profile
 }
 
 OpenRazer() {
