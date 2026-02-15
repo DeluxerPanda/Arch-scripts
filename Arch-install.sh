@@ -552,7 +552,7 @@ echo -ne "
 "
 
 runuser -l "$USERNAME" -c '
-cd $HOME
+cd /home/$USERNAME
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
 makepkg --noconfirm -si
@@ -567,21 +567,21 @@ fi
 if lsusb | grep -q "GoXLRMini"; then
     yay -S --sudoloop --noconfirm --needed goxlr-utility
 
-    mkdir -p $HOME/.config/autostart
+    mkdir -p /home/$USERNAME/.config/autostart
 
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/scripts/GoXLR_loopback.sh -O $HOME/.config/autostart/GoXLR_loopback.sh
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_loopback.desktop -O $HOME/.config/autostart/GoXLR_loopback.desktop
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_daemon.desktop -O $HOME/.config/autostart/GoXLR_daemon.desktop
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/scripts/GoXLR_loopback.sh -O /home/$USERNAME/.config/autostart/GoXLR_loopback.sh
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_loopback.desktop -O /home/$USERNAME/.config/autostart/GoXLR_loopback.desktop
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_daemon.desktop -O /home/$USERNAME/.config/autostart/GoXLR_daemon.desktop
 
-    chmod +x $HOME/.config/autostart/GoXLR_loopback.sh
-    chmod 600 $HOME/.config/autostart/GoXLR_loopback.desktop
-    chmod 600 $HOME/.config/autostart/GoXLR_daemon.desktop
+    chmod +x /home/$USERNAME/.config/autostart/GoXLR_loopback.sh
+    chmod 600 /home/$USERNAME/.config/autostart/GoXLR_loopback.desktop
+    chmod 600 /home/$USERNAME/.config/autostart/GoXLR_daemon.desktop
 
-    sed -i "s|^Exec=.*|Exec=$HOME/.config/autostart/GoXLR_loopback.sh|" \
-    "$HOME/.config/autostart/GoXLR_loopback.desktop"
+    sed -i "s|^Exec=.*|Exec=/home/$USERNAME/.config/autostart/GoXLR_loopback.sh|" \
+    "/home/$USERNAME/.config/autostart/GoXLR_loopback.desktop"
 fi
 
-wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O $HOME/.bashrc
+wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O /home/$USERNAME/.bashrc
 
 xdg-user-dirs-update --force
 '
