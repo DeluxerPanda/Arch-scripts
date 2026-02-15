@@ -547,11 +547,11 @@ cd ..
 rm -rf yay-bin
 yay -S --sudoloop --noconfirm --needed librewolf-bin
 
-if [[ lsusb | grep -q "Razer" ]]; then
+if lsusb | grep -q "Razer"; then
     yay -S --sudoloop --noconfirm --needed razergenie
 fi
 
-if [[ lsusb | grep -q "GoXLRMini" ]]; then
+if lsusb | grep -q "GoXLRMini"; then
     yay -S --sudoloop --noconfirm --needed goxlr-utility
 
     mkdir -p $HOME/.config/autostart
