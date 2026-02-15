@@ -412,10 +412,11 @@ gpu_type=$(lspci | grep -E "VGA|3D|Display")
 
 arch-chroot /mnt /bin/bash <<EOF
 
-
-#-------------------------------------------------------------------------
-#                    Nätverksinställningar
-#-------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
+                     Nätverksinställningar
+-------------------------------------------------------------------------
+"
 
 pacman -S --noconfirm --needed networkmanager
 systemctl enable NetworkManager
@@ -431,9 +432,11 @@ sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j$nc\"/g" /etc/makepkg.conf
 sed -i "s/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T $nc -z -)/g" /etc/makepkg.conf
 fi
 
-#-------------------------------------------------------------------------
-#                    Sätter upp språk
-#-------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
+                     Sätter upp språk
+-------------------------------------------------------------------------
+"
 
 sed -i 's/^#sv_SE.UTF-8 UTF-8/sv_SE.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
@@ -463,10 +466,11 @@ sed -i 's/^#Color/Color\nILoveCandy/' /etc/pacman.conf
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 pacman -Sy --noconfirm --needed
 
-
-#-------------------------------------------------------------------------
-#                    Installerar Microcode
-#-------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
+                     Installerar Microcode
+-------------------------------------------------------------------------
+"
 
 # determine processor type and install microcode
 if grep -q "GenuineIntel" /proc/cpuinfo; then
@@ -479,10 +483,11 @@ else
     echo "Unable to determine CPU vendor. Skipping microcode installation."
 fi
 
-
-#-------------------------------------------------------------------------
-#                    Installera grafikdrivrutiner
-#-------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
+                     Installera grafikdrivrutiner
+-------------------------------------------------------------------------
+"
 
 # Graphics Drivers find and install
 if [[ "$DUALGPU" == "AMD" ]]; then
@@ -500,14 +505,16 @@ elif echo "${gpu_type}" | grep 'VGA' | grep -E "Radeon"; then
     wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/X11/20-amdgpu.conf -O /etc/X11/xorg.conf.d/20-amdgpu.conf
 fi
 
-
-#-------------------------------------------------------------------------
-#                    Lägger till användare
-#-------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
+                     Lägger till användare
+-------------------------------------------------------------------------
+"
 
 groupadd libvirt
-useradd -m -G wheel,libvirt -s /bin/bash $USERNAME
-echo "$USERNAME created, home directory created, added to wheel and libvirt group, default shell set to /bin/bash"
+groupadd plugdev
+useradd -m -G wheel,libvirt,plugdev -s /bin/bash $USERNAME
+echo "$USERNAME created, home directory created, added to wheel, libvirt and plugdev group, default shell set to /bin/bash"
 echo "$USERNAME:$PASSWORD" | chpasswd
 echo "$USERNAME password set"
 echo $NAME_OF_MACHINE > /etc/hostname
@@ -519,10 +526,11 @@ if [[ -d "/sys/firmware/efi" ]]; then
     grub-install --efi-directory=/boot ${DISK} --removable
 fi
 
-#-------------------------------------------------------------------------
-#              Skapa Grub-startmenyn
-#-------------------------------------------------------------------------
-
+echo -ne "
+-------------------------------------------------------------------------
+               Skapa Grub-startmenyn
+-------------------------------------------------------------------------
+"
 
 # set kernel parameter for adding splash screen
 sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[^"]*/& splash /' /etc/default/grub
@@ -545,11 +553,11 @@ fi
 
     echo -e "All set!"
 
-
-
-#-------------------------------------------------------------------------
-#                    Aktivera viktiga tjänster
-#-------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
+                     Aktivera viktiga tjänster
+-------------------------------------------------------------------------
+"
 
 ntpd -qg
 systemctl enable ntpd.service
@@ -559,12 +567,11 @@ echo "  DHCP disabled"
 systemctl enable NetworkManager.service
 echo "  NetworkManager enabled"
 
-#-------------------------------------------------------------------------
-#                    Städa upp
-#-------------------------------------------------------------------------
-
-wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/setupConfigs.sh -O $HOME/setupConfigs.sh
-chmod +x $HOME/setupConfigs.sh
+echo -ne "
+-------------------------------------------------------------------------
+                    Städa upp
+-------------------------------------------------------------------------
+"
 
 # Remove no password sudo rights
 sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
