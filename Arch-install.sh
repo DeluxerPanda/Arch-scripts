@@ -259,12 +259,41 @@ dualGPU_check () {
     fi
 }
 
+setupGrub () {
+    clear
+    echo -ne "  
+    -----------------------------------------------------------------------
+                        Välj ett grub tema                    
+    -----------------------------------------------------------------------
+    1) Cartoon Girl
+    2) Aesthetic
+    3) inget tema
+    -----------------------------------------------------------------------
+    "
+    options=("Cartoon Girl" "Aesthetic" "inget tema")
+    select_option "${options[@]}"
+    case $? in
+        0)
+            export GRUBTHEME="CartoonGirl";;
+        1)
+            export GRUBTHEME="Aesthetic";;
+        2)
+            export GRUBTHEME="fallout";;
+        3)
+            export GRUBTHEME="none";;
+        *) echo "Fel alternativ. Försök igen."; setupGrub;;
+    esac
+}
+
 
 # Starting functions
 background_checks
 clear
 logo
 userinfo
+clear
+logo
+setupGrub
 clear
 logo
 dualGPU_check
@@ -545,12 +574,6 @@ fi
 mkdir -p /home/$USERNAME
 chown $USERNAME:$USERNAME /home/$USERNAME
 
-echo -ne "
--------------------------------------------------------------------------
-                     Temp text
--------------------------------------------------------------------------
-"
-
 runuser -l "$USERNAME" -c '
 cd /home/$USERNAME
 git clone https://aur.archlinux.org/yay-bin.git
@@ -605,6 +628,34 @@ sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[^"]*/& splash /' /etc/default/grub
 sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)quiet\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1\2"/' /etc/default/grub
 
 sed -i '/^GRUB_TIMEOUT=/c\GRUB_TIMEOUT=30' /etc/default/grub
+
+
+
+if [[ "$GRUBTHEME" == "CartoonGirl" ]]; then
+        mkdir -p "/boot/grub/themes/CartoonGirl"
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/theme.txt -O /boot/grub/themes/CartoonGirl/theme.txt
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/select_w.png -O /boot/grub/themes/CartoonGirl/select_w.png
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/select_e.png -O /boot/grub/themes/CartoonGirl/select_e.png
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/select_c.png -O /boot/grub/themes/CartoonGirl/select_c.png
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/norwester_22.pf2 -O /boot/grub/themes/CartoonGirl/norwester_22.pf2
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/hackb_18.pf2 -O /boot/grub/themes/CartoonGirl/hackb_18.pf2
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/Cartoon_Girl.png -O /boot/grub/themes/CartoonGirl/Cartoon_Girl.png
+        sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/CartoonGirl/theme.txt"|' /etc/default/grub
+elif [[ "$GRUBTHEME" == "Aesthetic" ]]; then
+        mkdir -p "/boot/grub/themes/Aesthetic"
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/theme.txt -O /boot/grub/themes/Aesthetic/theme.txt
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/select_w.png -O /boot/grub/themes/Aesthetic/select_w.png
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/select_e.png -O /boot/grub/themes/Aesthetic/select_e.png
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/select_c.png -O /boot/grub/themes/Aesthetic/select_c.png
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/hackb_18.pf2 -O /boot/grub/themes/Aesthetic/hackb_18.pf2
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/Aesthetic.png -O /boot/grub/themes/Aesthetic/Aesthetic.png
+        sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/Aesthetic/theme.txt"|' /etc/default/grub
+elif [[ "$GRUBTHEME" == "fallout" ]]; then
+        mkdir -p "/boot/grub/themes/fallout"
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/fallout/theme.txt -O /boot/grub/themes/fallout/theme.txt
+        sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/fallout/theme.txt"|' /etc/default/grub
+fi
+
 
 echo -e "Updating grub..."
 
