@@ -693,3 +693,10 @@ cp ./setupConfigs.sh /mnt/home/$USERNAME/.bash_profile
 
 clear
 logo
+echo -ne "
+-------------------------------------------------------------------------
+                     Installation klar!
+-------------------------------------------------------------------------
+Du kan nu starta om datorn och logga in på ditt nya Arch Linux-system!
+-------------------------------------------------------------------------
+"
