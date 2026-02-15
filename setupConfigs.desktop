@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Application
-Exec=$HOME/.config/autostart/GoXLR_loopback.sh
-Hidden=false
-NoDisplay=false
-X-GNOME-Autostart-enabled=true
-Name=Setup Configs
-Comment=Run setupConfigs.sh at login
