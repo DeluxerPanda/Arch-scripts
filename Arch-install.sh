@@ -569,7 +569,7 @@ echo "  NetworkManager enabled"
 
 echo -ne "
 -------------------------------------------------------------------------
-                    Städa upp
+                     Städa upp
 -------------------------------------------------------------------------
 "
 
@@ -580,3 +580,10 @@ sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: A
 sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 EOF
+clear
+logo
+echo -ne "
+-------------------------------------------------------------------------
+                     Installation klar!
+-------------------------------------------------------------------------
+"
