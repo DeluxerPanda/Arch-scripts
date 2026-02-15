@@ -57,20 +57,20 @@ select_option() {
 }
 
 main() {
+    sudo pacman -Sy --noconfirm
+
     sudo pacman -S --noconfirm --needed base-devel git
+    
     if ! [ -x "$(command -v yay)" ]; then
-    git clone https://aur.archlinux.org/yay.git
+    git clone https://aur.archlinux.org/yay-bin.git
     cd yay
-    makepkg -si
+    makepkg --noconfirm -si
     cd ..
     rm -rf yay
     fi
+
     yay -S --sudoloop --noconfirm --needed librewolf-bin
 
-    sudo pacman -Sy --noconfirm
-
-    sudo pacman -S --noconfirm --needed base-devel
-    sudo pacman -S --noconfirm --needed git
     sudo pacman -S --noconfirm --needed bash-completion
     sudo pacman -S --noconfirm --needed nfs-utils
     sudo pacman -S --noconfirm --needed usbutils
@@ -138,17 +138,7 @@ setupEnvironment(){
 }
 
 resetToNormal(){
-#-------------------------------------------------------------------------
-#                    Städa upp
-#-------------------------------------------------------------------------
 mv $HOME/.bash_profile_new $HOME/.bash_profile
-
-# Remove no password sudo rights
-sudo sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
-sudo sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
-# Add sudo rights
-sudo sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
-sudo sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 }
 
 OpenRazer() {
