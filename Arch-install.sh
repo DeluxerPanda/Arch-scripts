@@ -513,7 +513,7 @@ fi
 #                    Lägger till användare
 #-------------------------------------------------------------------------
 
-groupadd libvirt
+groupadd libvirt plugdev
 useradd -m -G wheel,libvirt,plugdev -s /bin/bash $USERNAME
 echo "$USERNAME created, home directory created, added to wheel and libvirt and plugdev group, default shell set to /bin/bash"
 echo "$USERNAME:$PASSWORD" | chpasswd
@@ -534,7 +534,7 @@ if lsusb | grep -q "Razer"; then
     sudo pacman -S --noconfirm --needed openrazer-daemon
 fi
 
-su - "$USERNAME" -c "
+runuser -l "$USERNAME" -c "
 cd ~
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
