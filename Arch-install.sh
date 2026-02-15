@@ -200,6 +200,7 @@ userinfo () {
     done
     export USERNAME=$username
     clear
+    logo
     while true
     do
         echo "**OBS! Lösenordet kommer inte att visas när du skriver det, så var noga med att skriva det korrekt.**"
