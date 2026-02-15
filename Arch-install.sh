@@ -414,11 +414,11 @@ gpu_type=$(lspci | grep -E "VGA|3D|Display")
 
 arch-chroot /mnt /bin/bash <<EOF
 
-
-#-------------------------------------------------------------------------
-#                    Nätverksinställningar
-#-------------------------------------------------------------------------
-
+echo -ne "
+-------------------------------------------------------------------------
+                     Nätverksinställningar
+-------------------------------------------------------------------------
+"
 pacman -S --noconfirm --needed networkmanager
 systemctl enable NetworkManager
 
@@ -433,9 +433,11 @@ sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j$nc\"/g" /etc/makepkg.conf
 sed -i "s/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T $nc -z -)/g" /etc/makepkg.conf
 fi
 
-#-------------------------------------------------------------------------
-#                    Sätter upp språk
-#-------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
+                     Sätter upp språk
+-------------------------------------------------------------------------
+"
 
 # Enable locales
 sed -i 's/^#sv_SE.UTF-8 UTF-8/sv_SE.UTF-8 UTF-8/' /etc/locale.gen
@@ -471,10 +473,11 @@ sed -i 's/^#Color/Color\nILoveCandy/' /etc/pacman.conf
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 pacman -Sy --noconfirm --needed
 
-
-#-------------------------------------------------------------------------
-#                    Installerar Microcode
-#-------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
+                     Installerar Microcode
+-------------------------------------------------------------------------
+"
 
 # determine processor type and install microcode
 if grep -q "GenuineIntel" /proc/cpuinfo; then
@@ -487,10 +490,11 @@ else
     echo "Unable to determine CPU vendor. Skipping microcode installation."
 fi
 
-
-#-------------------------------------------------------------------------
-#                    Installera grafikdrivrutiner
-#-------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
+                     Installera grafikdrivrutiner
+-------------------------------------------------------------------------
+"
 
 # Graphics Drivers find and install
 if [[ "$DUALGPU" == "AMD" ]]; then
@@ -508,10 +512,11 @@ elif echo "${gpu_type}" | grep 'VGA' | grep -E "Radeon"; then
     wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/X11/20-amdgpu.conf -O /etc/X11/xorg.conf.d/20-amdgpu.conf
 fi
 
-
-#-------------------------------------------------------------------------
-#                    Lägger till användare
-#-------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
+                     Lägger till användare
+-------------------------------------------------------------------------
+"
 
 groupadd libvirt
 groupadd plugdev
@@ -520,10 +525,12 @@ echo "$USERNAME created, home directory created, added to wheel and libvirt and 
 echo "$USERNAME:$PASSWORD" | chpasswd
 echo "$USERNAME password set"
 echo $NAME_OF_MACHINE > /etc/hostname
-
-#-------------------------------------------------------------------------
-#                    setup Environment
-#-------------------------------------------------------------------------
+ 
+echo -ne "
+-------------------------------------------------------------------------
+                     setup Environment
+-------------------------------------------------------------------------
+"
 
 pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire
 pacman -S --noconfirm --needed pavucontrol mpv sddm
@@ -531,16 +538,18 @@ pacman -S --noconfirm --needed steam gamescope
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
 pacman -S --noconfirm --needed unrar unzip xdg-user-dirs
 
-if [[ lsusb | grep -q "Razer" ]]; then
+if lsusb | grep -q "Razer"; then
     sudo pacman -S --noconfirm --needed openrazer-daemon
 fi
 
 mkdir -p /home/$USERNAME
 chown $USERNAME:$USERNAME /home/$USERNAME
 
-#-------------------------------------------------------------------------
-#                    Temp text
-#-------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
+                     Temp text
+-------------------------------------------------------------------------
+"
 
 runuser -l "$USERNAME" -c '
 cd $HOME
@@ -576,10 +585,11 @@ wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main
 
 xdg-user-dirs-update --force
 '
-
-#-------------------------------------------------------------------------
-#              Skapa Grub-startmenyn
-#-------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
+               Skapa Grub-startmenyn
+-------------------------------------------------------------------------
+"
 
 # Final Setup and Configurations
 # GRUB EFI Bootloader Install & Check
@@ -610,10 +620,11 @@ fi
     echo -e "All set!"
 
 
-
-#-------------------------------------------------------------------------
-#                    Aktivera viktiga tjänster
-#-------------------------------------------------------------------------
+echo -ne "
+-------------------------------------------------------------------------
+                     Aktivera viktiga tjänster
+-------------------------------------------------------------------------
+"
 
 ntpd -qg
 systemctl enable ntpd.service
@@ -629,9 +640,12 @@ if lsusb | grep -q "Razer"; then
     sudo systemctl enable openrazer-daemon
     echo "  openrazer enabled"
 fi
-#-------------------------------------------------------------------------
-#                    Städa upp
-#-------------------------------------------------------------------------
+
+echo -ne "
+-------------------------------------------------------------------------
+                     Städa upp
+-------------------------------------------------------------------------
+"
 
 # Remove no password sudo rights
 sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
