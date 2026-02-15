@@ -531,15 +531,15 @@ pacman -S --noconfirm --needed steam gamescope
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
 pacman -S --noconfirm --needed unrar unzip xdg-user-dirs
 
-if lsusb | grep -q "Razer"; then
+if [[ lsusb | grep -q "Razer" ]]; then
     sudo pacman -S --noconfirm --needed openrazer-daemon
 fi
 
 mkdir -p /home/$USERNAME
 chown $USERNAME:$USERNAME /home/$USERNAME
 
-runuser -l "$USERNAME" -c "
-cd ~
+runuser -l "$USERNAME" -c '
+cd $HOME
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
 makepkg --noconfirm -si
@@ -547,31 +547,31 @@ cd ..
 rm -rf yay-bin
 yay -S --sudoloop --noconfirm --needed librewolf-bin
 
-if lsusb | grep -q "Razer"; then
+if [[ lsusb | grep -q "Razer" ]]; then
     yay -S --sudoloop --noconfirm --needed razergenie
 fi
 
-if lsusb | grep -q "GoXLRMini"; then
+if [[ lsusb | grep -q "GoXLRMini" ]]; then
     yay -S --sudoloop --noconfirm --needed goxlr-utility
 
-    mkdir -p ~/.config/autostart
+    mkdir -p $HOME/.config/autostart
 
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/scripts/GoXLR_loopback.sh -O ~/.config/autostart/GoXLR_loopback.sh
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_loopback.desktop -O ~/.config/autostart/GoXLR_loopback.desktop
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_daemon.desktop -O ~/.config/autostart/GoXLR_daemon.desktop
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/scripts/GoXLR_loopback.sh -O $HOME/.config/autostart/GoXLR_loopback.sh
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_loopback.desktop -O $HOME/.config/autostart/GoXLR_loopback.desktop
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_daemon.desktop -O $HOME/.config/autostart/GoXLR_daemon.desktop
 
-    chmod +x ~/.config/autostart/GoXLR_loopback.sh
-    chmod 600 ~/.config/autostart/GoXLR_loopback.desktop
-    chmod 600 ~/.config/autostart/GoXLR_daemon.desktop
+    chmod +x $HOME/.config/autostart/GoXLR_loopback.sh
+    chmod 600 $HOME/.config/autostart/GoXLR_loopback.desktop
+    chmod 600 $HOME/.config/autostart/GoXLR_daemon.desktop
 
     sed -i "s|^Exec=.*|Exec=$HOME/.config/autostart/GoXLR_loopback.sh|" \
     "$HOME/.config/autostart/GoXLR_loopback.desktop"
 fi
 
-wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O ~/.bashrc
+wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O $HOME/.bashrc
 
 xdg-user-dirs-update --force
-"
+'
 
 #-------------------------------------------------------------------------
 #              Skapa Grub-startmenyn
