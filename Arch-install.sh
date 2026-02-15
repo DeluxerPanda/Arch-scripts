@@ -133,24 +133,6 @@ echo -ne "
 "
 }
 
-# @description Choose whether drive is SSD or not.
-drivessd () {
-    echo -ne "
-    Är detta en solid state-disk (SSD) eller hårddisk (HDD)?
-    "
-
-    options=("SSD" "HDD")
-    select_option "${options[@]}"
-
-    case $? in
-        0)
-        export MOUNT_OPTIONS="noatime,compress=zstd,ssd,commit=120";;
-        1)
-        export MOUNT_OPTIONS="noatime,compress=zstd,commit=120";;
-        *) echo "Fel alternativ. Försök igen."; drivessd;;
-    esac
-}
-
 # @description Disk selection for drive to be used with installation.
 diskpart () {
 echo -ne "
@@ -182,8 +164,6 @@ echo -ne "
 
     echo -e "\n${disk%|*} selected \n"
         export DISK=${disk%|*}
-
-    drivessd
 }
 
 # @description Gather username and password to be used for installation.
@@ -350,7 +330,7 @@ createsubvolumes () {
 
 # @description Mount all btrfs subvolumes after root has been mounted.
 mountallsubvol () {
-    mount -o "${MOUNT_OPTIONS}",subvol=@home "${partition3}" /mnt/home
+    mount -o noatime,compress=zstd,ssd,commit=120,subvol=@home "${partition3}" /mnt/home
 }
 
 # @description BTRFS subvolulme creation and mounting.
@@ -360,7 +340,7 @@ subvolumesetup () {
 # unmount root to remount with subvolume
     umount /mnt
 # mount @ subvolume
-    mount -o "${MOUNT_OPTIONS}",subvol=@ "${partition3}" /mnt
+    mount -o noatime,compress=zstd,ssd,commit=120,subvol=@ "${partition3}" /mnt
 # make directories home, .snapshots, var, tmp
     mkdir -p /mnt/home
 # mount subvolumes
