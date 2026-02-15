@@ -575,3 +575,6 @@ EOF
 
 cp ./bash_profile /mnt/home/$USERNAME/.bash_profile
 cp ./setupConfigs.sh /mnt/home/$USERNAME/setupConfigs.sh
+
+clear
+logo
