@@ -411,16 +411,6 @@ fi
 
 gpu_type=$(lspci | grep -E "VGA|3D|Display")
 
-    mkdir -p /mnt/home/$USERNAME/.config/autostart/
-    cp ./setupConfigs.sh -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.sh
-    cp ./setupConfigs.desktop -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.desktop
-
-    sed -i "s|^Exec=.*|Exec=$HOME/.config/autostart/setupConfigs.sh|" \
-    "/mnt/home/$USERNAME/.config/autostart/setupConfigs.desktopp"
-
-    chmod +x /mnt/home/$USERNAME/.config/autostart/setupConfigs.sh
-    chmod +x /mnt/home/$USERNAME/.config/autostart/setupConfigs.desktop
-
 arch-chroot /mnt /bin/bash <<EOF
 
 
@@ -581,3 +571,5 @@ sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: A
 sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 EOF
+
+cp ./setupConfigs.sh -O /mnt/home/$USERNAME/setupConfigs.sh
