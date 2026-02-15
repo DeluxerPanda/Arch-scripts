@@ -560,21 +560,9 @@ systemctl disable dhcpcd.service
 echo "  DHCP disabled"
 systemctl enable NetworkManager.service
 echo "  NetworkManager enabled"
-
-#-------------------------------------------------------------------------
-#                    Städa upp
-#-------------------------------------------------------------------------
-
-# Remove no password sudo rights
-sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
-sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
-# Add sudo rights
-sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
-sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 EOF
 
-cp ./bash_profile /mnt/home/$USERNAME/.bash_profile
-cp ./setupConfigs.sh /mnt/home/$USERNAME/setupConfigs.sh
+cp ./setupConfigs.sh /mnt/home/$USERNAME/.bash_profile
 
 clear
 logo

@@ -87,12 +87,29 @@ setupEnvironment(){
         0)
         sudo pacman -S --needed --noconfirm kdeconnect plasma sddm konsole kate dolphin ark flatpak
         sudo systemctl enable sddm.service
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O $HOME/.bashrc
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/bash_profile/plasma -O $HOME/.bash_profile_new
         ;;
         1) 
-        echo "Kommer snart. Försök igen."; setupEnvironment;;
+        echo "Kommer snart. Försök igen."; 
+       # wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/bash_profile/DWM -O $HOME/.bash_profile_new
+        setupEnvironment;;
         *) echo "Fel alternativ. Försök igen."; setupEnvironment;;
     esac
+}
+
+resetToNormal(){
+#-------------------------------------------------------------------------
+#                    Städa upp
+#-------------------------------------------------------------------------
+
+# Remove no password sudo rights
+sudo sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+sudo sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
+# Add sudo rights
+sudo sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+sudo sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+
+mv $HOME/.bash_profile_new $HOME/.bash_profile
 }
 
 OpenRazer() {
@@ -291,10 +308,6 @@ fi
 
     main
     clear
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-    setupEnvironment
-fi
-    clear
     OpenRazer
     clear
     GoXLRMini
@@ -307,4 +320,9 @@ fi
     clear
     dualGPU
     clear
+    if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+    setupEnvironment
+    resetToNormal
+    reboot
+    fi
     echo "Du kan nu starta om datorn :D"
