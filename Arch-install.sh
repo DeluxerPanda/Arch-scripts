@@ -216,7 +216,8 @@ userinfo () {
         fi
     done
     export PASSWORD=$PASSWORD1
-
+    clear
+    logo
      # Loop through user input until the user gives a valid hostname, but allow the user to force save
     while true
     do
@@ -571,5 +572,6 @@ sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: A
 sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 EOF
-cp ./bash_profile -O /mnt/home/$USERNAME/.bash_profile
-cp ./setupConfigs.sh -O /mnt/home/$USERNAME/setupConfigs.sh
+
+cp ./bash_profile /mnt/home/$USERNAME/.bash_profile
+cp ./setupConfigs.sh /mnt/home/$USERNAME/setupConfigs.sh
