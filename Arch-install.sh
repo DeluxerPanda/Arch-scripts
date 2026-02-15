@@ -538,6 +538,10 @@ fi
 mkdir -p /home/$USERNAME
 chown $USERNAME:$USERNAME /home/$USERNAME
 
+#-------------------------------------------------------------------------
+#                    Temp text
+#-------------------------------------------------------------------------
+
 runuser -l "$USERNAME" -c '
 cd $HOME
 git clone https://aur.archlinux.org/yay-bin.git
