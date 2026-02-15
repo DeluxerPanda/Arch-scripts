@@ -437,17 +437,23 @@ fi
 #                    Sätter upp språk
 #-------------------------------------------------------------------------
 
+# Enable locales
 sed -i 's/^#sv_SE.UTF-8 UTF-8/sv_SE.UTF-8 UTF-8/' /etc/locale.gen
+sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
+
+# Time & locale
 timedatectl --no-ask-password set-timezone Europe/Stockholm
 timedatectl --no-ask-password set-ntp 1
 localectl --no-ask-password set-locale LANG="sv_SE.UTF-8" LC_TIME="sv_SE.UTF-8"
-ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
+ln -sf /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
 
-# Set keymaps
+# Console & keyboard
 loadkeys sv-latin1
 echo "KEYMAP=sv-latin1" > /etc/vconsole.conf
 echo "XKBLAYOUT=se" >> /etc/vconsole.conf
+
+# Default locale
 echo "LANG=sv_SE.UTF-8" > /etc/locale.conf
 echo "LC_TIME=sv_SE.UTF-8" >> /etc/locale.conf
 
@@ -508,11 +514,64 @@ fi
 #-------------------------------------------------------------------------
 
 groupadd libvirt
-useradd -m -G wheel,libvirt -s /bin/bash $USERNAME
-echo "$USERNAME created, home directory created, added to wheel and libvirt group, default shell set to /bin/bash"
+useradd -m -G wheel,libvirt,plugdev -s /bin/bash $USERNAME
+echo "$USERNAME created, home directory created, added to wheel and libvirt and plugdev group, default shell set to /bin/bash"
 echo "$USERNAME:$PASSWORD" | chpasswd
 echo "$USERNAME password set"
 echo $NAME_OF_MACHINE > /etc/hostname
+
+#-------------------------------------------------------------------------
+#                    setup Environment
+#-------------------------------------------------------------------------
+
+pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse
+pacman -S --noconfirm --needed pavucontrol mpv sddm
+pacman -S --noconfirm --needed steam gamescope
+pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
+pacman -S --noconfirm --needed unrar unzip xdg-user-dirs
+
+if lsusb | grep -q "Razer"; then
+    sudo pacman -S --noconfirm --needed openrazer-daemon
+fi
+
+su - "$USERNAME" -c "
+cd ~
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin
+makepkg --noconfirm -si
+cd ..
+rm -rf yay-bin
+yay -S --sudoloop --noconfirm --needed librewolf-bin
+
+if lsusb | grep -q "Razer"; then
+    yay -S --sudoloop --noconfirm --needed razergenie
+fi
+
+if lsusb | grep -q "GoXLRMini"; then
+    yay -S --sudoloop --noconfirm --needed goxlr-utility
+
+    mkdir -p ~/.config/autostart
+
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/scripts/GoXLR_loopback.sh -O ~/.config/autostart/GoXLR_loopback.sh
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_loopback.desktop -O ~/.config/autostart/GoXLR_loopback.desktop
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_daemon.desktop -O ~/.config/autostart/GoXLR_daemon.desktop
+
+    chmod +x ~/.config/autostart/GoXLR_loopback.sh
+    chmod 600 ~/.config/autostart/GoXLR_loopback.desktop
+    chmod 600 ~/.config/autostart/GoXLR_daemon.desktop
+
+    sed -i "s|^Exec=.*|Exec=/home/$USERNAME/.config/autostart/GoXLR_loopback.sh|" \
+    "~/.config/autostart/GoXLR_loopback.desktop"
+fi
+
+wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O ~/.bashrc
+
+xdg-user-dirs-update --force
+"
+
+#-------------------------------------------------------------------------
+#              Skapa Grub-startmenyn
+#-------------------------------------------------------------------------
 
 # Final Setup and Configurations
 # GRUB EFI Bootloader Install & Check
@@ -520,11 +579,6 @@ echo $NAME_OF_MACHINE > /etc/hostname
 if [[ -d "/sys/firmware/efi" ]]; then
     grub-install --efi-directory=/boot ${DISK} --removable
 fi
-
-#-------------------------------------------------------------------------
-#              Skapa Grub-startmenyn
-#-------------------------------------------------------------------------
-
 
 # set kernel parameter for adding splash screen
 sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[^"]*/& splash /' /etc/default/grub
@@ -560,17 +614,23 @@ systemctl disable dhcpcd.service
 echo "  DHCP disabled"
 systemctl enable NetworkManager.service
 echo "  NetworkManager enabled"
+systemctl enable sddm.service
+echo "  sddm enabled"
 
+if lsusb | grep -q "Razer"; then
+    sudo systemctl enable openrazer-daemon
+    echo "  openrazer enabled"
+fi
 #-------------------------------------------------------------------------
 #                    Städa upp
 #-------------------------------------------------------------------------
 
 # Remove no password sudo rights
-sudo sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
-sudo sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
+sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
 # Add sudo rights
-sudo sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
-sudo sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 EOF
 
 cp ./setupConfigs.sh /mnt/home/$USERNAME/.bash_profile

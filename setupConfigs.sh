@@ -71,24 +71,11 @@ main() {
 
     yay -S --sudoloop --noconfirm --needed librewolf-bin
 
-    sudo pacman -S --noconfirm --needed bash-completion
-    sudo pacman -S --noconfirm --needed nfs-utils
-    sudo pacman -S --noconfirm --needed usbutils
-    sudo pacman -S --noconfirm --needed nano
-    sudo pacman -S --noconfirm --needed bat
-    sudo pacman -S --noconfirm --needed btop
-    sudo pacman -S --noconfirm --needed pavucontrol
-    sudo pacman -S --noconfirm --needed mpv
-    sudo pacman -S --noconfirm --needed gnome-keyring
-    sudo pacman -S --noconfirm --needed fuse
-    sudo pacman -S --noconfirm --needed ffmpeg
-    sudo pacman -S --noconfirm --needed steam
-    sudo pacman -S --noconfirm --needed gamescope
-    sudo pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd
-    sudo pacman -S --noconfirm --needed noto-fonts-emoji
-    sudo pacman -S --noconfirm --needed unrar
-    sudo pacman -S --noconfirm --needed unzip
-    sudo pacman -S --noconfirm --needed sddm
+    sudo pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse
+    sudo pacman -S --noconfirm --needed pavucontrol mpv sddm
+    sudo pacman -S --noconfirm --needed steam gamescope
+    sudo pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
+    sudo pacman -S --noconfirm --needed unrar unzip
 
     sudo systemctl enable sddm.service
     
