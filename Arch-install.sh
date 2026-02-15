@@ -513,7 +513,8 @@ fi
 #                    Lägger till användare
 #-------------------------------------------------------------------------
 
-groupadd libvirt plugdev
+groupadd libvirt
+groupadd plugdev
 useradd -m -G wheel,libvirt,plugdev -s /bin/bash $USERNAME
 echo "$USERNAME created, home directory created, added to wheel and libvirt and plugdev group, default shell set to /bin/bash"
 echo "$USERNAME:$PASSWORD" | chpasswd
@@ -524,7 +525,7 @@ echo $NAME_OF_MACHINE > /etc/hostname
 #                    setup Environment
 #-------------------------------------------------------------------------
 
-pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse
+pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire
 pacman -S --noconfirm --needed pavucontrol mpv sddm
 pacman -S --noconfirm --needed steam gamescope
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
@@ -533,6 +534,9 @@ pacman -S --noconfirm --needed unrar unzip xdg-user-dirs
 if lsusb | grep -q "Razer"; then
     sudo pacman -S --noconfirm --needed openrazer-daemon
 fi
+
+mkdir -p /home/$USERNAME
+chown $USERNAME:$USERNAME /home/$USERNAME
 
 runuser -l "$USERNAME" -c "
 cd ~
@@ -560,8 +564,8 @@ if lsusb | grep -q "GoXLRMini"; then
     chmod 600 ~/.config/autostart/GoXLR_loopback.desktop
     chmod 600 ~/.config/autostart/GoXLR_daemon.desktop
 
-    sed -i "s|^Exec=.*|Exec=/home/$USERNAME/.config/autostart/GoXLR_loopback.sh|" \
-    "~/.config/autostart/GoXLR_loopback.desktop"
+    sed -i "s|^Exec=.*|Exec=$HOME/.config/autostart/GoXLR_loopback.sh|" \
+    "$HOME/.config/autostart/GoXLR_loopback.desktop"
 fi
 
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O ~/.bashrc
