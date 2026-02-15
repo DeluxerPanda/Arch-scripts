@@ -568,6 +568,13 @@ pacman -S --noconfirm --needed steam gamescope
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
 pacman -S --noconfirm --needed unrar unzip xdg-user-dirs
 
+echo -ne "
+-------------------------------------------------------------------------
+                     KDE Plasma
+-------------------------------------------------------------------------
+"
+sudo pacman -S --needed --noconfirm plasma konsole kate dolphin gwenview ark
+
 if lsusb | grep -q "Razer"; then
     sudo pacman -S --noconfirm --needed openrazer-daemon
 fi
@@ -634,19 +641,19 @@ sed -i '/^GRUB_TIMEOUT=/c\GRUB_TIMEOUT=30' /etc/default/grub
 
 if [[ "$GRUBTHEME" == "CartoonGirl" ]]; then
         mkdir -p "/boot/grub/themes/CartoonGirl"
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl.tar.gz -O /boot/grub/themes/CartoonGirl.tar.gz
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/autostart/config/Grub/CartoonGirl.tar.gz -O /boot/grub/themes/CartoonGirl.tar.gz
         tar -xzf /boot/grub/themes/CartoonGirl.tar.gz -C /boot/grub/themes/CartoonGirl --strip-components=1
         rm /boot/grub/themes/CartoonGirl.tar.gz
         sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/CartoonGirl/theme.txt"|' /etc/default/grub
 elif [[ "$GRUBTHEME" == "Aesthetic" ]]; then
         mkdir -p "/boot/grub/themes/Aesthetic"
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic.tar.gz -O /boot/grub/themes/Aesthetic.tar.gz
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/autostart/config/Grub/Aesthetic.tar.gz -O /boot/grub/themes/Aesthetic.tar.gz
         tar -xzf /boot/grub/themes/Aesthetic.tar.gz -C /boot/grub/themes/Aesthetic --strip-components=1
         rm /boot/grub/themes/Aesthetic.tar.gz
         sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/Aesthetic/theme.txt"|' /etc/default/grub
 elif [[ "$GRUBTHEME" == "fallout" ]]; then
         mkdir -p "/boot/grub/themes/fallout"
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/fallout.tar.gz -O /boot/grub/themes/fallout.tar.gz
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/autostart/config/Grub/fallout.tar.gz -O /boot/grub/themes/fallout.tar.gz
         tar -xzf /boot/grub/themes/fallout.tar.gz -C /boot/grub/themes/fallout --strip-components=1
         rm /boot/grub/themes/fallout.tar.gz
         sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/fallout/theme.txt"|' /etc/default/grub

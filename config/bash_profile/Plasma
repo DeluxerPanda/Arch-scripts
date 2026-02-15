@@ -1,3 +1,0 @@
-#!/bin/bash
-# Source interactive bash settings
-[[ -f ~/.bashrc ]] && . ~/.bashrc
