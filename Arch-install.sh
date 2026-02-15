@@ -410,17 +410,16 @@ if [[  $TOTAL_MEM -lt 8000000 ]]; then
 fi
 
 gpu_type=$(lspci | grep -E "VGA|3D|Display")
-# mkdir -p /mnt/home/$USERNAME/.config/autostart/
-# cp ./setupConfigs.sh -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.sh
-# cp ./setupConfigs.desktop -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.desktop
 
-#     sed -i "s|^Exec=.*|Exec=$HOME/.config/autostart/setupConfigs.sh|" \
-#     "/mnt/home/$USERNAME/.config/autostart/setupConfigs.desktopp"
+    mkdir -p /mnt/home/$USERNAME/.config/autostart/
+    cp ./setupConfigs.sh -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.sh
+    cp ./setupConfigs.desktop -O /mnt/home/$USERNAME/.config/autostart/setupConfigs.desktop
 
-# chmod +x /mnt/home/$USERNAME/.config/autostart/setupConfigs.sh
-# chown $USERNAME:$USERNAME /mnt/home/$USERNAME/.config/autostart/setupConfigs.sh
-# chmod +x /mnt/home/$USERNAME/.config/autostart/setupConfigs.desktop
-# chown $USERNAME:$USERNAME /mnt/home/$USERNAME/.config/autostart/setupConfigs.desktop
+    sed -i "s|^Exec=.*|Exec=$HOME/.config/autostart/setupConfigs.sh|" \
+    "/mnt/home/$USERNAME/.config/autostart/setupConfigs.desktopp"
+
+    chmod +x /mnt/home/$USERNAME/.config/autostart/setupConfigs.sh
+    chmod +x /mnt/home/$USERNAME/.config/autostart/setupConfigs.desktop
 
 arch-chroot /mnt /bin/bash <<EOF
 
