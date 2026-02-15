@@ -633,26 +633,21 @@ sed -i '/^GRUB_TIMEOUT=/c\GRUB_TIMEOUT=30' /etc/default/grub
 
 if [[ "$GRUBTHEME" == "CartoonGirl" ]]; then
         mkdir -p "/boot/grub/themes/CartoonGirl"
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/theme.txt -O /boot/grub/themes/CartoonGirl/theme.txt
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/select_w.png -O /boot/grub/themes/CartoonGirl/select_w.png
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/select_e.png -O /boot/grub/themes/CartoonGirl/select_e.png
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/select_c.png -O /boot/grub/themes/CartoonGirl/select_c.png
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/norwester_22.pf2 -O /boot/grub/themes/CartoonGirl/norwester_22.pf2
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/hackb_18.pf2 -O /boot/grub/themes/CartoonGirl/hackb_18.pf2
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/Cartoon_Girl.png -O /boot/grub/themes/CartoonGirl/Cartoon_Girl.png
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl.tar.gz -O /boot/grub/themes/CartoonGirl.tar.gz
+        tar -xzf /boot/grub/themes/CartoonGirl.tar.gz -C /boot/grub/themes/CartoonGirl --strip-components=1
+        rm /boot/grub/themes/CartoonGirl.tar.gz
         sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/CartoonGirl/theme.txt"|' /etc/default/grub
 elif [[ "$GRUBTHEME" == "Aesthetic" ]]; then
         mkdir -p "/boot/grub/themes/Aesthetic"
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/theme.txt -O /boot/grub/themes/Aesthetic/theme.txt
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/select_w.png -O /boot/grub/themes/Aesthetic/select_w.png
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/select_e.png -O /boot/grub/themes/Aesthetic/select_e.png
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/select_c.png -O /boot/grub/themes/Aesthetic/select_c.png
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/hackb_18.pf2 -O /boot/grub/themes/Aesthetic/hackb_18.pf2
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/Aesthetic.png -O /boot/grub/themes/Aesthetic/Aesthetic.png
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic.tar.gz -O /boot/grub/themes/Aesthetic.tar.gz
+        tar -xzf /boot/grub/themes/Aesthetic.tar.gz -C /boot/grub/themes/Aesthetic --strip-components=1
+        rm /boot/grub/themes/Aesthetic.tar.gz
         sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/Aesthetic/theme.txt"|' /etc/default/grub
 elif [[ "$GRUBTHEME" == "fallout" ]]; then
         mkdir -p "/boot/grub/themes/fallout"
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/fallout/theme.txt -O /boot/grub/themes/fallout/theme.txt
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/fallout.tar.gz -O /boot/grub/themes/fallout.tar.gz
+        tar -xzf /boot/grub/themes/fallout.tar.gz -C /boot/grub/themes/fallout --strip-components=1
+        rm /boot/grub/themes/fallout.tar.gz
         sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/fallout/theme.txt"|' /etc/default/grub
 fi
 

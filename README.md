@@ -5,21 +5,20 @@ Jag tar inget ansvar för eventuella skador, instabilitet eller dataförlust som
 
 > **Viktigt:** Använd endast dessa script om du vet vad du gör
 
-# Arch install
-```bash
-curl -fsSL https://deluxerpanda.se/archsetup | sh
-```
-
 <details>
 <summary style="font-weight: bolder; font-size: 2rem;"> 🎨 GRUB Tema </summary>
 
-### Aesthetic  -- [Source](https://store.kde.org/p/2142488)
+### Cartoon Girl -- [Source](https://github.com/MrVivekRajan/Grub-Themes)
 
-<img src="https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/Aesthetic/Aesthetic.png">
+<img src="config/Grub/img/Cartoon_Girl.png">
 
-### Cartoon Girl -- [Source](https://store.kde.org/p/2142488)
+### Aesthetic  -- [Source](https://github.com/MrVivekRajan/Grub-Themes)
 
-<img src="https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/Grub/CartoonGirl/Cartoon_Girl.png">
+<img src="config/Grub/img/Aesthetic.png">
+
+### Fallout -- [Source](https://github.com/shvchk/fallout-grub-theme)
+
+<img src="config/Grub/img/Fallout.png">
 
 </details>
 
@@ -27,10 +26,10 @@ curl -fsSL https://deluxerpanda.se/archsetup | sh
 <summary style="font-weight: bolder; font-size: 2rem;">🎨 Fastfetch Tema</summary>
 
 ### Non-binary flagga
-<img src="https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/fastfetch/nonbinary/nonbinary_img.png">
+<img src="config/fastfetch/nonbinary/nonbinary_img.png">
 
 ### Transgender flagga  
-<img src="https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/fastfetch/transgender/transgender_img.png">
+<img src="config/fastfetch/transgender/transgender_img.png">
 
 </details>
 
@@ -38,9 +37,9 @@ curl -fsSL https://deluxerpanda.se/archsetup | sh
 <summary style="font-weight: bolder; font-size: 2rem;">🎨 Starship Tema</summary>
 
 ### Non-binary flagga
-<img src="https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/starship/nonbinary/nonbinary_img.png">
+<img src="config/starship/nonbinary/nonbinary_img.png">
 
 ### Transgender flagga  
-<img src="https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/starship/transgender/transgender_img.png">
+<img src="config/starship/transgender/transgender_img.png">
 
 </details>
