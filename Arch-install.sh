@@ -571,5 +571,5 @@ sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: A
 sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 EOF
-
+cp ./bash_profile -O /mnt/home/$USERNAME/.bash_profile
 cp ./setupConfigs.sh -O /mnt/home/$USERNAME/setupConfigs.sh
