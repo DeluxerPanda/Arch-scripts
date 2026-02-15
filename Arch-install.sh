@@ -688,15 +688,11 @@ sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: A
 sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 EOF
-
-cp ./setupConfigs.sh /mnt/home/$USERNAME/.bash_profile
-
 clear
 logo
 echo -ne "
--------------------------------------------------------------------------
                      Installation klar!
--------------------------------------------------------------------------
+
 Du kan nu starta om datorn och logga in på ditt nya Arch Linux-system!
 -------------------------------------------------------------------------
 "
