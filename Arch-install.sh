@@ -248,10 +248,11 @@ setupGrub () {
     1) Cartoon Girl
     2) Aesthetic
     3) Fallout
-    4) inget tema
+    4) Stardew Valley
+    5) inget tema
     -----------------------------------------------------------------------
     "
-    options=("Cartoon Girl" "Aesthetic" "Fallout" "inget tema")
+    options=("Cartoon Girl" "Aesthetic" "Fallout" "Stardew Valley" "inget tema")
     select_option "${options[@]}"
     case $? in
         0)
@@ -261,6 +262,8 @@ setupGrub () {
         2)
             export GRUBTHEME="fallout";;
         3)
+            export GRUBTHEME="StardewValley";;
+        4)
             export GRUBTHEME="none";;
         *) echo "Fel alternativ. Försök igen."; setupGrub;;
     esac
@@ -637,6 +640,12 @@ elif [[ "$GRUBTHEME" == "fallout" ]]; then
         tar --no-same-owner -xzf /boot/grub/themes/fallout.tar.gz -C /boot/grub/themes/fallout --strip-components=1
         rm /boot/grub/themes/fallout.tar.gz
         sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/fallout/theme.txt"|' /etc/default/grub
+elif [[ "$GRUBTHEME" == "StardewValley" ]]; then
+        mkdir -p "/boot/grub/themes/StardewValley"
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/autostart/config/Grub/StardewValley.tar.gz -O /boot/grub/themes/StardewValley.tar.gz
+        tar --no-same-owner -xzf /boot/grub/themes/StardewValley.tar.gz -C /boot/grub/themes/StardewValley --strip-components=1
+        rm /boot/grub/themes/StardewValley.tar.gz
+        sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/StardewValley/theme.txt"|' /etc/default/grub
 fi
 
 

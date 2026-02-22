@@ -20,6 +20,10 @@ Jag tar inget ansvar för eventuella skador, instabilitet eller dataförlust som
 
 <img src="config/Grub/img/Fallout.png">
 
+### Stardew Valley -- [Source](https://www.gnome-look.org/p/2327364)
+
+<img src="config/Grub/img/Stardew-Valley.png">
+
 </details>
 
 <details>
