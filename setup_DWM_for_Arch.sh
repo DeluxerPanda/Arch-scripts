@@ -70,7 +70,7 @@ function Installing() {
     sudo pacman -Syu --noconfirm
 
     # System packages
-    sudo pacman -S --needed --noconfirm base-devel libx11 libxft xorg-server xorg-xinit ffmpeg networkmanager mate-polkit nfs-utils nano usbutils gnome-keyring fuse
+    sudo pacman -S --needed --noconfirm base-devel libx11 libxft xorg-server xorg-xinit ffmpeg networkmanager network-manager-applet mate-polkit nfs-utils nano usbutils gnome-keyring fuse
 
     # Fonts
     sudo pacman -S --needed --noconfirm ttf-jetbrains-mono-nerd noto-fonts-emoji
