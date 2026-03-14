@@ -476,13 +476,13 @@ echo "LC_TIME=sv_SE.UTF-8" >> /etc/locale.conf
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
 
-#Add parallel downloading
+# Add parallel downloading
 sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 
-#Set colors and enable the easter egg
+# Set colors and enable the easter egg
 sed -i 's/^#Color/Color\nILoveCandy/' /etc/pacman.conf
 
-#Enable multilib
+# Enable multilib
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 pacman -Sy --noconfirm --needed
 
@@ -546,7 +546,7 @@ echo -ne "
 "
 
 pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire
-pacman -S --noconfirm --needed pavucontrol mpv sddm
+pacman -S --noconfirm --needed pavucontrol vlc sddm
 pacman -S --noconfirm --needed steam gamescope
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
 pacman -S --noconfirm --needed unrar unzip xdg-user-dirs
