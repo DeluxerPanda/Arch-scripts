@@ -217,26 +217,24 @@ userinfo () {
     export NAME_OF_MACHINE=$name_of_machine
 }
 
-dualGPU_check () {
-    if lspci | grep -E "NVIDIA|GeForce" >/dev/null && lspci | grep -E "Radeon" >/dev/null; then
+setupEnv () {
         echo -ne "  
     -----------------------------------------------------------------------
-                        Välj huvud GPU                    
+                        Välj Environment                    
     -----------------------------------------------------------------------
-    1) Radeon (AMD)
-    2) NVIDIA
+    1) Kde plasma (rekommenderas)
+    2) DWM (för avancerade användare)
     -----------------------------------------------------------------------
     "
-    options=("Radeon (AMD)" "NVIDIA")
+    options=("Kde plasma (rekommenderas)" "DWM (för avancerade användare)")
     select_option "${options[@]}"
     case $? in
         0)
-        export DUALGPU="AMD";;
+        export ENV="Env_Kde";;
         1)
-        export DUALGPU="NVIDIA";;
-        *) echo "Fel alternativ. Försök igen."; dualGPU_check;;
+        export ENV="Env_DWM";;
+        *) echo "Fel alternativ. Försök igen."; setupEnv;;
     esac 
-    fi
 }
 
 setupGrub () {
@@ -269,12 +267,37 @@ setupGrub () {
     esac
 }
 
+dualGPU_check () {
+    if lspci | grep -E "NVIDIA|GeForce" >/dev/null && lspci | grep -E "Radeon" >/dev/null; then
+        echo -ne "  
+    -----------------------------------------------------------------------
+                        Välj huvud GPU                    
+    -----------------------------------------------------------------------
+    1) Radeon (AMD)
+    2) NVIDIA
+    -----------------------------------------------------------------------
+    "
+    options=("Radeon (AMD)" "NVIDIA")
+    select_option "${options[@]}"
+    case $? in
+        0)
+        export DUALGPU="AMD";;
+        1)
+        export DUALGPU="NVIDIA";;
+        *) echo "Fel alternativ. Försök igen."; dualGPU_check;;
+    esac 
+    fi
+}
+
 
 # Starting functions
 background_checks
 clear
 logo
 userinfo
+clear
+logo
+setupEnv
 clear
 logo
 setupGrub
@@ -538,25 +561,20 @@ echo "$USERNAME created, home directory created, added to wheel and libvirt and 
 echo "$USERNAME:$PASSWORD" | chpasswd
 echo "$USERNAME password set"
 echo $NAME_OF_MACHINE > /etc/hostname
- 
+
 echo -ne "
 -------------------------------------------------------------------------
                      setup Environment
 -------------------------------------------------------------------------
 "
 
-pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire
-pacman -S --noconfirm --needed pavucontrol vlc sddm
-pacman -S --noconfirm --needed steam gamescope
+pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire dunst
+pacman -S --noconfirm --needed pavucontrol sddm dolphin
+pacman -S --noconfirm --needed steam gamescope prismlauncher
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
-pacman -S --noconfirm --needed unrar unzip xdg-user-dirs
+pacman -S --noconfirm --needed unrar unzip zip xdg-user-dirs
+xdg-user-dirs-update --force
 
-echo -ne "
--------------------------------------------------------------------------
-                     KDE Plasma
--------------------------------------------------------------------------
-"
-sudo pacman -S --needed --noconfirm plasma konsole kate dolphin gwenview ark
 
 if lsusb | grep -q "Razer"; then
     sudo pacman -S --noconfirm --needed openrazer-daemon
@@ -596,9 +614,45 @@ if lsusb | grep -q "GoXLRMini"; then
 fi
 
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O /home/$USERNAME/.bashrc
-
-xdg-user-dirs-update --force
 '
+echo -ne "
+-------------------------------------------------------------------------
+                     DWM
+-------------------------------------------------------------------------
+"
+if [[ "$ENV" == "Env_DWM" ]]; then
+    pacman -S --noconfirm --needed base-devel libx11 libxft xorg-server xorg-xinit ffmpeg network-manager-applet mate-polkit numlockx
+
+    pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot
+fi
+runuser -l "$USERNAME" -c '
+cd /home/$USERNAME
+    git clone https://github.com/DeluxerPanda/dwm.git
+    cd dwm
+    sudo make clean install
+    cd ..
+    rm -rf dwm
+
+    git clone https://github.com/DeluxerPanda/st.git
+    cd st
+    sudo make clean install
+    cd ..
+    rm -rf st
+
+    mkdir -p /home/$USERNAME/Bilder/backgrounds
+    wget -O /home/$USERNAME/Bilder/backgrounds/wallpaper.jpg "https://lh3.googleusercontent.com/pw/AP1GczNr22gSNbdSNq_08trKdHkkswDq1k2PuefBqriaPp86lshFr10RjFqKQ_phn0187riksWgh-ouqn_6-MkHwVb5nIpyCaiH34WCOIywCis8X39gV3q3Fsy_9HZO-he7gxYnjbt7zulTazkiIj4qxyBjY"
+'
+
+echo -ne "
+-------------------------------------------------------------------------
+                     KDE Plasma
+-------------------------------------------------------------------------
+"
+if [[ "$ENV" == "Env_Kde" ]]; then
+sudo pacman -S --needed --noconfirm plasma konsole kate dolphin gwenview ark
+pacman -S --noconfirm --needed sddm-kcm vlc
+fi
+
 echo -ne "
 -------------------------------------------------------------------------
                Skapa Grub-startmenyn
