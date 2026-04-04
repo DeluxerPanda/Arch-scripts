@@ -573,7 +573,7 @@ pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpe
 pacman -S --noconfirm --needed pavucontrol sddm dolphin
 pacman -S --noconfirm --needed steam gamescope prismlauncher
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
-pacman -S --noconfirm --needed unrar unzip zip xdg-user-dirs archlinux-xdg-menu
+pacman -S --noconfirm --needed unrar unzip zip xdg-user-dirs ffmpeg
 xdg-user-dirs-update --force
 
 
@@ -622,9 +622,9 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 if [[ "$ENV" == "Env_DWM" ]]; then
-    pacman -S --noconfirm --needed base-devel libx11 libxft xorg-server xorg-xinit ffmpeg network-manager-applet mate-polkit numlockx
+    pacman -S --noconfirm --needed base-devel libx11 libxft xorg-server xorg-xinit network-manager-applet mate-polkit numlockx archlinux-xdg-menu
 
-    pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot
+    pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot 
 fi
 runuser -l "$USERNAME" -c '
 cd /home/$USERNAME
@@ -650,7 +650,7 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 if [[ "$ENV" == "Env_Kde" ]]; then
-sudo pacman -S --needed --noconfirm plasma konsole kate dolphin gwenview ark
+sudo pacman -S --needed --noconfirm plasma konsole kate gwenview ark
 pacman -S --noconfirm --needed sddm-kcm vlc
 fi
 
