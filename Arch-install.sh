@@ -556,8 +556,9 @@ echo -ne "
 
 groupadd libvirt
 groupadd plugdev
-useradd -m -G wheel,libvirt,plugdev -s /bin/bash $USERNAME
-echo "$USERNAME created, home directory created, added to wheel and libvirt and plugdev group, default shell set to /bin/bash"
+groupadd docker
+useradd -m -G wheel,libvirt,plugdev,docker -s /bin/bash $USERNAME
+echo "$USERNAME created, home directory created, added to wheel and libvirt and plugdev and docker group, default shell set to /bin/bash"
 echo "$USERNAME:$PASSWORD" | chpasswd
 echo "$USERNAME password set"
 echo $NAME_OF_MACHINE > /etc/hostname
@@ -572,7 +573,7 @@ pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpe
 pacman -S --noconfirm --needed pavucontrol sddm dolphin
 pacman -S --noconfirm --needed steam gamescope prismlauncher
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
-pacman -S --noconfirm --needed unrar unzip zip xdg-user-dirs
+pacman -S --noconfirm --needed unrar unzip zip xdg-user-dirs archlinux-xdg-menu
 xdg-user-dirs-update --force
 
 
