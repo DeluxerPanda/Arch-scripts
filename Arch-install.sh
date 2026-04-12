@@ -637,7 +637,7 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 
-pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire dunst starship
+pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire dunst starship fastfetch
 pacman -S --noconfirm --needed pavucontrol sddm dolphin
 pacman -S --noconfirm --needed steam gamescope prismlauncher
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
