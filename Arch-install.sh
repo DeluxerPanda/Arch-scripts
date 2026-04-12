@@ -667,6 +667,8 @@ fi
 
 if lsusb | grep -q "GoXLRMini"; then
     yay -S --sudoloop --noconfirm --needed goxlr-utility
+    
+    mkdir -p /home/$USERNAME/.config
 
     mkdir -p /home/$USERNAME/.config/autostart
 
@@ -684,6 +686,8 @@ fi
 
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O /home/$USERNAME/.bashrc
 
+    mkdir -p /home/$USERNAME/.config/fastfetch
+
 if [[ "$STARSHIP_FASTFETCH" == "FASTFETCH_TRANSGENDER_FLAGGA" ]]; then
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/transgender/config.jsonc -O /home/$USERNAME/.config/fastfetch/config.jsonc
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/transgender/trans.txt -O /home/$USERNAME/.config/fastfetch/trans.txt
@@ -694,8 +698,7 @@ fi
 
 if [[ "$STARSHIP_TEMA" == "StarshipTema_TRANSGENDER" ]]; then
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/transgender/starship.toml -O /home/$USERNAME/.config/starship.toml
-        2) 
-elif [[ "$STARSHIP_TEMA" == "StarshipTema_TRANSGENDER" ]]; then
+elif [[ "$STARSHIP_TEMA" == "StarshipTema_NON-BINARY" ]]; then
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/nonbinary/starship.toml -O /home/$USERNAME/.config/starship.toml
 fi
 '
@@ -709,7 +712,7 @@ if [[ "$STARSHIP_EMOJI" == "StarshipEmoji_PANDA" ]]; then
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐼](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_kATT" ]]; then
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[😺](\$style)'|" "/home/$USERNAME/.config/starship.toml"
-elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_PINGViN" ]]; then
+elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_PINGVIN" ]]; then
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐧](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_ENHÖRNInG" ]]; then
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦄](\$style)'|" "/home/$USERNAME/.config/starship.toml"
