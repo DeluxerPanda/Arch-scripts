@@ -46,4 +46,12 @@ Jag tar inget ansvar för eventuella skador, instabilitet eller dataförlust som
 ### Transgender flagga  
 <img src="config/starship/transgender/transgender_img.png">
 
+## 🐼 [Panda] 
+## 😺 [Katt] 
+## 🐧 [Pingvin] 
+## 🦄 [Enhörning] 
+## 🦊 [Räv] 
+## 🦉 [Ugla] 
+## 🐝 [bi] 
+## 🍍 [Ananas]
 </details>
