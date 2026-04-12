@@ -297,25 +297,18 @@ setupStarshipEmoji () {
     case $? in
         0)
         export STARSHIP_EMOJI="StarshipEmoji_PANDA";;
-        ;;
         1)
-                export STARSHIP_EMOJI="StarshipEmoji_kATT";;
-        ;;
+        export STARSHIP_EMOJI="StarshipEmoji_kATT";;
         2) 
-                export STARSHIP_EMOJI="StarshipEmoji_PINGVIN";;
-        ;;
+        export STARSHIP_EMOJI="StarshipEmoji_PINGVIN";;
         3) 
-                export STARSHIP_EMOJI="StarshipEmoji_ENHÖRNING";;
-        ;;
+        export STARSHIP_EMOJI="StarshipEmoji_ENHÖRNING";;
         4) 
-                export STARSHIP_EMOJI="StarshipEmoji_RÄV";;
-        ;;
+        export STARSHIP_EMOJI="StarshipEmoji_RÄV";;
         5) 
-                export STARSHIP_EMOJI="StarshipEmoji_UGLA";;
-        ;;
+        export STARSHIP_EMOJI="StarshipEmoji_UGLA";;
         6) 
-                export STARSHIP_EMOJI="StarshipEmoji_BI";;
-        ;;
+        export STARSHIP_EMOJI="StarshipEmoji_BI";;
         7) 
         export STARSHIP_EMOJI="StarshipEmoji_ANNANAS";;
         8)
