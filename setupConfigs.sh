@@ -57,18 +57,28 @@ select_option() {
 }
 
 main() {
+    sudo pacman -Sy --noconfirm
+
     sudo pacman -S --noconfirm --needed base-devel git
-    if ! [ -x "$(command -v git)" ]; then
-    git clone https://aur.archlinux.org/yay.git
+    
+    if ! [ -x "$(command -v yay)" ]; then
+    git clone https://aur.archlinux.org/yay-bin.git
     cd yay
-    makepkg -si
+    makepkg --noconfirm -si
     cd ..
     rm -rf yay
     fi
+
     yay -S --sudoloop --noconfirm --needed librewolf-bin
 
-    sudo pacman -Sy --noconfirm
-    sudo pacman -S --noconfirm --needed base-devel git bash-completion bat btop pavucontrol mpv feh nfs-utils nano usbutils gnome-keyring fuse ffmpeg steam ttf-jetbrains-mono-nerd noto-fonts-emoji gamescope unrar wget
+    sudo pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse
+    sudo pacman -S --noconfirm --needed pavucontrol mpv sddm
+    sudo pacman -S --noconfirm --needed steam gamescope
+    sudo pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
+    sudo pacman -S --noconfirm --needed unrar unzip
+
+    sudo systemctl enable sddm.service
+    
     wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O $HOME/.bashrc
 }
 
@@ -85,14 +95,37 @@ setupEnvironment(){
 
     case $? in
         0)
-        sudo pacman -S --needed --noconfirm kdeconnect plasma sddm konsole kate dolphin ark flatpak
-        sudo systemctl enable sddm.service
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O $HOME/.bashrc
+        sudo pacman -S --needed --noconfirm plasma konsole kate dolphin gwenview ark
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/bash_profile/plasma -O $HOME/.bash_profile_new
         ;;
         1) 
-        echo "Kommer snart. Försök igen."; setupEnvironment;;
+        echo "Kommer snart. Försök igen."; 
+        #sudo pacman -S --needed --noconfirm libx11 libxft xorg-server xorg-xinit mate-polkit eh mpv rofi arandr dunst
+
+        #mkdir -p ~/Bilder/backgrounds
+        #wget -O ~/Bilder/backgrounds/wallpaper.jpg "https://lh3.googleusercontent.com/pw/AP1GczNr22gSNbdSNq_08trKdHkkswDq1k2PuefBqriaPp86lshFr10RjFqKQ_phn0187riksWgh-ouqn_6-MkHwVb5nIpyCaiH34WCOIywCis8X39gV3q3Fsy_9HZO-he7gxYnjbt7zulTazkiIj4qxyBjY"
+
+        #git clone https://github.com/DeluxerPanda/dwm.git
+        #cd dwm
+        #sudo make clean install
+        #cd ..
+        #rm -rf dwm
+
+        #git clone https://github.com/DeluxerPanda/st.git
+        #cd st
+        #sudo make clean install
+        #cd ..
+        #rm -rf st
+        
+        # wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/bash_profile/DWM -O $HOME/.bash_profile_new
+        
+        setupEnvironment;;
         *) echo "Fel alternativ. Försök igen."; setupEnvironment;;
     esac
+}
+
+resetToNormal(){
+mv $HOME/.bash_profile_new $HOME/.bash_profile
 }
 
 OpenRazer() {
@@ -241,7 +274,7 @@ setupStarshipEmoji(){
                         Välj ett Starship Emoji                    
     -----------------------------------------------------------------------
     "
-    options=("🐼 (Standard)" "😺" "🐧" "🦄" "🦊" "🦉" "🐝" "🍍")
+    options=("🐼 [Panda] (Standard)" "😺 [Katt]" "🐧 [Pingvin]" "🦄 [Enhörning]" "🦊 [Räv]" "🦉 [Ugla]" "🐝 [bi]" "🍍 [Ananas]")
     select_option "${options[@]}"
 
     case $? in
@@ -291,10 +324,6 @@ fi
 
     main
     clear
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-    setupEnvironment
-fi
-    clear
     OpenRazer
     clear
     GoXLRMini
@@ -307,4 +336,9 @@ fi
     clear
     dualGPU
     clear
+    if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+    setupEnvironment
+    resetToNormal
+    reboot
+    fi
     echo "Du kan nu starta om datorn :D"

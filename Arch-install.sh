@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ ! -t 0 ] && [ -t 1 ]; then
+    exec bash "$0" "$@"
+fi
+
 # Redirect stdout and stderr to archsetup.txt and still output to console
 exec > >(tee -i archsetup.txt)
 exec 2>&1
@@ -87,10 +91,10 @@ select_option() {
         last_selected=$selected
 
         # Read user input
-        read -rsn1 key
+        read -rsn1 key < /dev/tty
         case $key in
             $'\x1b') # ESC sequence
-                read -rsn2 -t 0.1 key
+                read -rsn2 -t 0.1 key < /dev/tty
                 case $key in
                     '[A') # Up arrow
                         ((selected--))
@@ -133,24 +137,6 @@ echo -ne "
 "
 }
 
-# @description Choose whether drive is SSD or not.
-drivessd () {
-    echo -ne "
-    Är detta en solid state-disk (SSD) eller hårddisk (HDD)?
-    "
-
-    options=("SSD" "HDD")
-    select_option "${options[@]}"
-
-    case $? in
-        0)
-        export MOUNT_OPTIONS="noatime,compress=zstd,ssd,commit=120";;
-        1)
-        export MOUNT_OPTIONS="noatime,compress=zstd,commit=120";;
-        *) echo "Fel alternativ. Försök igen."; drivessd;;
-    esac
-}
-
 # @description Disk selection for drive to be used with installation.
 diskpart () {
 echo -ne "
@@ -182,8 +168,6 @@ echo -ne "
 
     echo -e "\n${disk%|*} selected \n"
         export DISK=${disk%|*}
-
-    drivessd
 }
 
 # @description Gather username and password to be used for installation.
@@ -191,7 +175,7 @@ userinfo () {
     # Loop through user input until the user gives a valid username
     while true
     do
-            read -r -p "Ange användarnamn: " username
+            read -r -p "Ange användarnamn: " username < /dev/tty
             if [[ "${username,,}" =~ ^[a-z_]([a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\$)$ ]]
             then
                     break
@@ -205,9 +189,9 @@ userinfo () {
     do
         echo "**OBS! Lösenordet kommer inte att visas när du skriver det, så var noga med att skriva det korrekt.**"
         echo "**OBS! Använd inte numpadstangenterna just nu!**"
-        read -rs -p "Ange lösenord: " PASSWORD1
+        read -rs -p "Ange lösenord: " PASSWORD1 < /dev/tty
         echo -ne "\n"
-        read -rs -p "Ange lösenord igen: " PASSWORD2
+        read -rs -p "Ange lösenord igen: " PASSWORD2 < /dev/tty
         echo -ne "\n"
         if [[ "$PASSWORD1" == "$PASSWORD2" ]]; then
             break
@@ -221,20 +205,70 @@ userinfo () {
      # Loop through user input until the user gives a valid hostname, but allow the user to force save
     while true
     do
-            read -r -p "Namnge din dator: " name_of_machine
+            read -r -p "Namnge din dator: " name_of_machine < /dev/tty
             # hostname regex (!!couldn't find spec for computer name!!)
             if [[ "${name_of_machine,,}" =~ ^[a-z][a-z0-9_.-]{0,62}[a-z0-9]$ ]]
             then
                     break
             fi
             # if validation fails allow the user to force saving of the hostname
-            read -r -p "namnet verkar inte vara korrekt. Vill du fortfarande använda det?? (y/n)" force
+            read -r -p "namnet verkar inte vara korrekt. Vill du fortfarande använda det?? (y/n)" force < /dev/tty
             if [[ "${force,,}" = "y" ]]
             then
                     break
             fi
     done
     export NAME_OF_MACHINE=$name_of_machine
+}
+
+setupEnv () {
+        echo -ne "  
+    -----------------------------------------------------------------------
+                        Välj Environment                    
+    -----------------------------------------------------------------------
+    1) Kde plasma (rekommenderas)
+    2) DWM (för avancerade användare)
+    -----------------------------------------------------------------------
+    "
+    options=("Kde plasma (rekommenderas)" "DWM (för avancerade användare)")
+    select_option "${options[@]}"
+    case $? in
+        0)
+        export ENV="Env_Kde";;
+        1)
+        export ENV="Env_DWM";;
+        *) echo "Fel alternativ. Försök igen."; setupEnv;;
+    esac 
+}
+
+setupGrub () {
+    clear
+    echo -ne "  
+    -----------------------------------------------------------------------
+                        Välj ett grub tema                    
+    -----------------------------------------------------------------------
+    1) Cartoon Girl
+    2) Aesthetic
+    3) Fallout
+    4) Stardew Valley
+    5) inget tema
+    -----------------------------------------------------------------------
+    "
+    options=("Cartoon Girl" "Aesthetic" "Fallout" "Stardew Valley" "inget tema")
+    select_option "${options[@]}"
+    case $? in
+        0)
+            export GRUBTHEME="CartoonGirl";;
+        1)
+            export GRUBTHEME="Aesthetic";;
+        2)
+            export GRUBTHEME="fallout";;
+        3)
+            export GRUBTHEME="StardewValley";;
+        4)
+            export GRUBTHEME="none";;
+        *) echo "Fel alternativ. Försök igen."; setupGrub;;
+    esac
 }
 
 dualGPU_check () {
@@ -265,6 +299,12 @@ background_checks
 clear
 logo
 userinfo
+clear
+logo
+setupEnv
+clear
+logo
+setupGrub
 clear
 logo
 dualGPU_check
@@ -316,11 +356,14 @@ echo -ne "
 createsubvolumes () {
     btrfs subvolume create /mnt/@
     btrfs subvolume create /mnt/@home
+    # Set @ as the default subvolume so genfstab records subvolid=256 (not 5)
+    # Path form requires btrfs-progs >= 5.6 (standard on Arch rolling)
+    btrfs subvolume set-default /mnt/@
 }
 
 # @description Mount all btrfs subvolumes after root has been mounted.
 mountallsubvol () {
-    mount -o "${MOUNT_OPTIONS}",subvol=@home "${partition3}" /mnt/home
+    mount -o noatime,compress=zstd,ssd,commit=120,subvol=@home "${partition3}" /mnt/home
 }
 
 # @description BTRFS subvolulme creation and mounting.
@@ -330,7 +373,7 @@ subvolumesetup () {
 # unmount root to remount with subvolume
     umount /mnt
 # mount @ subvolume
-    mount -o "${MOUNT_OPTIONS}",subvol=@ "${partition3}" /mnt
+    mount -o noatime,compress=zstd,ssd,commit=120,subvol=@ "${partition3}" /mnt
 # make directories home, .snapshots, var, tmp
     mkdir -p /mnt/home
 # mount subvolumes
@@ -389,26 +432,6 @@ echo -ne "
 if [[ ! -d "/sys/firmware/efi" ]]; then
     grub-install --boot-directory=/mnt/boot "${DISK}" --removable
 fi
-echo -ne "
--------------------------------------------------------------------------
-                    Kontrollerar system med lågt minne <8GB
--------------------------------------------------------------------------
-"
-TOTAL_MEM=$(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')
-if [[  $TOTAL_MEM -lt 8000000 ]]; then
-    # Put swap into the actual system, not into RAM disk, otherwise there is no point in it, it'll cache RAM into RAM. So, /mnt/ everything.
-    mkdir -p /mnt/opt/swap # make a dir that we can apply NOCOW to to make it btrfs-friendly.
-    if findmnt -n -o FSTYPE /mnt | grep -q btrfs; then
-        chattr +C /mnt/opt/swap # apply NOCOW, btrfs needs that.
-    fi
-    dd if=/dev/zero of=/mnt/opt/swap/swapfile bs=1M count=2048 status=progress
-    chmod 600 /mnt/opt/swap/swapfile # set permissions.
-    chown root /mnt/opt/swap/swapfile
-    mkswap /mnt/opt/swap/swapfile
-    swapon /mnt/opt/swap/swapfile
-    # The line below is written to /mnt/ but doesn't contain /mnt/, since it's just / for the system itself.
-    echo "/opt/swap/swapfile    none    swap    sw    0    0" >> /mnt/etc/fstab # Add swap to fstab, so it KEEPS working after installation.
-fi
 
 gpu_type=$(lspci | grep -E "VGA|3D|Display")
 
@@ -419,7 +442,6 @@ echo -ne "
                      Nätverksinställningar
 -------------------------------------------------------------------------
 "
-
 pacman -S --noconfirm --needed networkmanager
 systemctl enable NetworkManager
 
@@ -440,17 +462,23 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 
+# Enable locales
 sed -i 's/^#sv_SE.UTF-8 UTF-8/sv_SE.UTF-8 UTF-8/' /etc/locale.gen
+sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
+
+# Time & locale
 timedatectl --no-ask-password set-timezone Europe/Stockholm
 timedatectl --no-ask-password set-ntp 1
 localectl --no-ask-password set-locale LANG="sv_SE.UTF-8" LC_TIME="sv_SE.UTF-8"
-ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
+ln -sf /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
 
-# Set keymaps
+# Console & keyboard
 loadkeys sv-latin1
 echo "KEYMAP=sv-latin1" > /etc/vconsole.conf
 echo "XKBLAYOUT=se" >> /etc/vconsole.conf
+
+# Default locale
 echo "LANG=sv_SE.UTF-8" > /etc/locale.conf
 echo "LC_TIME=sv_SE.UTF-8" >> /etc/locale.conf
 
@@ -458,15 +486,16 @@ echo "LC_TIME=sv_SE.UTF-8" >> /etc/locale.conf
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
 
-#Add parallel downloading
+# Add parallel downloading
 sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 
-#Set colors and enable the easter egg
+# Set colors and enable the easter egg
 sed -i 's/^#Color/Color\nILoveCandy/' /etc/pacman.conf
 
-#Enable multilib
+# Enable multilib
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 pacman -Sy --noconfirm --needed
+
 
 echo -ne "
 -------------------------------------------------------------------------
@@ -515,17 +544,102 @@ echo -ne "
 
 groupadd libvirt
 groupadd plugdev
-useradd -m -G wheel,libvirt,plugdev -s /bin/bash $USERNAME
-echo "$USERNAME created, home directory created, added to wheel, libvirt and plugdev group, default shell set to /bin/bash"
+groupadd docker
+useradd -m -G wheel,libvirt,plugdev,docker -s /bin/bash $USERNAME
+echo "$USERNAME created, home directory created, added to wheel and libvirt and plugdev and docker group, default shell set to /bin/bash"
 echo "$USERNAME:$PASSWORD" | chpasswd
 echo "$USERNAME password set"
 echo $NAME_OF_MACHINE > /etc/hostname
 
-# Final Setup and Configurations
-# GRUB EFI Bootloader Install & Check
+echo -ne "
+-------------------------------------------------------------------------
+                     setup Environment
+-------------------------------------------------------------------------
+"
 
-if [[ -d "/sys/firmware/efi" ]]; then
-    grub-install --efi-directory=/boot ${DISK} --removable
+pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire dunst
+pacman -S --noconfirm --needed pavucontrol sddm dolphin
+pacman -S --noconfirm --needed steam gamescope prismlauncher
+pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
+pacman -S --noconfirm --needed unrar unzip zip xdg-user-dirs ffmpeg
+xdg-user-dirs-update --force
+
+
+if lsusb | grep -q "Razer"; then
+    sudo pacman -S --noconfirm --needed openrazer-daemon
+fi
+
+mkdir -p /home/$USERNAME
+chown $USERNAME:$USERNAME /home/$USERNAME
+
+runuser -l "$USERNAME" -c '
+cd /home/$USERNAME
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin
+makepkg --noconfirm -si
+cd ..
+rm -rf yay-bin
+yay -S --sudoloop --noconfirm --needed librewolf-bin
+
+if lsusb | grep -q "Razer"; then
+    yay -S --sudoloop --noconfirm --needed razergenie
+fi
+
+if lsusb | grep -q "GoXLRMini"; then
+    yay -S --sudoloop --noconfirm --needed goxlr-utility
+
+    mkdir -p /home/$USERNAME/.config/autostart
+
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/scripts/GoXLR_loopback.sh -O /home/$USERNAME/.config/autostart/GoXLR_loopback.sh
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_loopback.desktop -O /home/$USERNAME/.config/autostart/GoXLR_loopback.desktop
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/autostart/GoXLR_daemon.desktop -O /home/$USERNAME/.config/autostart/GoXLR_daemon.desktop
+
+    chmod +x /home/$USERNAME/.config/autostart/GoXLR_loopback.sh
+    chmod 600 /home/$USERNAME/.config/autostart/GoXLR_loopback.desktop
+    chmod 600 /home/$USERNAME/.config/autostart/GoXLR_daemon.desktop
+
+    sed -i "s|^Exec=.*|Exec=/home/$USERNAME/.config/autostart/GoXLR_loopback.sh|" \
+    "/home/$USERNAME/.config/autostart/GoXLR_loopback.desktop"
+fi
+
+wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O /home/$USERNAME/.bashrc
+'
+echo -ne "
+-------------------------------------------------------------------------
+                     DWM
+-------------------------------------------------------------------------
+"
+if [[ "$ENV" == "Env_DWM" ]]; then
+    pacman -S --noconfirm --needed base-devel libx11 libxft xorg-server xorg-xinit network-manager-applet mate-polkit numlockx archlinux-xdg-menu
+
+    pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot 
+fi
+runuser -l "$USERNAME" -c "
+cd /home/$USERNAME
+    git clone https://github.com/DeluxerPanda/dwm.git
+    cd dwm
+    sudo make clean install
+    cd ..
+    rm -rf dwm
+
+    git clone https://github.com/DeluxerPanda/st.git
+    cd st
+    sudo make clean install
+    cd ..
+    rm -rf st
+
+    mkdir -p /home/$USERNAME/Bilder/backgrounds
+    wget -O /home/$USERNAME/Bilder/backgrounds/wallpaper.jpg "https://lh3.googleusercontent.com/pw/AP1GczNr22gSNbdSNq_08trKdHkkswDq1k2PuefBqriaPp86lshFr10RjFqKQ_phn0187riksWgh-ouqn_6-MkHwVb5nIpyCaiH34WCOIywCis8X39gV3q3Fsy_9HZO-he7gxYnjbt7zulTazkiIj4qxyBjY"
+"
+
+echo -ne "
+-------------------------------------------------------------------------
+                     KDE Plasma
+-------------------------------------------------------------------------
+"
+if [[ "$ENV" == "Env_Kde" ]]; then
+sudo pacman -S --needed --noconfirm plasma konsole kate gwenview ark
+pacman -S --noconfirm --needed sddm-kcm vlc
 fi
 
 echo -ne "
@@ -534,6 +648,13 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 
+# Final Setup and Configurations
+# GRUB EFI Bootloader Install & Check
+
+if [[ -d "/sys/firmware/efi" ]]; then
+    grub-install --efi-directory=/boot ${DISK} --removable
+fi
+
 # set kernel parameter for adding splash screen
 sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[^"]*/& splash /' /etc/default/grub
 
@@ -541,6 +662,35 @@ sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[^"]*/& splash /' /etc/default/grub
 sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)quiet\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1\2"/' /etc/default/grub
 
 sed -i '/^GRUB_TIMEOUT=/c\GRUB_TIMEOUT=30' /etc/default/grub
+
+
+
+if [[ "$GRUBTHEME" == "CartoonGirl" ]]; then
+        mkdir -p "/boot/grub/themes/CartoonGirl"
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/autostart/config/Grub/CartoonGirl.tar.gz -O /boot/grub/themes/CartoonGirl.tar.gz
+        tar --no-same-owner -xzf /boot/grub/themes/CartoonGirl.tar.gz -C /boot/grub/themes/CartoonGirl --strip-components=1
+        rm /boot/grub/themes/CartoonGirl.tar.gz
+        sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/CartoonGirl/theme.txt"|' /etc/default/grub
+elif [[ "$GRUBTHEME" == "Aesthetic" ]]; then
+        mkdir -p "/boot/grub/themes/Aesthetic"
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/autostart/config/Grub/Aesthetic.tar.gz -O /boot/grub/themes/Aesthetic.tar.gz
+        tar --no-same-owner -xzf /boot/grub/themes/Aesthetic.tar.gz -C /boot/grub/themes/Aesthetic --strip-components=1
+        rm /boot/grub/themes/Aesthetic.tar.gz
+        sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/Aesthetic/theme.txt"|' /etc/default/grub
+elif [[ "$GRUBTHEME" == "fallout" ]]; then
+        mkdir -p "/boot/grub/themes/fallout"
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/autostart/config/Grub/fallout.tar.gz -O /boot/grub/themes/fallout.tar.gz
+        tar --no-same-owner -xzf /boot/grub/themes/fallout.tar.gz -C /boot/grub/themes/fallout --strip-components=1
+        rm /boot/grub/themes/fallout.tar.gz
+        sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/fallout/theme.txt"|' /etc/default/grub
+elif [[ "$GRUBTHEME" == "StardewValley" ]]; then
+        mkdir -p "/boot/grub/themes/StardewValley"
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/autostart/config/Grub/StardewValley.tar.gz -O /boot/grub/themes/StardewValley.tar.gz
+        tar --no-same-owner -xzf /boot/grub/themes/StardewValley.tar.gz -C /boot/grub/themes/StardewValley --strip-components=1
+        rm /boot/grub/themes/StardewValley.tar.gz
+        sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/StardewValley/theme.txt"|' /etc/default/grub
+fi
+
 
 echo -e "Updating grub..."
 
@@ -555,6 +705,7 @@ fi
 
     echo -e "All set!"
 
+
 echo -ne "
 -------------------------------------------------------------------------
                      Aktivera viktiga tjänster
@@ -568,6 +719,13 @@ systemctl disable dhcpcd.service
 echo "  DHCP disabled"
 systemctl enable NetworkManager.service
 echo "  NetworkManager enabled"
+systemctl enable sddm.service
+echo "  sddm enabled"
+
+if lsusb | grep -q "Razer"; then
+    sudo systemctl enable openrazer-daemon
+    echo "  openrazer enabled"
+fi
 
 echo -ne "
 -------------------------------------------------------------------------
@@ -585,7 +743,8 @@ EOF
 clear
 logo
 echo -ne "
--------------------------------------------------------------------------
                      Installation klar!
+
+Du kan nu starta om datorn och logga in på ditt nya Arch Linux-system!
 -------------------------------------------------------------------------
 "
