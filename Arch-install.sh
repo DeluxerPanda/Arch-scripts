@@ -237,7 +237,7 @@ setupEnv () {
     esac 
 }
 
-setupFastfetch(){
+setupFastfetch () {
         echo -ne "  
     -----------------------------------------------------------------------
                         Välj ett Fastfetch tema                    
@@ -261,7 +261,7 @@ setupFastfetch(){
     esac
 }
 
-setupStarship(){
+setupStarship () {
         echo -ne "  
     -----------------------------------------------------------------------
                         Välj ett Starship tema                    
@@ -280,12 +280,11 @@ setupStarship(){
         export STARSHIP_TEMA="StarshipTema_NON-BINARY";;
         2) 
         export STARSHIP_TEMA="none";;
-        ;;
         *) echo "Fel alternativ. Försök igen."; setupStarship;;
     esac
 }
 
-setupStarshipEmoji(){
+setupStarshipEmoji () {
     clear
         echo -ne "  
     -----------------------------------------------------------------------
@@ -321,13 +320,11 @@ setupStarshipEmoji(){
         export STARSHIP_EMOJI="StarshipEmoji_ANNANAS";;
         8)
         export STARSHIP_TEMA="none";;
-        ;;
         *) echo "Fel alternativ. Försök igen."; setupStarshipEmoji;;
     esac
 }
 
 setupGrub () {
-    clear
     echo -ne "  
     -----------------------------------------------------------------------
                         Välj ett grub tema                    
