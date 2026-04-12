@@ -237,6 +237,96 @@ setupEnv () {
     esac 
 }
 
+setupFastfetch(){
+        echo -ne "  
+    -----------------------------------------------------------------------
+                        Välj ett Fastfetch tema                    
+    -----------------------------------------------------------------------
+    1) Transgender Flagga
+    2) Non-binary Flagga
+    3) inget tema
+    -----------------------------------------------------------------------
+    "
+    options=("Transgender Flag" "Nonbinary Flag" "inget tema")
+    select_option "${options[@]}"
+
+    case $? in
+        0)
+        export STARSHIP_FASTFETCH="FASTFETCH_TRANSGENDER_FLAGGA";;
+        1)
+        export STARSHIP_FASTFETCH="FASTFETCH_NON-BINARY-FLAGGA";;
+        2) 
+        export STARSHIP_FASTFETCH="none";;
+        ;;
+        *) echo "Fel alternativ. Försök igen."; setupFastfetch;;
+    esac
+}
+
+setupStarship(){
+        echo -ne "  
+    -----------------------------------------------------------------------
+                        Välj ett Starship tema                    
+    -----------------------------------------------------------------------
+    1) Transgender
+    2) Non-binary
+    3) inget tema
+    -----------------------------------------------------------------------
+    "
+    options=("Transgender Flag" "Nonbinary Flag" "inget tema")
+    select_option "${options[@]}"
+    case $? in
+        0)
+        export STARSHIP_TEMA="StarshipTema_TRANSGENDER";;
+        1)
+        export STARSHIP_TEMA="StarshipTema_NON-BINARY";;
+        2) 
+        export STARSHIP_TEMA="none";;
+        ;;
+        *) echo "Fel alternativ. Försök igen."; setupStarship;;
+    esac
+}
+
+setupStarshipEmoji(){
+    clear
+        echo -ne "  
+    -----------------------------------------------------------------------
+                        Välj ett Starship Emoji                    
+    -----------------------------------------------------------------------
+    "
+    options=("🐼 [Panda] (Standard)" "😺 [Katt]" "🐧 [Pingvin]" "🦄 [Enhörning]" "🦊 [Räv]" "🦉 [Ugla]" "🐝 [bi]" "🍍 [Ananas]")
+    select_option "${options[@]}"
+
+    case $? in
+        0)
+        export STARSHIP_EMOJI="StarshipEmoji_PANDA";;
+        ;;
+        1)
+                export STARSHIP_EMOJI="StarshipEmoji_kATT";;
+        ;;
+        2) 
+                export STARSHIP_EMOJI="StarshipEmoji_PINGVIN";;
+        ;;
+        3) 
+                export STARSHIP_EMOJI="StarshipEmoji_ENHÖRNING";;
+        ;;
+        4) 
+                export STARSHIP_EMOJI="StarshipEmoji_RÄV";;
+        ;;
+        5) 
+                export STARSHIP_EMOJI="StarshipEmoji_UGLA";;
+        ;;
+        6) 
+                export STARSHIP_EMOJI="StarshipEmoji_BI";;
+        ;;
+        7) 
+        export STARSHIP_EMOJI="StarshipEmoji_ANNANAS";;
+        8)
+        export STARSHIP_TEMA="none";;
+        ;;
+        *) echo "Fel alternativ. Försök igen."; setupStarshipEmoji;;
+    esac
+}
+
 setupGrub () {
     clear
     echo -ne "  
@@ -298,6 +388,15 @@ userinfo
 clear
 logo
 setupEnv
+clear
+logo
+setupFastfetch
+clear
+logo
+setupStarship
+clear
+logo
+setupStarshipEmoji
 clear
 logo
 setupGrub
@@ -595,6 +694,82 @@ if lsusb | grep -q "GoXLRMini"; then
 fi
 
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O /home/$USERNAME/.bashrc
+
+echo -ne "
+-------------------------------------------------------------------------
+                       FastFetch
+-------------------------------------------------------------------------
+"
+
+if [[ "$STARSHIP_FASTFETCH" == "FASTFETCH_TRANSGENDER_FLAGGA" ]]; then
+        sudo pacman -S --needed --noconfirm fastfetch
+        mkdir -p /home/$USERNAME/.config/fastfetch
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/transgender/config.jsonc -O /home/$USERNAME/.config/fastfetch/config.jsonc
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/transgender/trans.txt -O /home/$USERNAME/.config/fastfetch/trans.txt
+elif [[ "$STARSHIP_FASTFETCH" == "FASTFETCH_NON-BINARY-FLAGGA" ]]; then
+        sudo pacman -S --needed --noconfirm fastfetch
+        mkdir -p /home/$USERNAME/.config/fastfetch
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/nonbinary/config.jsonc -O /home/$USERNAME/.config/fastfetch/config.jsonc
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/nonbinary/nonbinary.txt -O /home/$USERNAME/.config/fastfetch/nonbinary.txt
+fi
+
+echo -ne "
+-------------------------------------------------------------------------
+                       Starship Tema
+-------------------------------------------------------------------------
+"
+
+if [[ "$STARSHIP_TEMA" == "StarshipTema_TRANSGENDER" ]]; then
+        sudo pacman -S --needed --noconfirm starship
+        mkdir -p /home/$USERNAME/.config
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/transgender/starship.toml -O /home/$USERNAME/.config/starship.toml
+        2) 
+elif [[ "$STARSHIP_TEMA" == "StarshipTema_TRANSGENDER" ]]; then
+        sudo pacman -S --needed --noconfirm starship
+        mkdir -p /home/$USERNAME/.config
+        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/nonbinary/starship.toml -O /home/$USERNAME/.config/starship.toml
+fi
+
+echo -ne "
+-------------------------------------------------------------------------
+                       Starship Emoji
+-------------------------------------------------------------------------
+"
+
+if [[ "$STARSHIP_EMOJI" == "StarshipEmoji_PANDA" ]]; then
+        sudo pacman -S --needed --noconfirm starship
+        mkdir -p /home/$USERNAME/.config
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐼](\$style)'|" "$HOME/.config/starship.toml"
+elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_kATT" ]]; then
+        sudo pacman -S --needed --noconfirm starship
+        mkdir -p /home/$USERNAME/.config
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[😺](\$style)'|" "$HOME/.config/starship.toml"
+elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_PINGViN" ]]; then
+        sudo pacman -S --needed --noconfirm starship
+        mkdir -p /home/$USERNAME/.config
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐧](\$style)'|" "$HOME/.config/starship.toml"
+elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_ENHÖRNInG" ]]; then
+        sudo pacman -S --needed --noconfirm starship
+        mkdir -p /home/$USERNAME/.config
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦄](\$style)'|" "$HOME/.config/starship.toml"
+elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_RÄV" ]]; then
+        sudo pacman -S --needed --noconfirm starship
+        mkdir -p /home/$USERNAME/.config
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦊](\$style)'|" "$HOME/.config/starship.toml"
+elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_UGLA" ]]; then
+        sudo pacman -S --needed --noconfirm starship
+        mkdir -p /home/$USERNAME/.config
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦉](\$style)'|" "$HOME/.config/starship.toml"
+elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_BI" ]]; then
+        sudo pacman -S --needed --noconfirm starship
+        mkdir -p /home/$USERNAME/.config
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐝](\$style)'|" "$HOME/.config/starship.toml"
+elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_ANNANAS" ]]; then
+        sudo pacman -S --needed --noconfirm starship
+        mkdir -p /home/$USERNAME/.config
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🍍](\$style)'|" "$HOME/.config/starship.toml"
+fi
+
 "
 echo -ne "
 -------------------------------------------------------------------------
@@ -659,25 +834,25 @@ sed -i '/^GRUB_TIMEOUT=/c\GRUB_TIMEOUT=30' /etc/default/grub
 
 if [[ "$GRUBTHEME" == "CartoonGirl" ]]; then
         mkdir -p "/boot/grub/themes/CartoonGirl"
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/autostart/config/Grub/CartoonGirl.tar.gz -O /boot/grub/themes/CartoonGirl.tar.gz
+        wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/config/Grub/CartoonGirl.tar.gz -O /boot/grub/themes/CartoonGirl.tar.gz
         tar --no-same-owner -xzf /boot/grub/themes/CartoonGirl.tar.gz -C /boot/grub/themes/CartoonGirl --strip-components=1
         rm /boot/grub/themes/CartoonGirl.tar.gz
         sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/CartoonGirl/theme.txt"|' /etc/default/grub
 elif [[ "$GRUBTHEME" == "Aesthetic" ]]; then
         mkdir -p "/boot/grub/themes/Aesthetic"
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/autostart/config/Grub/Aesthetic.tar.gz -O /boot/grub/themes/Aesthetic.tar.gz
+        wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/config/Grub/Aesthetic.tar.gz -O /boot/grub/themes/Aesthetic.tar.gz
         tar --no-same-owner -xzf /boot/grub/themes/Aesthetic.tar.gz -C /boot/grub/themes/Aesthetic --strip-components=1
         rm /boot/grub/themes/Aesthetic.tar.gz
         sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/Aesthetic/theme.txt"|' /etc/default/grub
 elif [[ "$GRUBTHEME" == "fallout" ]]; then
         mkdir -p "/boot/grub/themes/fallout"
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/autostart/config/Grub/fallout.tar.gz -O /boot/grub/themes/fallout.tar.gz
+        wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/config/Grub/fallout.tar.gz -O /boot/grub/themes/fallout.tar.gz
         tar --no-same-owner -xzf /boot/grub/themes/fallout.tar.gz -C /boot/grub/themes/fallout --strip-components=1
         rm /boot/grub/themes/fallout.tar.gz
         sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/fallout/theme.txt"|' /etc/default/grub
 elif [[ "$GRUBTHEME" == "StardewValley" ]]; then
         mkdir -p "/boot/grub/themes/StardewValley"
-        wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/autostart/config/Grub/StardewValley.tar.gz -O /boot/grub/themes/StardewValley.tar.gz
+        wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/config/Grub/StardewValley.tar.gz -O /boot/grub/themes/StardewValley.tar.gz
         tar --no-same-owner -xzf /boot/grub/themes/StardewValley.tar.gz -C /boot/grub/themes/StardewValley --strip-components=1
         rm /boot/grub/themes/StardewValley.tar.gz
         sed -i 's|^#\?GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/StardewValley/theme.txt"|' /etc/default/grub
