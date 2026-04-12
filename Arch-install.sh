@@ -637,7 +637,7 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 
-pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire dunst
+pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire dunst starship
 pacman -S --noconfirm --needed pavucontrol sddm dolphin
 pacman -S --noconfirm --needed steam gamescope prismlauncher
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
@@ -652,7 +652,7 @@ fi
 mkdir -p /home/$USERNAME
 chown $USERNAME:$USERNAME /home/$USERNAME
 
-runuser -l "$USERNAME" -c "
+runuser -l "$USERNAME" -c '
 cd /home/$USERNAME
 git clone https://aur.archlinux.org/yay.git
 cd yay
@@ -684,41 +684,21 @@ fi
 
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O /home/$USERNAME/.bashrc
 
-echo -ne "
--------------------------------------------------------------------------
-                       FastFetch
--------------------------------------------------------------------------
-"
-
 if [[ "$STARSHIP_FASTFETCH" == "FASTFETCH_TRANSGENDER_FLAGGA" ]]; then
-        sudo pacman -S --needed --noconfirm fastfetch
-        mkdir -p /home/$USERNAME/.config/fastfetch
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/transgender/config.jsonc -O /home/$USERNAME/.config/fastfetch/config.jsonc
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/transgender/trans.txt -O /home/$USERNAME/.config/fastfetch/trans.txt
 elif [[ "$STARSHIP_FASTFETCH" == "FASTFETCH_NON-BINARY-FLAGGA" ]]; then
-        sudo pacman -S --needed --noconfirm fastfetch
-        mkdir -p /home/$USERNAME/.config/fastfetch
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/nonbinary/config.jsonc -O /home/$USERNAME/.config/fastfetch/config.jsonc
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/fastfetch/nonbinary/nonbinary.txt -O /home/$USERNAME/.config/fastfetch/nonbinary.txt
 fi
 
-echo -ne "
--------------------------------------------------------------------------
-                       Starship Tema
--------------------------------------------------------------------------
-"
-
 if [[ "$STARSHIP_TEMA" == "StarshipTema_TRANSGENDER" ]]; then
-        sudo pacman -S --needed --noconfirm starship
-        mkdir -p /home/$USERNAME/.config
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/transgender/starship.toml -O /home/$USERNAME/.config/starship.toml
         2) 
 elif [[ "$STARSHIP_TEMA" == "StarshipTema_TRANSGENDER" ]]; then
-        sudo pacman -S --needed --noconfirm starship
-        mkdir -p /home/$USERNAME/.config
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/nonbinary/starship.toml -O /home/$USERNAME/.config/starship.toml
 fi
-
+'
 echo -ne "
 -------------------------------------------------------------------------
                        Starship Emoji
@@ -726,40 +706,23 @@ echo -ne "
 "
 
 if [[ "$STARSHIP_EMOJI" == "StarshipEmoji_PANDA" ]]; then
-        sudo pacman -S --needed --noconfirm starship
-        mkdir -p /home/$USERNAME/.config
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐼](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_kATT" ]]; then
-        sudo pacman -S --needed --noconfirm starship
-        mkdir -p /home/$USERNAME/.config
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[😺](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_PINGViN" ]]; then
-        sudo pacman -S --needed --noconfirm starship
-        mkdir -p /home/$USERNAME/.config
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐧](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_ENHÖRNInG" ]]; then
-        sudo pacman -S --needed --noconfirm starship
-        mkdir -p /home/$USERNAME/.config
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦄](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_RÄV" ]]; then
-        sudo pacman -S --needed --noconfirm starship
-        mkdir -p /home/$USERNAME/.config
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦊](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_UGLA" ]]; then
-        sudo pacman -S --needed --noconfirm starship
-        mkdir -p /home/$USERNAME/.config
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦉](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_BI" ]]; then
-        sudo pacman -S --needed --noconfirm starship
-        mkdir -p /home/$USERNAME/.config
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐝](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_ANNANAS" ]]; then
-        sudo pacman -S --needed --noconfirm starship
-        mkdir -p /home/$USERNAME/.config
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🍍](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 fi
 
-"
 echo -ne "
 -------------------------------------------------------------------------
                      DWM
@@ -769,7 +732,7 @@ if [[ "$ENV" == "Env_DWM" ]]; then
     pacman -S --noconfirm --needed libx11 libxft xorg-server xorg-xinit network-manager-applet mate-polkit numlockx archlinux-xdg-menu
 
     pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot 
-fi
+
 runuser -l "$USERNAME" -c "
 cd /home/$USERNAME
     git clone https://github.com/DeluxerPanda/dwm.git
@@ -787,6 +750,7 @@ cd /home/$USERNAME
     mkdir -p /home/$USERNAME/Bilder/backgrounds
     wget -O /home/$USERNAME/Bilder/backgrounds/wallpaper.jpg "https://lh3.googleusercontent.com/pw/AP1GczNr22gSNbdSNq_08trKdHkkswDq1k2PuefBqriaPp86lshFr10RjFqKQ_phn0187riksWgh-ouqn_6-MkHwVb5nIpyCaiH34WCOIywCis8X39gV3q3Fsy_9HZO-he7gxYnjbt7zulTazkiIj4qxyBjY"
 "
+fi
 
 echo -ne "
 -------------------------------------------------------------------------
