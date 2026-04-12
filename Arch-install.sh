@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ ! -t 0 ] && [ -t 1 ]; then
+    exec bash "$0" "$@"
+fi
+
 # Redirect stdout and stderr to archsetup.txt and still output to console
 exec > >(tee -i archsetup.txt)
 exec 2>&1
