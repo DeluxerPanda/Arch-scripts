@@ -652,7 +652,7 @@ fi
 mkdir -p /home/$USERNAME
 chown $USERNAME:$USERNAME /home/$USERNAME
 
-runuser -l "$USERNAME" -c '
+runuser -l "$USERNAME" -c "
 cd /home/$USERNAME
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
@@ -759,7 +759,7 @@ elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_ANNANAS" ]]; then
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🍍](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 fi
 
-'
+"
 echo -ne "
 -------------------------------------------------------------------------
                      DWM
