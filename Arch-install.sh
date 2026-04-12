@@ -564,7 +564,7 @@ fi
 mkdir -p /home/$USERNAME
 chown $USERNAME:$USERNAME /home/$USERNAME
 
-runuser -l "$USERNAME" -c '
+runuser -l "$USERNAME" -c "
 cd /home/$USERNAME
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
@@ -595,7 +595,7 @@ if lsusb | grep -q "GoXLRMini"; then
 fi
 
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O /home/$USERNAME/.bashrc
-'
+"
 echo -ne "
 -------------------------------------------------------------------------
                      DWM
