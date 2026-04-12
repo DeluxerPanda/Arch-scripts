@@ -652,7 +652,7 @@ fi
 mkdir -p /home/$USERNAME
 chown $USERNAME:$USERNAME /home/$USERNAME
 
-runuser -l "$USERNAME" -c "
+runuser -l "$USERNAME" -c '
 cd /home/$USERNAME
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
@@ -728,38 +728,38 @@ echo -ne "
 if [[ "$STARSHIP_EMOJI" == "StarshipEmoji_PANDA" ]]; then
         sudo pacman -S --needed --noconfirm starship
         mkdir -p /home/$USERNAME/.config
-        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐼](\$style)'|" "$HOME/.config/starship.toml"
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐼](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_kATT" ]]; then
         sudo pacman -S --needed --noconfirm starship
         mkdir -p /home/$USERNAME/.config
-        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[😺](\$style)'|" "$HOME/.config/starship.toml"
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[😺](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_PINGViN" ]]; then
         sudo pacman -S --needed --noconfirm starship
         mkdir -p /home/$USERNAME/.config
-        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐧](\$style)'|" "$HOME/.config/starship.toml"
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐧](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_ENHÖRNInG" ]]; then
         sudo pacman -S --needed --noconfirm starship
         mkdir -p /home/$USERNAME/.config
-        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦄](\$style)'|" "$HOME/.config/starship.toml"
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦄](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_RÄV" ]]; then
         sudo pacman -S --needed --noconfirm starship
         mkdir -p /home/$USERNAME/.config
-        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦊](\$style)'|" "$HOME/.config/starship.toml"
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦊](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_UGLA" ]]; then
         sudo pacman -S --needed --noconfirm starship
         mkdir -p /home/$USERNAME/.config
-        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦉](\$style)'|" "$HOME/.config/starship.toml"
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦉](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_BI" ]]; then
         sudo pacman -S --needed --noconfirm starship
         mkdir -p /home/$USERNAME/.config
-        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐝](\$style)'|" "$HOME/.config/starship.toml"
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐝](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_ANNANAS" ]]; then
         sudo pacman -S --needed --noconfirm starship
         mkdir -p /home/$USERNAME/.config
-        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🍍](\$style)'|" "$HOME/.config/starship.toml"
+        sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🍍](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 fi
 
-"
+'
 echo -ne "
 -------------------------------------------------------------------------
                      DWM
