@@ -766,7 +766,7 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 if [[ "$ENV" == "Env_DWM" ]]; then
-    pacman -S --noconfirm --needed base-devel libx11 libxft xorg-server xorg-xinit network-manager-applet mate-polkit numlockx archlinux-xdg-menu
+    pacman -S --noconfirm --needed libx11 libxft xorg-server xorg-xinit network-manager-applet mate-polkit numlockx archlinux-xdg-menu
 
     pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot 
 fi
