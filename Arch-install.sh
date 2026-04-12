@@ -87,10 +87,10 @@ select_option() {
         last_selected=$selected
 
         # Read user input
-        read -rsn1 key
+        read -rsn1 key < /dev/tty
         case $key in
             $'\x1b') # ESC sequence
-                read -rsn2 -t 0.1 key
+                read -rsn2 -t 0.1 key < /dev/tty
                 case $key in
                     '[A') # Up arrow
                         ((selected--))
@@ -171,7 +171,7 @@ userinfo () {
     # Loop through user input until the user gives a valid username
     while true
     do
-            read -r -p "Ange användarnamn: " username
+            read -r -p "Ange användarnamn: " username < /dev/tty
             if [[ "${username,,}" =~ ^[a-z_]([a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\$)$ ]]
             then
                     break
@@ -185,9 +185,9 @@ userinfo () {
     do
         echo "**OBS! Lösenordet kommer inte att visas när du skriver det, så var noga med att skriva det korrekt.**"
         echo "**OBS! Använd inte numpadstangenterna just nu!**"
-        read -rs -p "Ange lösenord: " PASSWORD1
+        read -rs -p "Ange lösenord: " PASSWORD1 < /dev/tty
         echo -ne "\n"
-        read -rs -p "Ange lösenord igen: " PASSWORD2
+        read -rs -p "Ange lösenord igen: " PASSWORD2 < /dev/tty
         echo -ne "\n"
         if [[ "$PASSWORD1" == "$PASSWORD2" ]]; then
             break
@@ -201,14 +201,14 @@ userinfo () {
      # Loop through user input until the user gives a valid hostname, but allow the user to force save
     while true
     do
-            read -r -p "Namnge din dator: " name_of_machine
+            read -r -p "Namnge din dator: " name_of_machine < /dev/tty
             # hostname regex (!!couldn't find spec for computer name!!)
             if [[ "${name_of_machine,,}" =~ ^[a-z][a-z0-9_.-]{0,62}[a-z0-9]$ ]]
             then
                     break
             fi
             # if validation fails allow the user to force saving of the hostname
-            read -r -p "namnet verkar inte vara korrekt. Vill du fortfarande använda det?? (y/n)" force
+            read -r -p "namnet verkar inte vara korrekt. Vill du fortfarande använda det?? (y/n)" force < /dev/tty
             if [[ "${force,,}" = "y" ]]
             then
                     break
