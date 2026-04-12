@@ -257,7 +257,6 @@ setupFastfetch(){
         export STARSHIP_FASTFETCH="FASTFETCH_NON-BINARY-FLAGGA";;
         2) 
         export STARSHIP_FASTFETCH="none";;
-        ;;
         *) echo "Fel alternativ. Försök igen."; setupFastfetch;;
     esac
 }
