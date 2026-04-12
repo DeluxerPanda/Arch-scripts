@@ -654,11 +654,11 @@ chown $USERNAME:$USERNAME /home/$USERNAME
 
 runuser -l "$USERNAME" -c "
 cd /home/$USERNAME
-git clone https://aur.archlinux.org/yay-bin.git
-cd yay-bin
+git clone https://aur.archlinux.org/yay.git
+cd yay
 makepkg --noconfirm -si
 cd ..
-rm -rf yay-bin
+rm -rf yay
 yay -S --sudoloop --noconfirm --needed librewolf-bin
 
 if lsusb | grep -q "Razer"; then
