@@ -352,6 +352,9 @@ echo -ne "
 createsubvolumes () {
     btrfs subvolume create /mnt/@
     btrfs subvolume create /mnt/@home
+    # Set @ as the default subvolume so genfstab records subvolid=256 (not 5)
+    # Path form requires btrfs-progs >= 5.6 (standard on Arch rolling)
+    btrfs subvolume set-default /mnt/@
 }
 
 # @description Mount all btrfs subvolumes after root has been mounted.
@@ -425,26 +428,6 @@ echo -ne "
 if [[ ! -d "/sys/firmware/efi" ]]; then
     grub-install --boot-directory=/mnt/boot "${DISK}" --removable
 fi
-echo -ne "
--------------------------------------------------------------------------
-                    Kontrollerar system med lågt minne <8GB
--------------------------------------------------------------------------
-"
-TOTAL_MEM=$(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')
-if [[  $TOTAL_MEM -lt 8000000 ]]; then
-    # Put swap into the actual system, not into RAM disk, otherwise there is no point in it, it'll cache RAM into RAM. So, /mnt/ everything.
-    mkdir -p /mnt/opt/swap # make a dir that we can apply NOCOW to to make it btrfs-friendly.
-    if findmnt -n -o FSTYPE /mnt | grep -q btrfs; then
-        chattr +C /mnt/opt/swap # apply NOCOW, btrfs needs that.
-    fi
-    dd if=/dev/zero of=/mnt/opt/swap/swapfile bs=1M count=2048 status=progress
-    chmod 600 /mnt/opt/swap/swapfile # set permissions.
-    chown root /mnt/opt/swap/swapfile
-    mkswap /mnt/opt/swap/swapfile
-    swapon /mnt/opt/swap/swapfile
-    # The line below is written to /mnt/ but doesn't contain /mnt/, since it's just / for the system itself.
-    echo "/opt/swap/swapfile    none    swap    sw    0    0" >> /mnt/etc/fstab # Add swap to fstab, so it KEEPS working after installation.
-fi
 
 gpu_type=$(lspci | grep -E "VGA|3D|Display")
 
@@ -508,6 +491,7 @@ sed -i 's/^#Color/Color\nILoveCandy/' /etc/pacman.conf
 # Enable multilib
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 pacman -Sy --noconfirm --needed
+
 
 echo -ne "
 -------------------------------------------------------------------------
@@ -626,7 +610,7 @@ if [[ "$ENV" == "Env_DWM" ]]; then
 
     pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot 
 fi
-runuser -l "$USERNAME" -c '
+runuser -l "$USERNAME" -c "
 cd /home/$USERNAME
     git clone https://github.com/DeluxerPanda/dwm.git
     cd dwm
@@ -642,7 +626,7 @@ cd /home/$USERNAME
 
     mkdir -p /home/$USERNAME/Bilder/backgrounds
     wget -O /home/$USERNAME/Bilder/backgrounds/wallpaper.jpg "https://lh3.googleusercontent.com/pw/AP1GczNr22gSNbdSNq_08trKdHkkswDq1k2PuefBqriaPp86lshFr10RjFqKQ_phn0187riksWgh-ouqn_6-MkHwVb5nIpyCaiH34WCOIywCis8X39gV3q3Fsy_9HZO-he7gxYnjbt7zulTazkiIj4qxyBjY"
-'
+"
 
 echo -ne "
 -------------------------------------------------------------------------
