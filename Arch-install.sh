@@ -1,9 +1,5 @@
 #!/bin/bash
 
-if [ ! -t 0 ] && [ -t 1 ]; then
-    exec bash "$0" "$@"
-fi
-
 # Redirect stdout and stderr to archsetup.txt and still output to console
 exec > >(tee -i archsetup.txt)
 exec 2>&1
@@ -448,13 +444,9 @@ systemctl enable NetworkManager
 pacman -S --noconfirm --needed pacman-contrib curl terminus-font
 pacman -S --noconfirm --needed rsync grub arch-install-scripts git ntp wget
 
-nc=$(grep -c ^"cpu cores" /proc/cpuinfo)
-
-TOTAL_MEM=$(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')
-if [[  $TOTAL_MEM -gt 8000000 ]]; then
-sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j$nc\"/g" /etc/makepkg.conf
-sed -i "s/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T $nc -z -)/g" /etc/makepkg.conf
-fi
+NUM_CORES=$(nproc)
+sed -i "s/#MAKEFLAGS=\"-j\"/MAKEFLAGS=\"-j$NUM_CORES\"/g" /etc/makepkg.conf
+sed -i "s/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T $NUM_CORES -z -)/g" /etc/makepkg.conf
 
 echo -ne "
 -------------------------------------------------------------------------
