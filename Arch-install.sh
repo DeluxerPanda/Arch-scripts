@@ -644,7 +644,7 @@ pacman -S --noconfirm --needed pavucontrol sddm dolphin
 pacman -S --noconfirm --needed steam gamescope prismlauncher
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
 pacman -S --noconfirm --needed unrar unzip zip xdg-user-dirs ffmpeg
-xdg-user-dirs-update --force
+LC_ALL=sv_SE.UTF-8 xdg-user-dirs-update --force
 
 
 if lsusb | grep -q "Razer"; then
