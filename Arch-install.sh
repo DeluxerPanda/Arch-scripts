@@ -659,7 +659,7 @@ echo -ne "
 pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire pipewire-pulse pipewire-alsa dunst starship fastfetch
 pacman -S --noconfirm --needed pavucontrol sddm dolphin kdeconnect
 pacman -S --noconfirm --needed steam gamescope prismlauncher
-pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
+pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji qt5ct qt6ct
 pacman -S --noconfirm --needed unrar unzip zip xdg-user-dirs ffmpeg
 
 
@@ -755,7 +755,7 @@ echo -ne "
 "
     pacman -S --noconfirm --needed libx11 libxft xorg-server xorg-xinit xorg-xset network-manager-applet mate-polkit numlockx archlinux-xdg-menu xclip
 
-    pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot 
+    pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot nwg-look
 
 runuser -l "$USERNAME" -c "
 cd /home/$USERNAME
