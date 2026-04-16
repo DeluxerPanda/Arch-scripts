@@ -736,7 +736,7 @@ echo -ne "
                      DWM
 -------------------------------------------------------------------------
 "
-    pacman -S --noconfirm --needed libx11 libxft xorg-server xorg-xinit network-manager-applet mate-polkit numlockx archlinux-xdg-menu xclip
+    pacman -S --noconfirm --needed libx11 libxft xorg-server xorg-xinit xorg-xset network-manager-applet mate-polkit numlockx archlinux-xdg-menu xclip
 
     pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot 
 
