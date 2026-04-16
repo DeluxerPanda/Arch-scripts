@@ -557,12 +557,13 @@ ln -sf /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
 loadkeys sv-latin1
 echo "KEYMAP=sv-latin1" > /etc/vconsole.conf
 echo "XKBLAYOUT=se" >> /etc/vconsole.conf
-setxkbmap se
-localectl --no-ask-password set-x11-keymap se
 
 # Default locale
 echo "LANG=sv_SE.UTF-8" > /etc/locale.conf
 echo "LC_TIME=sv_SE.UTF-8" >> /etc/locale.conf
+
+setxkbmap se
+localectl --no-ask-password set-x11-keymap se
 
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
@@ -644,7 +645,6 @@ pacman -S --noconfirm --needed pavucontrol sddm dolphin
 pacman -S --noconfirm --needed steam gamescope prismlauncher
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
 pacman -S --noconfirm --needed unrar unzip zip xdg-user-dirs ffmpeg
-LC_ALL=sv_SE.UTF-8 xdg-user-dirs-update --force
 
 
 if lsusb | grep -q "Razer"; then
@@ -653,8 +653,10 @@ fi
 
 mkdir -p /home/$USERNAME
 chown $USERNAME:$USERNAME /home/$USERNAME
+runuser -l "$USERNAME" -c 'LC_ALL=sv_SE.UTF-8 xdg-user-dirs-update --force'
 
 runuser -l "$USERNAME" -c '
+
 cd /home/$USERNAME
 git clone https://aur.archlinux.org/yay.git
 cd yay
@@ -734,7 +736,7 @@ echo -ne "
                      DWM
 -------------------------------------------------------------------------
 "
-    pacman -S --noconfirm --needed libx11 libxft xorg-server xorg-xinit network-manager-applet mate-polkit numlockx archlinux-xdg-menu
+    pacman -S --noconfirm --needed libx11 libxft xorg-server xorg-xinit network-manager-applet mate-polkit numlockx archlinux-xdg-menu xclip
 
     pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot 
 
