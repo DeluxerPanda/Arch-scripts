@@ -550,20 +550,36 @@ locale-gen
 # Time & locale
 timedatectl --no-ask-password set-timezone Europe/Stockholm
 timedatectl --no-ask-password set-ntp true
-localectl --no-ask-password set-locale LANG="sv_SE.UTF-8" LC_TIME="sv_SE.UTF-8"
+localectl --no-ask-password set-locale LANG=sv_SE.UTF-8 LC_TIME=sv_SE.UTF-8
 ln -sf /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
 
-# Console & keyboard
+# Console keyboard
 loadkeys sv-latin1
 echo "KEYMAP=sv-latin1" > /etc/vconsole.conf
-echo "XKBLAYOUT=se" >> /etc/vconsole.conf
 
-# Default locale
+# System locale
 echo "LANG=sv_SE.UTF-8" > /etc/locale.conf
 echo "LC_TIME=sv_SE.UTF-8" >> /etc/locale.conf
 
-setxkbmap se
-localectl --no-ask-password set-x11-keymap se
+# Global environmental variables
+echo "LANG=sv_SE.UTF-8" > /etc/environment
+echo "LC_ALL=sv_SE.UTF-8" >> /etc/environment
+
+# X11 keyboard layout
+mkdir -p /etc/X11/xorg.conf.d
+echo 'Section "InputClass"' > /etc/X11/xorg.conf.d/00-keyboard.conf
+echo '    Identifier "system-keyboard"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo '    MatchIsKeyboard "on"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo '    Option "XkbLayout" "se"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo 'EndSection' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+
+# SDDM locale
+mkdir -p /etc/sddm.conf.d
+echo '[General]' > /etc/sddm.conf.d/locale.conf
+echo 'InputMethod=' >> /etc/sddm.conf.d/locale.conf
+echo '' >> /etc/sddm.conf.d/locale.conf
+echo '[Locale]' >> /etc/sddm.conf.d/locale.conf
+echo 'Lang=sv_SE.UTF-8' >> /etc/sddm.conf.d/locale.conf
 
 # Add sudo no password rights
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
@@ -655,8 +671,6 @@ mkdir -p /home/$USERNAME
 chown $USERNAME:$USERNAME /home/$USERNAME
 
 runuser -l "$USERNAME" -c 'LC_ALL=sv_SE.UTF-8 xdg-user-dirs-update --force'
-
-runuser -l "$USERNAME" -c 'setxkbmap se'
 
 runuser -l "$USERNAME" -c '
 
