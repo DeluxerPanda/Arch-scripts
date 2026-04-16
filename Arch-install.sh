@@ -653,7 +653,10 @@ fi
 
 mkdir -p /home/$USERNAME
 chown $USERNAME:$USERNAME /home/$USERNAME
+
 runuser -l "$USERNAME" -c 'LC_ALL=sv_SE.UTF-8 xdg-user-dirs-update --force'
+
+runuser -l "$USERNAME" -c 'setxkbmap se'
 
 runuser -l "$USERNAME" -c '
 
@@ -757,6 +760,7 @@ cd /home/$USERNAME
     mkdir -p /home/$USERNAME/Bilder/backgrounds
     wget -O /home/$USERNAME/Bilder/backgrounds/wallpaper.jpg "https://lh3.googleusercontent.com/pw/AP1GczNr22gSNbdSNq_08trKdHkkswDq1k2PuefBqriaPp86lshFr10RjFqKQ_phn0187riksWgh-ouqn_6-MkHwVb5nIpyCaiH34WCOIywCis8X39gV3q3Fsy_9HZO-he7gxYnjbt7zulTazkiIj4qxyBjY"
 
+    mkdir -p /home/$USERNAME/.config/rofi
     wget -O /home/$USERNAME/.config/rofi/config.rasi "https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/rofi/config.rasi"
     mkdir -p /home/$USERNAME/.config/rofi/themes
     wget -O /home/$USERNAME/.config/rofi/themes/catppuccin-mocha.rasi "https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/rofi/themes/catppuccin-mocha.rasi"
