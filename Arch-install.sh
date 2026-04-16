@@ -549,16 +549,16 @@ locale-gen
 
 # Time & locale
 timedatectl --no-ask-password set-timezone Europe/Stockholm
-timedatectl --no-ask-password set-ntp 1
+timedatectl --no-ask-password set-ntp true
 localectl --no-ask-password set-locale LANG="sv_SE.UTF-8" LC_TIME="sv_SE.UTF-8"
 ln -sf /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
 
 # Console & keyboard
-localectl --no-ask-password set-keymap sv-latin1
-localectl --no-ask-password set-x11-keymap se pc105
 loadkeys sv-latin1
 echo "KEYMAP=sv-latin1" > /etc/vconsole.conf
 echo "XKBLAYOUT=se" >> /etc/vconsole.conf
+setxkbmap se
+localectl --no-ask-password set-x11-keymap se
 
 # Default locale
 echo "LANG=sv_SE.UTF-8" > /etc/locale.conf
@@ -648,7 +648,7 @@ xdg-user-dirs-update --force
 
 
 if lsusb | grep -q "Razer"; then
-    pacman -S --noconfirm --needed openrazer-daemon
+    sudo pacman -S --noconfirm --needed openrazer-daemon
 fi
 
 mkdir -p /home/$USERNAME
@@ -848,11 +848,9 @@ systemctl enable sddm.service
 echo "  sddm enabled"
 
 if lsusb | grep -q "Razer"; then
-    systemctl enable openrazer-daemon
+    sudo systemctl enable openrazer-daemon
     echo "  openrazer enabled"
 fi
-
-hwclock --systohc
 
 echo -ne "
 -------------------------------------------------------------------------
