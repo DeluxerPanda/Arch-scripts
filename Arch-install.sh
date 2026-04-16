@@ -726,12 +726,12 @@ elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_ANNANAS" ]]; then
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🍍](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 fi
 
+if [[ "$ENV" == "Env_DWM" ]]; then
 echo -ne "
 -------------------------------------------------------------------------
                      DWM
 -------------------------------------------------------------------------
 "
-if [[ "$ENV" == "Env_DWM" ]]; then
     pacman -S --noconfirm --needed libx11 libxft xorg-server xorg-xinit network-manager-applet mate-polkit numlockx archlinux-xdg-menu
 
     pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot 
@@ -755,12 +755,12 @@ cd /home/$USERNAME
 "
 fi
 
+if [[ "$ENV" == "Env_Kde" ]]; then
 echo -ne "
 -------------------------------------------------------------------------
                      KDE Plasma
 -------------------------------------------------------------------------
 "
-if [[ "$ENV" == "Env_Kde" ]]; then
 sudo pacman -S --needed --noconfirm plasma konsole kate gwenview ark
 pacman -S --noconfirm --needed sddm-kcm vlc
 fi
