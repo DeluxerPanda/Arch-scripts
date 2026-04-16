@@ -757,6 +757,7 @@ cd /home/$USERNAME
     mkdir -p /home/$USERNAME/Bilder/backgrounds
     wget -O /home/$USERNAME/Bilder/backgrounds/wallpaper.jpg "https://lh3.googleusercontent.com/pw/AP1GczNr22gSNbdSNq_08trKdHkkswDq1k2PuefBqriaPp86lshFr10RjFqKQ_phn0187riksWgh-ouqn_6-MkHwVb5nIpyCaiH34WCOIywCis8X39gV3q3Fsy_9HZO-he7gxYnjbt7zulTazkiIj4qxyBjY"
 "
+    touch /etc/environment
     cat >> /etc/environment <<'EOF'
 QT_QPA_PLATFORMTHEME=qt5ct
 GTK_THEME=Adwaita:dark
