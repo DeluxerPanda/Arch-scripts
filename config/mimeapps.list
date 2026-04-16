@@ -1,12 +1,12 @@
 [Default Applications]
-x-scheme-handler/http=firefox.desktop
-x-scheme-handler/https=firefox.desktop
-text/html=firefox.desktop
+x-scheme-handler/http=librewolf.desktop
+x-scheme-handler/https=librewolf.desktop
+text/html=librewolf.desktop
 text/plain=code.desktop
 inode/directory=pcmanfm.desktop
 image/png=feh.desktop
 image/jpeg=feh.desktop
-image/gif=firefox.desktop
+image/gif=librewolf.desktop
 image/webp=feh.desktop
 video/mp4=mpv.desktop
 video/x-matroska=mpv.desktop
@@ -21,9 +21,9 @@ application/x-bzip2=xarchiver.desktop
 application/x-xz=xarchiver.desktop
 application/x-7z-compressed=xarchiver.desktop
 application/x-rar=xarchiver.desktop
-application/pdf=firefox.desktop
-x-scheme-handler/about=firefox.desktop
-x-scheme-handler/unknown=firefox.desktop
+application/pdf=librewolf.desktop
+x-scheme-handler/about=librewolf.desktop
+x-scheme-handler/unknown=librewolf.desktop
 
 [Added Associations]
 text/plain=code-oss.desktop;

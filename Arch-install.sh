@@ -761,6 +761,7 @@ cd /home/$USERNAME
     mkdir -p /home/$USERNAME/.config/rofi/themes
     wget -O /home/$USERNAME/.config/rofi/themes/catppuccin-mocha.rasi "https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/rofi/themes/catppuccin-mocha.rasi"
     
+    wget -O /home/$USERNAME/.config/mimeapps.list "https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/mimeapps.list"
 "
     touch /etc/environment
     cat >> /etc/environment <<'EOF'
