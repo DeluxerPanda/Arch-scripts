@@ -764,10 +764,8 @@ cd /home/$USERNAME
     wget -O /home/$USERNAME/.config/mimeapps.list "https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/mimeapps.list"
 "
     touch /etc/environment
-    cat >> /etc/environment <<'EOF'
-QT_QPA_PLATFORMTHEME=qt5ct
-GTK_THEME=Adwaita:dark
-EOF
+    echo "QT_QPA_PLATFORMTHEME=qt5ct" >> /etc/environment
+    echo "GTK_THEME=Adwaita:dark" >> /etc/environment
 fi
 
 if [[ "$ENV" == "Env_Kde" ]]; then
