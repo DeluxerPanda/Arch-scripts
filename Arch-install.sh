@@ -642,10 +642,11 @@ echo -ne "
 "
 
 groupadd libvirt
+groupadd kvm
 groupadd plugdev
 groupadd docker
-useradd -m -G wheel,libvirt,plugdev,docker -s /bin/bash $USERNAME
-echo "$USERNAME created, home directory created, added to wheel and libvirt and plugdev and docker group, default shell set to /bin/bash"
+useradd -m -G wheel,libvirt,kvm,plugdev,docker -s /bin/bash $USERNAME
+echo "$USERNAME created, home directory created, added to wheel and libvirt and kvm and plugdev and docker group, default shell set to /bin/bash"
 echo "$USERNAME:$PASSWORD" | chpasswd
 echo "$USERNAME password set"
 echo $NAME_OF_MACHINE > /etc/hostname
@@ -657,11 +658,22 @@ echo -ne "
 "
 
 pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire pipewire-pulse pipewire-alsa dunst starship fastfetch
-pacman -S --noconfirm --needed pavucontrol sddm dolphin kdeconnect flatpak
+pacman -S --noconfirm --needed pavucontrol sddm kdeconnect flatpak
 pacman -S --noconfirm --needed steam gamescope prismlauncher
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji qt5ct qt6ct
 pacman -S --noconfirm --needed unrar unzip zip xdg-user-dirs ffmpeg
 
+wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-sddm.tar.gz -O /usr/share/sddm/themes/catppuccin-frappe-pink-sddm.tar.gz
+tar --no-same-owner -xzf /usr/share/sddm/themes/catppuccin-frappe-pink-sddm.tar.gz -C /usr/share/sddm/themes/catppuccin-frappe-pink-sddm --strip-components=1
+rm /usr/share/sddm/themes/catppuccin-frappe-pink-sddm.tar.gz
+
+touch /etc/sddm.conf
+echo "[Theme]" > /etc/sddm.conf
+echo "Current=catppuccin-frappe-pink" > /etc/sddm.conf
+
+touch /etc/sddm.conf.d/10-wayland.conf
+echo "[General]" > /etc/sddm.conf.d/10-wayland.conf
+echo "DisplayServer=wayland" > /etc/sddm.conf.d/10-wayland.conf
 
 if lsusb | grep -q "Razer"; then
     sudo pacman -S --noconfirm --needed openrazer-daemon
@@ -703,6 +715,13 @@ if lsusb | grep -q "GoXLRMini"; then
 
     sed -i "s|^Exec=.*|Exec=/home/$USERNAME/.config/autostart/GoXLR_loopback.sh|" \
     "/home/$USERNAME/.config/autostart/GoXLR_loopback.desktop"
+
+    rm /home/$USERNAME/.local/share/goxlr-utility/profiles/*
+    rm /home/$USERNAME/.local/share/goxlr-utility/mic-profiles/*
+
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/GoXLR/profiles/Default.goxlr -O /home/$USERNAME/.local/share/goxlr-utility/profiles/Default.goxlr
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/GoXLR/mic-profiles/DEFAULT.goxlrMicProfile -O /home/$USERNAME/.local/share/goxlr-utility/mic-profiles/DEFAULT.goxlrMicProfile
+
 fi
 
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O /home/$USERNAME/.bashrc
@@ -755,7 +774,7 @@ echo -ne "
 "
     pacman -S --noconfirm --needed libx11 libxft xorg-server xorg-xinit xorg-xset network-manager-applet mate-polkit numlockx archlinux-xdg-menu xclip
 
-    pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot nwg-look
+    pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot nwg-look papirus-icon-theme pcmanfm-qt gvfs-smb
 
 runuser -l "$USERNAME" -c "
 cd /home/$USERNAME
@@ -784,6 +803,17 @@ cd /home/$USERNAME
     touch /etc/environment
     echo "QT_QPA_PLATFORMTHEME=qt5ct" >> /etc/environment
     echo "GTK_THEME=Adwaita:dark" >> /etc/environment
+
+  mkdir -p /home/$USERNAME/.config/qt6ct
+  mkdir -p /home/$USERNAME/.config/qt5ct
+wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-qt.conf -O /home/$USERNAME/.config/qt6ct/catppuccin-frappe-pink-qt.conf
+wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-qt.conf -O /home/$USERNAME/.config/qt5ct/catppuccin-frappe-pink-qt.conf
+
+  mkdir -p /home/$USERNAME/.themes
+wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz -O /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz
+tar --no-same-owner -xzf /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz -C /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk --strip-components=1
+rm /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz
+
 fi
 
 if [[ "$ENV" == "Env_Kde" ]]; then
@@ -792,7 +822,7 @@ echo -ne "
                      KDE Plasma
 -------------------------------------------------------------------------
 "
-sudo pacman -S --needed --noconfirm plasma konsole kate gwenview ark
+sudo pacman -S --needed --noconfirm plasma konsole kate gwenview ark dolphin
 pacman -S --noconfirm --needed sddm-kcm vlc
 fi
 
