@@ -747,7 +747,7 @@ mkdir -p /home/$USERNAME/.config/bat/themes
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/theme/catppuccin-frappe-bat.tmTheme -O /home/$USERNAME/.config/bat/themes/frappe-bat.tmTheme
 bat cache --build
 bat --theme="Catppuccin Frappe"
-
+'
 echo -ne "
 -------------------------------------------------------------------------
                        Starship Emoji
@@ -771,7 +771,7 @@ elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_BI" ]]; then
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_ANNANAS" ]]; then
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🍍](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 fi
-'
+
 if [[ "$ENV" == "Env_DWM" ]]; then
 echo -ne "
 -------------------------------------------------------------------------
