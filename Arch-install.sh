@@ -564,6 +564,7 @@ echo "LC_TIME=sv_SE.UTF-8" >> /etc/locale.conf
 # Global environmental variables
 echo "LANG=sv_SE.UTF-8" > /etc/environment
 echo "LC_ALL=sv_SE.UTF-8" >> /etc/environment
+echo "BAT_THEME=Catppuccin Frappe" >> /etc/environment
 
 # X11 keyboard layout
 mkdir -p /etc/X11/xorg.conf.d
@@ -841,7 +842,6 @@ cd /home/$USERNAME
 
     echo "QT_QPA_PLATFORMTHEME=qt6ct" >> /etc/environment
     echo "GTK_THEME=Adwaita:dark" >> /etc/environment
-    echo "BAT_THEME=Catppuccin Frappe" >> /etc/environment
 
     mkdir -p /home/$USERNAME/.config/qt6ct/colors/
     mkdir -p /home/$USERNAME/.config/qt5ct/colors/
