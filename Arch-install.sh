@@ -564,7 +564,7 @@ echo "LC_TIME=sv_SE.UTF-8" >> /etc/locale.conf
 # Global environmental variables
 echo "LANG=sv_SE.UTF-8" > /etc/environment
 echo "LC_ALL=sv_SE.UTF-8" >> /etc/environment
-echo "BAT_THEME=Catppuccin Frappe" >> /etc/environment
+echo "BAT_THEME="Catppuccin Frappe"" >> /etc/environment
 
 # X11 keyboard layout
 mkdir -p /etc/X11/xorg.conf.d
@@ -857,7 +857,7 @@ cd /home/$USERNAME
     rm /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.zip
 
     mkdir -p /home/$USERNAME/.config/dunst/dunstrc
-    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-dunst.conf -O /home/$USERNAME/.config/dunst/dunstrc/catppuccin-frappe.conf
+    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-dunst.conf -O /home/$USERNAME/.config/dunst/dunstrc
 "
 fi
 
