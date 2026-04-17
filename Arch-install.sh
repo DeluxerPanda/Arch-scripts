@@ -564,7 +564,6 @@ echo "LC_TIME=sv_SE.UTF-8" >> /etc/locale.conf
 # Global environmental variables
 echo "LANG=sv_SE.UTF-8" > /etc/environment
 echo "LC_ALL=sv_SE.UTF-8" >> /etc/environment
-echo "BAT_THEME="Catppuccin Frappe"" >> /etc/environment
 
 # X11 keyboard layout
 mkdir -p /etc/X11/xorg.conf.d
@@ -742,9 +741,6 @@ if [[ "$STARSHIP_TEMA" == "StarshipTema_TRANSGENDER" ]]; then
 elif [[ "$STARSHIP_TEMA" == "StarshipTema_NON-BINARY" ]]; then
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/nonbinary/starship.toml -O /home/$USERNAME/.config/starship.toml
 fi
-
-mkdir -p /home/$USERNAME/.config/bat/themes
-wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/theme/catppuccin-frappe-bat.tmTheme -O /home/$USERNAME/.config/bat/themes/frappe-bat.tmTheme
 '
 echo -ne "
 -------------------------------------------------------------------------
