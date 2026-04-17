@@ -657,6 +657,9 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 
+touch /etc/sddm.conf
+touch /etc/sddm.conf.d/10-wayland.conf
+
 pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire pipewire-pulse pipewire-alsa dunst starship fastfetch
 pacman -S --noconfirm --needed pavucontrol sddm kdeconnect flatpak
 pacman -S --noconfirm --needed steam gamescope prismlauncher
@@ -667,13 +670,13 @@ wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catp
 tar -xvzf /usr/share/sddm/themes/catppuccin-frappe-pink-sddm.tar.gz -C /usr/share/sddm/themes/
 rm /usr/share/sddm/themes/catppuccin-frappe-pink-sddm.tar.gz
 
-touch /etc/sddm.conf
-echo "[Theme]" > /etc/sddm.conf
-echo "Current=catppuccin-frappe-pink" > /etc/sddm.conf
 
-touch /etc/sddm.conf.d/10-wayland.conf
-echo "[General]" > /etc/sddm.conf.d/10-wayland.conf
-echo "DisplayServer=wayland" > /etc/sddm.conf.d/10-wayland.conf
+
+echo '[Theme]' >> /etc/sddm.conf
+echo 'Current=catppuccin-frappe-pink' >> /etc/sddm.conf
+
+echo '[General]' >> /etc/sddm.conf.d/10-wayland.conf
+echo 'DisplayServer=wayland' >> /etc/sddm.conf.d/10-wayland.conf
 
 if lsusb | grep -q "Razer"; then
     sudo pacman -S --noconfirm --needed openrazer-daemon
