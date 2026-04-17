@@ -777,7 +777,7 @@ echo -ne "
 "
     pacman -S --noconfirm --needed libx11 libxft xorg-server xorg-xinit xorg-xset network-manager-applet mate-polkit numlockx archlinux-xdg-menu xclip
 
-    pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot nwg-look papirus-icon-theme pcmanfm-qt gvfs-smb
+    pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot nwg-look papirus-icon-theme pcmanfm-qt gvfs-smb code
 
 runuser -l "$USERNAME" -c "
 cd /home/$USERNAME
@@ -800,8 +800,42 @@ cd /home/$USERNAME
     wget -O /home/$USERNAME/.config/rofi/config.rasi "https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/rofi/config.rasi"
     mkdir -p /home/$USERNAME/.config/rofi/themes
     wget -O /home/$USERNAME/.config/rofi/themes/catppuccin-mocha.rasi "https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/rofi/themes/catppuccin-mocha.rasi"
-    
-    wget -O /home/$USERNAME/.config/mimeapps.list "https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/mimeapps.list"
+
+    xdg-settings set default-web-browser librewolf.desktop
+    xdg-mime default librewolf.desktop application/pdf
+    xdg-mime default feh.desktop image/jpeg
+    xdg-mime default feh.desktop image/png
+    xdg-mime default feh.desktop image/webp
+    xdg-mime default feh.desktop image/gif
+    xdg-mime default mpv.desktop video/webm
+    xdg-mime default mpv.desktop video/mp4
+    xdg-mime default mpv.desktop video/quicktime
+    xdg-mime default mpv.desktop video/x-matroska
+    xdg-mime default mpv.desktop video/x-matroska
+    xdg-mime default xarchiver.desktop application/zip
+    xdg-mime default xarchiver.desktop application/x-tar
+    xdg-mime default xarchiver.desktop application/x-gzip
+    xdg-mime default xarchiver.desktop application/x-bzip2
+    xdg-mime default xarchiver.desktop application/x-xz
+    xdg-mime default xarchiver.desktop application/x-7z-compressed
+    xdg-mime default xarchiver.desktop application/x-rar
+    xdg-mime default xarchiver.desktop application/x-compressed-tar
+    xdg-mime default xarchiver.desktop application/x-xz-compressed
+    xdg-mime default code.desktop text/html
+    xdg-mime default code.desktop text/plain
+    xdg-mime default code.desktop text/xml
+    xdg-mime default code.desktop text/css
+    xdg-mime default code.desktop text/csv
+    xdg-mime default code.desktop text/markdown
+    xdg-mime default code.desktop text/x-python
+    xdg-mime default code.desktop text/x-shellscript
+    xdg-mime default code.desktop text/x-csrc
+    xdg-mime default code.desktop text/x-c++src
+    xdg-mime default code.desktop text/x-javascript
+    xdg-mime default code.desktop application/json
+    xdg-mime default code.desktop application/javascript
+    xdg-mime default code.desktop application/xml
+    xdg-mime default code.desktop application/x-yaml    
 
     touch /etc/environment
     echo "QT_QPA_PLATFORMTHEME=qt6ct" >> /etc/environment
@@ -821,6 +855,8 @@ cd /home/$USERNAME
     wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-cursors.tar.gz -O /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.tar.gz
     tar -xvzf /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.tar.gz -C /home/$USERNAME/.icons/
     rm /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.tar.gz
+
+
 "
 fi
 
