@@ -802,21 +802,26 @@ cd /home/$USERNAME
     wget -O /home/$USERNAME/.config/rofi/themes/catppuccin-mocha.rasi "https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/rofi/themes/catppuccin-mocha.rasi"
     
     wget -O /home/$USERNAME/.config/mimeapps.list "https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/mimeapps.list"
-"
+
     touch /etc/environment
     echo "QT_QPA_PLATFORMTHEME=qt5ct" >> /etc/environment
     echo "GTK_THEME=Adwaita:dark" >> /etc/environment
 
-    mkdir -p /home/$USERNAME/.config/qt6ct
-    mkdir -p /home/$USERNAME/.config/qt5ct
-    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-qt.conf -O /home/$USERNAME/.config/qt6ct/catppuccin-frappe-pink-qt.conf
-    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-qt.conf -O /home/$USERNAME/.config/qt5ct/catppuccin-frappe-pink-qt.conf
+    mkdir -p /home/$USERNAME/.config/qt6ct/colors/
+    mkdir -p /home/$USERNAME/.config/qt5ct/colors/
+    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-qt.conf -O /home/$USERNAME/.config/qt6ct/colors/catppuccin-frappe-pink-qt.conf
+    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-qt.conf -O /home/$USERNAME/.config/qt5ct/colors/catppuccin-frappe-pink-qt.conf
 
     mkdir -p /home/$USERNAME/.themes
     wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz -O /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz
     tar -xvzf /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz -C /home/$USERNAME/.themes/
     rm /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz
 
+    mkdir -p /home/$USERNAME/.icons
+    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-cursors.tar.gz -O /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.tar.gz
+    tar -xvzf /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.tar.gz -C /home/$USERNAME/.icons/
+    rm /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.tar.gz
+"
 fi
 
 if [[ "$ENV" == "Env_Kde" ]]; then
