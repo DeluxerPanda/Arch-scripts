@@ -745,6 +745,7 @@ fi
 mkdir -p /home/$USERNAME/.config/bat/themes
 wget -P "/home/$USERNAME/.config/bat/themes" https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/theme/catppuccin-frappe-bat.tmTheme
 bat cache --build
+bat --theme="Catppuccin Frappe"
 '
 echo -ne "
 -------------------------------------------------------------------------
@@ -838,9 +839,9 @@ cd /home/$USERNAME
     xdg-mime default code.desktop application/xml
     xdg-mime default code.desktop application/x-yaml    
 
-    touch /etc/environment
     echo "QT_QPA_PLATFORMTHEME=qt6ct" >> /etc/environment
     echo "GTK_THEME=Adwaita:dark" >> /etc/environment
+    echo "BAT_THEME=Catppuccin Frappe" >> /etc/environment
 
     mkdir -p /home/$USERNAME/.config/qt6ct/colors/
     mkdir -p /home/$USERNAME/.config/qt5ct/colors/
@@ -853,12 +854,12 @@ cd /home/$USERNAME
     rm /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz
 
     mkdir -p /home/$USERNAME/.icons
-    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-cursors.tar.gz -O /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.tar.gz
-    tar -xvzf /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.tar.gz -C /home/$USERNAME/.icons/
-    rm /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.tar.gz
+    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-cursors.zip -O /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.zip
+    unzip  /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.zip -d /home/$USERNAME/.icons/
+    rm /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.zip
 
     mkdir -p /home/$USERNAME/.config/dunst/dunstrc
-    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-dunst.conf -O /home/$USERNAME/.config/dunst/dunstrc/frappe.conf
+    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-dunst.conf -O /home/$USERNAME/.config/dunst/dunstrc/catppuccin-frappe.conf
 "
 fi
 
