@@ -854,7 +854,7 @@ cd /home/$USERNAME
     unzip  /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.zip -d /home/$USERNAME/.icons/
     rm /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.zip
 
-    mkdir -p /home/$USERNAME/.config/dunst/dunstrc
+    mkdir -p /home/$USERNAME/.config/dunst/
     wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-dunst.conf -O /home/$USERNAME/.config/dunst/dunstrc
 "
 fi
