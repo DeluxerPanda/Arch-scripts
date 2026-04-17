@@ -804,7 +804,7 @@ cd /home/$USERNAME
     wget -O /home/$USERNAME/.config/mimeapps.list "https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/mimeapps.list"
 
     touch /etc/environment
-    echo "QT_QPA_PLATFORMTHEME=qt5ct" >> /etc/environment
+    echo "QT_QPA_PLATFORMTHEME=qt6ct" >> /etc/environment
     echo "GTK_THEME=Adwaita:dark" >> /etc/environment
 
     mkdir -p /home/$USERNAME/.config/qt6ct/colors/
