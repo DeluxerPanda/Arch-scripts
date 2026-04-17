@@ -514,7 +514,7 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 if [[ ! -d "/sys/firmware/efi" ]]; then
-    grub-install --boot-directory=/mnt/boot "${DISK}" --removable
+    grub-install --boot-directory=/mnt/boot "${DISK}"
 fi
 
 gpu_type=$(lspci | grep -E "VGA|3D|Display")
@@ -883,7 +883,7 @@ echo -ne "
 # GRUB EFI Bootloader Install & Check
 
 if [[ -d "/sys/firmware/efi" ]]; then
-    grub-install --efi-directory=/boot ${DISK} --removable
+    grub-install --efi-directory=/boot ${DISK}
 fi
 
 # set kernel parameter for adding splash screen
