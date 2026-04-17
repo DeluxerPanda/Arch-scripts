@@ -745,10 +745,9 @@ elif [[ "$STARSHIP_TEMA" == "StarshipTema_NON-BINARY" ]]; then
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/nonbinary/starship.toml -O /home/$USERNAME/.config/starship.toml
 fi
 
-mkdir -p "$(bat --config-dir)/themes"
-wget -P "$(bat --config-dir)/themes" https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/theme/catppuccin-frappe-bat.tmTheme
+mkdir -p /home/$USERNAME/.config/bat/themes
+wget -P "/home/$USERNAME/.config/bat/themes" https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/theme/catppuccin-frappe-bat.tmTheme
 bat cache --build
-
 '
 echo -ne "
 -------------------------------------------------------------------------
