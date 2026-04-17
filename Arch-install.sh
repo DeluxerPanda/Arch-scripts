@@ -719,12 +719,12 @@ if lsusb | grep -q "GoXLRMini"; then
     sed -i "s|^Exec=.*|Exec=/home/$USERNAME/.config/autostart/GoXLR_loopback.sh|" \
     "/home/$USERNAME/.config/autostart/GoXLR_loopback.desktop"
 
-    rm /home/$USERNAME/.local/share/goxlr-utility/profiles/*
-    rm /home/$USERNAME/.local/share/goxlr-utility/mic-profiles/*
 
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/GoXLR/profiles/Default.goxlr -O /home/$USERNAME/.local/share/goxlr-utility/profiles/Default.goxlr
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/GoXLR/mic-profiles/DEFAULT.goxlrMicProfile -O /home/$USERNAME/.local/share/goxlr-utility/mic-profiles/DEFAULT.goxlrMicProfile
-
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/GoXLR/profiles/Default.goxlr -O /home/$USERNAME/Skrivbord/Default.goxlr
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/GoXLR/mic-profiles/DEFAULT.goxlrMicProfile -O /home/$USERNAME/Skrivbord/DEFAULT.goxlrMicProfile
+    
+    chown $USERNAME:$USERNAME /home/$USERNAME/Skrivbord/Default.goxlr
+    chown $USERNAME:$USERNAME /home/$USERNAME/Skrivbord/DEFAULT.goxlrMicProfile
 fi
 
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O /home/$USERNAME/.bashrc
