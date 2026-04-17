@@ -660,7 +660,7 @@ echo -ne "
 touch /etc/sddm.conf
 touch /etc/sddm.conf.d/10-wayland.conf
 
-pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire pipewire-pulse pipewire-alsa dunst starship fastfetch
+pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire pipewire-pulse pipewire-alsa starship fastfetch
 pacman -S --noconfirm --needed pavucontrol sddm kdeconnect flatpak
 pacman -S --noconfirm --needed steam gamescope prismlauncher
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji qt5ct qt6ct
@@ -744,6 +744,11 @@ if [[ "$STARSHIP_TEMA" == "StarshipTema_TRANSGENDER" ]]; then
 elif [[ "$STARSHIP_TEMA" == "StarshipTema_NON-BINARY" ]]; then
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/nonbinary/starship.toml -O /home/$USERNAME/.config/starship.toml
 fi
+
+mkdir -p "$(bat --config-dir)/themes"
+wget -P "$(bat --config-dir)/themes" https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/theme/catppuccin-frappe-bat.tmTheme
+bat cache --build
+
 '
 echo -ne "
 -------------------------------------------------------------------------
@@ -775,7 +780,7 @@ echo -ne "
                      DWM
 -------------------------------------------------------------------------
 "
-    pacman -S --noconfirm --needed libx11 libxft xorg-server xorg-xinit xorg-xset network-manager-applet mate-polkit numlockx archlinux-xdg-menu xclip dex
+    pacman -S --noconfirm --needed libx11 libxft xorg-server xorg-xinit xorg-xset network-manager-applet mate-polkit numlockx archlinux-xdg-menu xclip dex dunst
 
     pacman -S --needed --noconfirm rofi arandr xarchiver mpv feh flameshot nwg-look papirus-icon-theme pcmanfm-qt gvfs-smb code
 
@@ -856,7 +861,8 @@ cd /home/$USERNAME
     tar -xvzf /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.tar.gz -C /home/$USERNAME/.icons/
     rm /home/$USERNAME/.icons/catppuccin-frappe-pink-cursors.tar.gz
 
-
+    mkdir -p /home/$USERNAME/.config/dunst/dunstrc
+    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-dunst.conf -O /home/$USERNAME/.config/dunst/dunstrc/frappe.conf
 "
 fi
 
