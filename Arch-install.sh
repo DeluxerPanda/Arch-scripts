@@ -664,7 +664,7 @@ pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji qt5ct qt
 pacman -S --noconfirm --needed unrar unzip zip xdg-user-dirs ffmpeg
 
 wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-sddm.tar.gz -O /usr/share/sddm/themes/catppuccin-frappe-pink-sddm.tar.gz
-tar --no-same-owner -xzf /usr/share/sddm/themes/catppuccin-frappe-pink-sddm.tar.gz -C /usr/share/sddm/themes/catppuccin-frappe-pink-sddm --strip-components=1
+tar -xvzf /usr/share/sddm/themes/catppuccin-frappe-pink-sddm.tar.gz -C /usr/share/sddm/themes/
 rm /usr/share/sddm/themes/catppuccin-frappe-pink-sddm.tar.gz
 
 touch /etc/sddm.conf
@@ -804,15 +804,15 @@ cd /home/$USERNAME
     echo "QT_QPA_PLATFORMTHEME=qt5ct" >> /etc/environment
     echo "GTK_THEME=Adwaita:dark" >> /etc/environment
 
-  mkdir -p /home/$USERNAME/.config/qt6ct
-  mkdir -p /home/$USERNAME/.config/qt5ct
-wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-qt.conf -O /home/$USERNAME/.config/qt6ct/catppuccin-frappe-pink-qt.conf
-wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-qt.conf -O /home/$USERNAME/.config/qt5ct/catppuccin-frappe-pink-qt.conf
+    mkdir -p /home/$USERNAME/.config/qt6ct
+    mkdir -p /home/$USERNAME/.config/qt5ct
+    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-qt.conf -O /home/$USERNAME/.config/qt6ct/catppuccin-frappe-pink-qt.conf
+    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/catppuccin-frappe-pink-qt.conf -O /home/$USERNAME/.config/qt5ct/catppuccin-frappe-pink-qt.conf
 
-  mkdir -p /home/$USERNAME/.themes
-wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz -O /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz
-tar --no-same-owner -xzf /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz -C /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk --strip-components=1
-rm /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz
+    mkdir -p /home/$USERNAME/.themes
+    wget https://github.com/DeluxerPanda/Arch-scripts/raw/refs/heads/main/theme/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz -O /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz
+    tar -xvzf /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz -C /home/$USERNAME/.themes/
+    rm /home/$USERNAME/.themes/Catppuccin-Frappe-Standard-Pink-Dark-gtk.tar.gz
 
 fi
 
