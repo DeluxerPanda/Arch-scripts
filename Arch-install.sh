@@ -745,8 +745,6 @@ fi
 
 mkdir -p /home/$USERNAME/.config/bat/themes
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/theme/catppuccin-frappe-bat.tmTheme -O /home/$USERNAME/.config/bat/themes/frappe-bat.tmTheme
-bat cache --build
-bat --theme="Catppuccin Frappe"
 '
 echo -ne "
 -------------------------------------------------------------------------
