@@ -838,7 +838,7 @@ cd /home/$USERNAME
     xdg-mime default code.desktop application/xml
     xdg-mime default code.desktop application/x-yaml    
 
-    echo "QT_QPA_PLATFORMTHEME=qt6ct" >> /etc/environment
+    echo "QT_QPA_PLATFORMTHEME=qt6ct" > /etc/environment
     echo "GTK_THEME=Adwaita:dark" >> /etc/environment
 
     mkdir -p /home/$USERNAME/.config/qt6ct/colors/
