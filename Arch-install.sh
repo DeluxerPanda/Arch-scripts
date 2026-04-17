@@ -565,6 +565,11 @@ echo "LC_TIME=sv_SE.UTF-8" >> /etc/locale.conf
 echo "LANG=sv_SE.UTF-8" > /etc/environment
 echo "LC_ALL=sv_SE.UTF-8" >> /etc/environment
 
+if [[ "$ENV" == "Env_DWM" ]]; then
+    echo "QT_QPA_PLATFORMTHEME=qt6ct" >> /etc/environment
+    echo "GTK_THEME=Adwaita:dark" >> /etc/environment
+fi
+
 # X11 keyboard layout
 mkdir -p /etc/X11/xorg.conf.d
 echo 'Section "InputClass"' > /etc/X11/xorg.conf.d/00-keyboard.conf
@@ -833,9 +838,6 @@ cd /home/$USERNAME
     xdg-mime default code.desktop application/javascript
     xdg-mime default code.desktop application/xml
     xdg-mime default code.desktop application/x-yaml    
-
-    echo "QT_QPA_PLATFORMTHEME=qt6ct" >> /etc/environment
-    echo "GTK_THEME=Adwaita:dark" >> /etc/environment
 
     mkdir -p /home/$USERNAME/.config/qt6ct/colors/
     mkdir -p /home/$USERNAME/.config/qt5ct/colors/
