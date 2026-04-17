@@ -722,9 +722,6 @@ if lsusb | grep -q "GoXLRMini"; then
 
     wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/GoXLR/profiles/Default.goxlr -O /home/$USERNAME/Skrivbord/Default.goxlr
     wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/GoXLR/mic-profiles/DEFAULT.goxlrMicProfile -O /home/$USERNAME/Skrivbord/DEFAULT.goxlrMicProfile
-    
-    chown $USERNAME:$USERNAME /home/$USERNAME/Skrivbord/Default.goxlr
-    chown $USERNAME:$USERNAME /home/$USERNAME/Skrivbord/DEFAULT.goxlrMicProfile
 fi
 
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O /home/$USERNAME/.bashrc
