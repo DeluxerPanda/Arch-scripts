@@ -302,9 +302,9 @@ setupStarshipEmoji () {
         2) 
         export STARSHIP_EMOJI="StarshipEmoji_PINGVIN";;
         3) 
-        export STARSHIP_EMOJI="StarshipEmoji_ENHÖRNING";;
+        export STARSHIP_EMOJI="StarshipEmoji_ENHORNING";;
         4) 
-        export STARSHIP_EMOJI="StarshipEmoji_RÄV";;
+        export STARSHIP_EMOJI="StarshipEmoji_RAV";;
         5) 
         export STARSHIP_EMOJI="StarshipEmoji_UGLA";;
         6) 
@@ -744,10 +744,10 @@ elif [[ "$STARSHIP_TEMA" == "StarshipTema_NON-BINARY" ]]; then
 fi
 
 mkdir -p /home/$USERNAME/.config/bat/themes
-wget -P "/home/$USERNAME/.config/bat/themes" https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/theme/catppuccin-frappe-bat.tmTheme
+wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/theme/catppuccin-frappe-bat.tmTheme -O /home/$USERNAME/.config/bat/themes/frappe-bat.tmTheme
 bat cache --build
 bat --theme="Catppuccin Frappe"
-'
+
 echo -ne "
 -------------------------------------------------------------------------
                        Starship Emoji
@@ -760,9 +760,9 @@ elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_kATT" ]]; then
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[😺](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_PINGVIN" ]]; then
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🐧](\$style)'|" "/home/$USERNAME/.config/starship.toml"
-elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_ENHÖRNInG" ]]; then
+elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_ENHORNING" ]]; then
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦄](\$style)'|" "/home/$USERNAME/.config/starship.toml"
-elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_RÄV" ]]; then
+elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_RAV" ]]; then
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦊](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_UGLA" ]]; then
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🦉](\$style)'|" "/home/$USERNAME/.config/starship.toml"
@@ -771,7 +771,7 @@ elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_BI" ]]; then
 elif [[ "$STARSHIP_EMOJI" == "StarshipEmoji_ANNANAS" ]]; then
         sed -i "s|format = '\[[^]]*\](\$style)'|format = '[🍍](\$style)'|" "/home/$USERNAME/.config/starship.toml"
 fi
-
+'
 if [[ "$ENV" == "Env_DWM" ]]; then
 echo -ne "
 -------------------------------------------------------------------------
