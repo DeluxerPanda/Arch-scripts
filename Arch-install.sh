@@ -948,6 +948,8 @@ systemctl enable NetworkManager.service
 echo "  NetworkManager enabled"
 systemctl enable sddm.service
 echo "  sddm enabled"
+systemctl enable bluetooth.service
+echo "  bluetooth enabled"
 
 if lsusb | grep -q "Razer"; then
     sudo systemctl enable openrazer-daemon
