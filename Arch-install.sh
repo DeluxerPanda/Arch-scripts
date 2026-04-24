@@ -866,7 +866,7 @@ echo -ne "
 -------------------------------------------------------------------------
 "
 sudo pacman -S --needed --noconfirm plasma konsole kate gwenview ark dolphin
-pacman -S --noconfirm --needed sddm-kcm vlc
+pacman -S --noconfirm --needed sddm-kcm vlc vlc-plugins-all
 fi
 
 echo -ne "
