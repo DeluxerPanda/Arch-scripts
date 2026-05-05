@@ -3,7 +3,8 @@
 if [ -f /usr/bin/fastfetch ]; then
 	fastfetch
 fi
-      alias cat='bat'
+
+#alias lea='ssh user@ip'
 
 eval "$(starship init bash)"
 
