@@ -665,7 +665,7 @@ echo -ne "
 touch /etc/sddm.conf
 touch /etc/sddm.conf.d/10-wayland.conf
 
-pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse pipewire pipewire-pulse pipewire-alsa starship fastfetch
+pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano ffmpeg btop gnome-keyring fuse pipewire pipewire-pulse pipewire-alsa starship fastfetch
 pacman -S --noconfirm --needed pavucontrol sddm kdeconnect flatpak
 pacman -S --noconfirm --needed steam gamescope prismlauncher gimp blender
 pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji qt5ct qt6ct
