@@ -71,7 +71,7 @@ main() {
 
     yay -S --sudoloop --noconfirm --needed librewolf-bin
 
-    sudo pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano bat ffmpeg btop gnome-keyring fuse
+    sudo pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano ffmpeg btop gnome-keyring fuse
     sudo pacman -S --noconfirm --needed pavucontrol mpv sddm
     sudo pacman -S --noconfirm --needed steam gamescope
     sudo pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd noto-fonts-emoji
