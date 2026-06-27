@@ -631,8 +631,8 @@ if [[ "$DUALGPU" == "AMD" ]]; then
     mkdir -p /etc/X11/xorg.conf.d/
     wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/X11/20-amdgpu.conf -O /etc/X11/xorg.conf.d/20-amdgpu.conf
 elif echo "${gpu_type}" | grep -E "NVIDIA|GeForce"; then
-    echo "Installing NVIDIA drivers: nvidia-open nvidia-open-dkms nvidia-settings nvidia-utils"
-    pacman -S --noconfirm --needed nvidia-open nvidia-open-dkms nvidia-settings nvidia-utils
+    echo "Installing NVIDIA drivers: nvidia-open-dkms nvidia-settings nvidia-utils"
+    pacman -S --noconfirm --needed nvidia-open-dkms nvidia-settings nvidia-utils
 elif echo "${gpu_type}" | grep 'VGA' | grep -E "Radeon"; then
     echo "Installing AMD drivers: xf86-video-amdgpu vulkan-radeon"
     pacman -S --noconfirm --needed xf86-video-amdgpu vulkan-radeon
@@ -665,6 +665,10 @@ echo -ne "
 touch /etc/sddm.conf
 touch /etc/sddm.conf.d/10-wayland.conf
 
+if lspci | grep -E "Ryzen" >/dev/null; then
+pacman -S --noconfirm --needed rocm-smi-lib
+fi
+
 pacman -S --noconfirm --needed bash-completion nfs-utils usbutils nano ffmpeg btop gnome-keyring fuse pipewire pipewire-pulse pipewire-alsa starship fastfetch networkmanager-vpn-plugin-openvpn
 pacman -S --noconfirm --needed pavucontrol sddm kdeconnect flatpak
 pacman -S --noconfirm --needed steam gamescope prismlauncher gimp blender
@@ -680,8 +684,10 @@ rm /usr/share/sddm/themes/catppuccin-frappe-pink-sddm.tar.gz
 echo '[Theme]' >> /etc/sddm.conf
 echo 'Current=catppuccin-frappe-pink' >> /etc/sddm.conf
 
+if [[ "$MSIBORD" == *"MSI"* || "$MSIBORD" == *"Micro-Star"* ]]; then
 echo '[General]' >> /etc/sddm.conf.d/10-wayland.conf
 echo 'DisplayServer=wayland' >> /etc/sddm.conf.d/10-wayland.conf
+fi
 
 if lsusb | grep -q "Razer"; then
     sudo pacman -S --noconfirm --needed openrazer-daemon
@@ -746,6 +752,8 @@ if [[ "$STARSHIP_TEMA" == "StarshipTema_TRANSGENDER" ]]; then
 elif [[ "$STARSHIP_TEMA" == "StarshipTema_NON-BINARY" ]]; then
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/nonbinary/starship.toml -O /home/$USERNAME/.config/starship.toml
 fi
+flatpak install -y --noninteractive flathub com.teamspeak.TeamSpeak
+flatpak install -y --noninteractive flathub com.vysp3r.ProtonPlus
 '
 echo -ne "
 -------------------------------------------------------------------------
