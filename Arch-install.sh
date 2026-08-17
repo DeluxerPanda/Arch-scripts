@@ -706,7 +706,6 @@ cd yay
 makepkg --noconfirm -si
 cd ..
 rm -rf yay
-yay -S --sudoloop --noconfirm --needed librewolf-bin
 
 if lsusb | grep -q "Razer"; then
     yay -S --sudoloop --noconfirm --needed razergenie
@@ -754,6 +753,7 @@ elif [[ "$STARSHIP_TEMA" == "StarshipTema_NON-BINARY" ]]; then
 fi
 flatpak install -y --noninteractive flathub com.teamspeak.TeamSpeak
 flatpak install -y --noninteractive flathub com.vysp3r.ProtonPlus
+flatpak install -y --noninteractive flathub com.google.Chrome
 '
 echo -ne "
 -------------------------------------------------------------------------
