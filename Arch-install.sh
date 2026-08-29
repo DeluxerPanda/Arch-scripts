@@ -650,8 +650,9 @@ groupadd libvirt
 groupadd kvm
 groupadd plugdev
 groupadd docker
-useradd -m -G wheel,libvirt,kvm,plugdev,docker -s /bin/bash $USERNAME
-echo "$USERNAME created, home directory created, added to wheel and libvirt and kvm and plugdev and docker group, default shell set to /bin/bash"
+groupadd input
+useradd -m -G wheel,libvirt,kvm,plugdev,docker,input -s /bin/bash $USERNAME
+echo "$USERNAME created, home directory created, added to wheel and libvirt and kvm and plugdev and docker and input group, default shell set to /bin/bash"
 echo "$USERNAME:$PASSWORD" | chpasswd
 echo "$USERNAME password set"
 echo $NAME_OF_MACHINE > /etc/hostname
@@ -759,9 +760,10 @@ echo -ne "
                      KDE Discover Flatpak application shortcuts
 -------------------------------------------------------------------------
 "
+    mkdir -p "/home/$USERNAME/Skrivbord"
 
     # TeamSpeak
-    cat > "$HOME/Skrivbord/TeamSpeak.desktop" <<EOFDesktopTeamSpeak
+    cat > "/home/$USERNAME/Skrivbord/TeamSpeak.desktop" <<EOFDesktopTeamSpeak
 [Desktop Entry]
 Name=TeamSpeak
 Comment=Install TeamSpeak from Flathub using KDE Discover
@@ -773,7 +775,7 @@ Categories=Network;Chat;
 EOFDesktopTeamSpeak
 
     # ProtonPlus
-    cat > "$HOME/Skrivbord/ProtonPlus.desktop" <<EOFDesktopProtonPlus
+    cat > "/home/$USERNAME/Skrivbord/ProtonPlus.desktop" <<EOFDesktopProtonPlus
 [Desktop Entry]
 Name=ProtonPlus
 Comment=Install ProtonPlus from Flathub using KDE Discover
@@ -785,7 +787,7 @@ Categories=Utility;
 EOFDesktopProtonPlus
 
     # Google Chrome
-    cat > "$HOME/Skrivbord/GoogleChrome.desktop" <<EOFDesktopGoogleChrome
+    cat > "/home/$USERNAME/Skrivbord/GoogleChrome.desktop" <<EOFDesktopGoogleChrome
 [Desktop Entry]
 Name=Google Chrome
 Comment=Install Google Chrome from Flathub using KDE Discover
@@ -796,9 +798,9 @@ Type=Application
 Categories=Network;WebBrowser;
 EOFDesktopGoogleChrome
 
-    chmod +x "$HOME/Skrivbord/TeamSpeak.desktop"
-    chmod +x "$HOME/Skrivbord/ProtonPlus.desktop"
-    chmod +x "$HOME/Skrivbord/GoogleChrome.desktop"
+    chmod +x "/home/$USERNAME/Skrivbord/TeamSpeak.desktop"
+    chmod +x "/home/$USERNAME/Skrivbord/ProtonPlus.desktop"
+    chmod +x "/home/$USERNAME/Skrivbord/GoogleChrome.desktop"
 
     echo "Discover Flatpak shortcuts created."
 
