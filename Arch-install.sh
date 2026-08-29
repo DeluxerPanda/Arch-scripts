@@ -729,9 +729,10 @@ if lsusb | grep -q "GoXLRMini"; then
     sed -i "s|^Exec=.*|Exec=/home/$USERNAME/.config/autostart/GoXLR_loopback.sh|" \
     "/home/$USERNAME/.config/autostart/GoXLR_loopback.desktop"
 
-
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/GoXLR/profiles/Default.goxlr -O /home/$USERNAME/Skrivbord/Default.goxlr
-    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/GoXLR/mic-profiles/DEFAULT.goxlrMicProfile -O /home/$USERNAME/Skrivbord/DEFAULT.goxlrMicProfile
+    rm -rf /home/$USERNAME/.local/share/goxlr-utility/mic-profiles/*
+    rm -rf /home/$USERNAME/.local/share/goxlr-utility/profiles/*
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/GoXLR/profiles/Default.goxlr -O /home/$USERNAME/.local/share/goxlr-utility/profiles/Default.goxlr
+    wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/GoXLR/mic-profiles/DEFAULT.goxlrMicProfile -O /home/$USERNAME/.local/share/goxlr-utility/mic-profiles/DEFAULT.goxlrMicProfile
 fi
 
 wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/refs/heads/main/config/.bashrc -O /home/$USERNAME/.bashrc
@@ -751,9 +752,56 @@ if [[ "$STARSHIP_TEMA" == "StarshipTema_TRANSGENDER" ]]; then
 elif [[ "$STARSHIP_TEMA" == "StarshipTema_NON-BINARY" ]]; then
         wget https://raw.githubusercontent.com/DeluxerPanda/Arch-scripts/main/config/starship/nonbinary/starship.toml -O /home/$USERNAME/.config/starship.toml
 fi
-flatpak install -y --noninteractive flathub com.teamspeak.TeamSpeak
-flatpak install -y --noninteractive flathub com.vysp3r.ProtonPlus
-flatpak install -y --noninteractive flathub com.google.Chrome
+
+
+echo -ne "
+-------------------------------------------------------------------------
+                     KDE Discover Flatpak application shortcuts
+-------------------------------------------------------------------------
+"
+
+    # TeamSpeak
+    cat > "$HOME/Skrivbord/TeamSpeak.desktop" <<EOFDesktopTeamSpeak
+[Desktop Entry]
+Name=TeamSpeak
+Comment=Install TeamSpeak from Flathub using KDE Discover
+Exec=plasma-discover --application appstream://com.teamspeak.teamspeak
+Icon=com.teamspeak.TeamSpeak
+Terminal=false
+Type=Application
+Categories=Network;Chat;
+EOFDesktopTeamSpeak
+
+    # ProtonPlus
+    cat > "$HOME/Skrivbord/ProtonPlus.desktop" <<EOFDesktopProtonPlus
+[Desktop Entry]
+Name=ProtonPlus
+Comment=Install ProtonPlus from Flathub using KDE Discover
+Exec=plasma-discover --application appstream://com.vysp3r.ProtonPlus
+Icon=com.vysp3r.ProtonPlus
+Terminal=false
+Type=Application
+Categories=Utility;
+EOFDesktopProtonPlus
+
+    # Google Chrome
+    cat > "$HOME/Skrivbord/GoogleChrome.desktop" <<EOFDesktopGoogleChrome
+[Desktop Entry]
+Name=Google Chrome
+Comment=Install Google Chrome from Flathub using KDE Discover
+Exec=plasma-discover --application appstream://com.google.Chrome
+Icon=com.google.Chrome
+Terminal=false
+Type=Application
+Categories=Network;WebBrowser;
+EOFDesktopGoogleChrome
+
+    chmod +x "$HOME/Skrivbord/TeamSpeak.desktop"
+    chmod +x "$HOME/Skrivbord/ProtonPlus.desktop"
+    chmod +x "$HOME/Skrivbord/GoogleChrome.desktop"
+
+    echo "Discover Flatpak shortcuts created."
+
 '
 echo -ne "
 -------------------------------------------------------------------------
