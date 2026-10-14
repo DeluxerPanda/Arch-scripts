@@ -685,10 +685,11 @@ rm /usr/share/sddm/themes/catppuccin-frappe-pink-sddm.tar.gz
 echo '[Theme]' >> /etc/sddm.conf
 echo 'Current=catppuccin-frappe-pink' >> /etc/sddm.conf
 
-if [[ "$MSIBORD" == *"MSI"* || "$MSIBORD" == *"Micro-Star"* ]]; then
 echo '[General]' >> /etc/sddm.conf.d/10-wayland.conf
 echo 'DisplayServer=wayland' >> /etc/sddm.conf.d/10-wayland.conf
-fi
+echo 'GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell' >> /etc/sddm.conf.d/10-wayland.conf
+echo '[Wayland]' >> /etc/sddm.conf.d/10-wayland.conf
+echo 'CompositorCommand=kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1' >> /etc/sddm.conf.d/10-wayland.conf
 
 if lsusb | grep -q "Razer"; then
     sudo pacman -S --noconfirm --needed openrazer-daemon
